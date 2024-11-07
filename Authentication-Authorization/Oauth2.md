@@ -154,3 +154,97 @@ Refresh tokens are credentials used to obtain access tokens. Refresh tokens are 
 1. Use HTTP-only cookies when security is a priority, as they prevent XSS-based token theft. They are especially suitable for applications with a backend server and support CSRF token-based protection(set `samesite=strict`).
 2. Consider Local Storage only if your application is a pure SPA, and you’re implementing strict security practices to prevent XSS attacks. It’s suitable if you need the token to persist across sessions.
 3. Use Session Storage for temporary tokens or data that should be cleared once the tab is closed, but be cautious of XSS vulnerabilities.
+
+---
+
+## Clients:
+In OAuth2, the "Client" is an application (such as a web, mobile, or desktop app) that requests access to resources on behalf of the "Resource Owner," usually the user.
+1. **Confidential Client:** A Client that can keep its credentials (Client ID and Client Secret) secure. Examples include server-side applications (e.g., web apps running on a backend server).
+2. **Public Client:** A Client that cannot securely store its credentials (no Client Secret), typically a client-side application such as a Single Page Application (SPA) or a mobile app.
+
+## Protocol Endpoints:
+   1. **Authorization Endpoint (`/authorize`):** Used to initiate the `OAuth2 flow and get user consent`.
+        ```bash
+        GET https://authorization-server.com/authorize? response_type=code& client_id=your-client-id& redirect_uri=https://your-app.com/callback& scope=openid%20profile& state=random-state-value
+        ```
+      * ***`Scope:`*** In OAuth 2.0, `scope` is a parameter that defines the level of access the Client (the app) is requesting from the Resource Server (such as Google, GitHub, or Facebook) on behalf of the user. It allows the Authorization Server to limit the client's access to specific resources or actions, ensuring that clients only receive the permissions necessary for their purposes. 
+   2. **Token Endpoint (`/token`):** Used to exchange `authorization codes` for access tokens, and to request tokens in other flows (e.g., Client Credentials).
+      
+        ```bash
+        POST https://authorization-server.com/token
+        Content-Type: application/x-www-form-urlencoded
+        grant_type=authorization_code&
+        code=authorization-code&
+        redirect_uri=https://your-app.com/callback&
+        client_id=your-client-id&
+        client_secret=your-client-secret
+        ```
+      * grant_type: The type of grant being used (e.g., authorization_code).
+      * code: The Authorization Code received in the previous step.
+      * redirect_uri: The same URI that was used in the authorization request.
+      * client_id: The Client ID registered with the Authorization Server.
+      * client_secret: The Client Secret (if applicable) to authenticate the Client.
+   3. **Introspection Endpoint (`/introspect`):** Used to validate tokens.
+        ```bash
+        POST /revoke HTTP/1.1
+        Host: auth.example.com
+        Content-Type: application/x-www-form-urlencoded
+        Authorization: Basic BASE64(CLIENT_ID:CLIENT_SECRET)
+
+        token=ACCESS_TOKEN
+        ```
+   4. **Revocation Endpoint (`/revoke`):** Used to revoke tokens.
+        ```bash
+        POST /revoke HTTP/1.1
+        Host: auth.example.com
+        Content-Type: application/x-www-form-urlencoded
+        Authorization: Basic BASE64(CLIENT_ID:CLIENT_SECRET)
+
+        token=ACCESS_TOKEN
+        ```
+   5. **UserInfo Endpoint (`/userinfo`):** Used to retrieve user profile information using an access token. 
+        ```bash
+        GET https://resource-server.com/user/profile Authorization: Bearer access-token-value
+        ```
+   6. **Refresh Token Endpoint (`/token`):** Used to exchange a refresh token for a new access token.
+        ```bash
+        POST /token HTTP/1.1
+        Host: auth.example.com
+        Content-Type: application/x-www-form-urlencoded
+
+        grant_type=refresh_token&refresh_token=REFRESH_TOKEN&client_id=CLIENT_ID&client_secret=CLIENT_SECRET
+        ```
+---
+## OpenID Connect:
+`OpenID Connect (OIDC)` is an authentication protocol built on top of `OAuth 2.0` that allows clients to verify the identity of a user. It provides a standardized way to authenticate users and obtain identity-related claims. While OAuth 2.0 is used for authorization (accessing resources), `OpenID Connect` adds authentication capabilities. OIDC enables applications to verify the identity of users and obtain basic profile information in a secure, standardized way.<br>
+`OIDC allows clients`, typically `web or mobile apps`, to confirm a user’s identity based on the authentication performed by an Authorization Server and to obtain user information (such as their name, email, or profile picture) through an ID token.
+
+***Key Points:***
+1. **ID Token:** `A JWT (JSON Web Token)` issued by the Authorization Server, which confirms the user’s identity and contains claims about the user.
+   - The ID Token includes essential claims like sub (subject identifier, or unique user ID), name, email, and exp (expiration time).
+   - It’s digitally signed, allowing the client to verify the user’s identity and trust the contents.
+2. **Authorization Endpoint:** Used by the client to initiate authentication.
+The client redirects the user to this endpoint to authenticate and authorize access to their data.
+1. **Token Endpoint:** After the user is authenticated, the client can use this endpoint to obtain tokens, including the access token (for API access) and the ID token (for authentication).
+2. **UserInfo Endpoint:** A standard endpoint defined by OIDC where the client can retrieve additional user profile information.
+   - Accessed with an access token, this endpoint provides details about the user that the client has permission to view.
+
+### Why do we need OpenId Connect?
+OpenID Connect is crucial when your app needs to verify the identity of a user and securely authenticate them. It’s a way to ensure that the user who logs into the app is the one they claim to be, often through third-party services (e.g., Google, Facebook).
+
+### Scope
+In OAuth 2.0, `scope` is a parameter that defines the level of access the Client (the app) is requesting from the Resource Server (such as Google, GitHub, or Facebook) on behalf of the user. It allows the Authorization Server to limit the client's access to specific resources or actions, ensuring that clients only receive the permissions necessary for their purposes.
+
+**Types of Scopes:**
+1. **Read-only:** Grants the client application permission to view the data but not modify it.
+2. **Read-write:** Grants the client application permission to both read and modify the data.
+3. **Admin access:** Grants full administrative control, including the ability to create, modify, and delete resources.
+4. **User-specific scopes:** Access to specific user-related data like email, contacts, photos, or calendar.
+5. **Custom scopes:** Some APIs might define custom scopes for their own needs, such as access to specific resources or actions (e.g., "premium_features" or "file_upload").
+
+### API Resources
+API Resources are the actual data or services that a client application wants to access. These are usually exposed by backend APIs, which are protected by OAuth 2.0. The client must have an access token to interact with these resources.
+
+### Identity Resources
+Identity Resources represent user-specific data (claims) that define who the user is. In OpenID Connect, identity resources are used to authenticate the user and return user-specific information, like the user's name, email, and profile picture. These resources are typically returned as part of the ID Token.
+
