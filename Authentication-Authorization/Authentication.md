@@ -24,6 +24,13 @@ Authentication is the process of varyfying the identity of user or systems.
 7. `API Key Authentication:`
    1. An API key is generated for the client.
    2. The key is sent in headers or query parameters for each request.
+8. `Device-Based Authentication`: Device-Based Authentication verifies a user's identity based on the device they are using to access a service.
+   1. Banks often remember trusted devices.
+9. `Risk-Based Authentication (Adaptive Authentication)`: It is an advanced security method that dynamically adjusts the authentication requirements based on the risk level associated with each login attempt.
+   1.  RBA evaluates various factors (like `location, device, IP address, time, and behavior patterns`) to determine if additional verification is needed.
+10. `Single Sign-On (SSO)`: Single Sign-On (SSO) is an authentication method that enables users to access multiple applications or services with `one set of login credentials (e.g., a single username and password)`.
+    1.  Accessing multiple Google services (e.g., Gmail, Google Drive, YouTube) after logging in once to a Google account.
+
 ---
 ### JWT
 A JWT (JSON Web Token) is a `compact, self-contained token` used for securely transmitting information `between parties`. It consists of three parts. Each part is `Base64Url-encoded` and concatenated using `dots (.)`.
@@ -50,6 +57,26 @@ A JWT (JSON Web Token) is a `compact, self-contained token` used for securely tr
    
 ---
 #### How JWT works?
+     +--------+                               +---------------+
+     |        |--(A)- Authorization Request ->|   Resource    |
+     |        |                               |     Owner     |
+     |        |<-(B)--- Access Token ---------|    (User)     |
+     | Client |                               +---------------+
+     | (SPA)  |
+     |        |                               +---------------+
+     |        |--(C)----- Access Token ------->| Authorization |
+     |        |                               |     Server    |
+     |        |<-(D)--- Protected Resource ---|   (Identity   |
+     +--------+                               |     Server)   |
+     |        |                               +---------------+
+     |        |
+     |        |                               +---------------+
+     |        |--(E)----- Access Token ------>|    Resource   |
+     |        |                               |     Server    |
+     |        |<-(F)--- Protected Resource ---|    (API)      |
+     +--------+                               +---------------+
+
+
 1. `Login / Authentication Request:` The user sends their credentials (e.g., email and password) to the authentication server via a login endpoint.
 2. `Verification and Token Generation:`
    1. The `server validates the credentials` (by checking against a database).
