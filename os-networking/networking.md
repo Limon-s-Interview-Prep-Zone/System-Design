@@ -145,3 +145,13 @@ DNS lookup involves the following eight steps:
    - `urn:isbn:978-3-16-148410-0`
 3. **URN (Uniform Resource Name):** A URN is a type of URI that names a resource without specifying its location. A URN is intended to serve as a persistent, `location-independent resource identifier`.
    - Schema+name(urn: name): `urn:isbn:978-3-16-148410-0`
+ 
+## Life cycle of an HTTP request
+1. `Client Initiates Request:` It all starts when your web browser (the client) wants to retrieve information from a server. You type a URL or click a link.
+2. `DNS Lookup:` Before the client can send the request, it needs to know where to send it. This is where the Domain Name System (DNS) comes in, translating the human-friendly domain name (like www.example.com) into an IP address.
+3. `Establish Connection:` With the IP address in hand, the client establishes a connection to the server using the `Transmission Control Protocol (TCP)`. This involves a three-way handshake to ensure both sides are ready to communicate.
+4. `Send HTTP Request:` Now the actual HTTP request is sent over this connection. This request includes various elements like the HTTP method (GET, POST, etc.), headers (information about the request), and sometimes a body (with data for POST requests).
+5. `Server Processes Request:` Upon receiving the request, the server processes it. This might involve querying a database, executing some server-side code, or simply fetching a static file.
+6. `Send HTTP Response:` Once the server has the requested data, it sends back an HTTP response. This response includes a status code (like 200 OK, 404 Not Found), headers, and the body with the requested content (like an HTML page, JSON data, etc.).
+7. `Client Receives Response:` The client's browser receives the response and processes it. For example, if it's an HTML page, the browser will render it for you to see.
+8. `Close Connection:` Finally, the connection is closed, freeing up resources on both the client and server sides.
