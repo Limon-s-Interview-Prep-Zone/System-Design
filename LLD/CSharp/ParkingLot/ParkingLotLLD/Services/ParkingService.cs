@@ -1,4 +1,5 @@
-﻿using ParkingLotLLD.Dtos;
+﻿using ParkingLotLLD.Decorator;
+using ParkingLotLLD.Dtos;
 using ParkingLotLLD.Entities;
 using ParkingLotLLD.Entities.ParkingSpot;
 using ParkingLotLLD.Entities.Vehicle;
@@ -100,5 +101,11 @@ public class ParkingService: IParkingService
             return amount;
         }
         throw new NotImplementedException();
+    }
+    
+    // TODO: separate this into another service
+    public void AddWash(ParkingTicket parkingTicket)
+    {
+        parkingTicket.ParkingSpot = new CarWash(parkingTicket.ParkingSpot);
     }
 }

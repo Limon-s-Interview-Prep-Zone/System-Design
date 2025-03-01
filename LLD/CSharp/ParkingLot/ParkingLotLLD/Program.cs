@@ -39,10 +39,12 @@ Console.WriteLine($"Parking Ticket1 with ${JsonSerializer.Serialize(parkingTicke
 
 Console.WriteLine($"Free Parking Spot:: {JsonSerializer.Serialize(displayBoard.FreeParkingSpots)}");
 
+parkingService.AddWash(parkingTicket1);
+
 try
 {
     parkingService.Exist(parkingTicket1, bike1);
-    int cost = parkingTicket1.ParkingSpot.Amount;
+    int cost = parkingTicket1.ParkingSpot.Cost(2);
     Console.WriteLine($"Total cost: {cost}");
     paymentService.AcceptCash(cost);
 }

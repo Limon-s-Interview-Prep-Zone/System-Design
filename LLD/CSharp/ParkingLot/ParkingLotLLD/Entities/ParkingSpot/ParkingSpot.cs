@@ -8,6 +8,10 @@ public abstract class ParkingSpot
     public int Amount { get; private set; }
     public bool IsFree { get; private set; } = true;
 
+    public ParkingSpot()
+    {
+        
+    }
     protected ParkingSpot(int floorNumber, int amount)
     {
         FloorNumber = floorNumber;
@@ -19,4 +23,6 @@ public abstract class ParkingSpot
     {
         set => IsFree = value;
     }
+
+    public abstract int Cost(int parkingHours);
 }

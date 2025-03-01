@@ -6,7 +6,7 @@ public class ParkingTicket
 
     public int Id { get; private set; }
     public Vehicle.Vehicle Vehicle { get; private set; }
-    public ParkingSpot.ParkingSpot ParkingSpot { get; private set; }
+    public ParkingSpot.ParkingSpot ParkingSpot { get;  set; }
     public DateTime Timestamp { get; private set; }
 
     public ParkingTicket(Vehicle.Vehicle vehicle, ParkingSpot.ParkingSpot parkingSpot)
