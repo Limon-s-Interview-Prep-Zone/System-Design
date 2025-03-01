@@ -1,6 +1,6 @@
 ﻿using ParkingLotLLD.Dtos;
 
-namespace ParkingLotLLD.Interfaces;
+namespace ParkingLotLLD.PubSub;
 
 public interface IObserver
 {

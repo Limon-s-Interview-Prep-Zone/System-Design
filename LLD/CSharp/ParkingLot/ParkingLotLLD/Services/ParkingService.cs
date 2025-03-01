@@ -1,9 +1,11 @@
-﻿using ParkingLotLLD.Entities;
+﻿using ParkingLotLLD.Dtos;
+using ParkingLotLLD.Entities;
 using ParkingLotLLD.Entities.ParkingSpot;
 using ParkingLotLLD.Entities.Vehicle;
 using ParkingLotLLD.Enums;
 using ParkingLotLLD.Interfaces;
 using ParkingLotLLD.ParkingStrategy;
+using ParkingLotLLD.PubSub;
 
 namespace ParkingLotLLD.Services;
 
@@ -13,12 +15,15 @@ public class ParkingService: IParkingService
     private readonly DisplayService _displayService;
     private readonly ParkingLot _parkingLot;
     private static object _lock= new object();
+    private IEventBus _eventBus;
 
     public ParkingService(IParkingStrategy parkingStrategy)
     {
         _parkingStrategy = parkingStrategy;
         _displayService = new DisplayService();
         _parkingLot = ParkingLot.GetInstance();
+        _eventBus = new EventBus();
+        _eventBus.Subscribe(_displayService);
     }
     public ParkingTicket Entry(Vehicle vehicle)
     {
@@ -39,7 +44,9 @@ public class ParkingService: IParkingService
                         freeParkingSpots.Remove(parkingSpot);
                         occupiedParkingSpots.Add(parkingSpot);
                         ParkingTicket parkingTicket = new ParkingTicket(vehicle, parkingSpot);
-                        _displayService.Update(parkingSpotEnum, -1);
+                        ParkingEvent parkingEvent = new ParkingEvent(ParkingEventType.ENTRY, parkingSpotEnum);
+                        _eventBus.Publish(parkingEvent);
+                        // _displayService.Update(parkingSpotEnum, -1);
                         return parkingTicket;   
                     }
                     Entry(vehicle);
@@ -86,7 +93,10 @@ public class ParkingService: IParkingService
             _parkingLot.OccupiedParkingSpots[vehicle.SupportedParkingSpot].Remove(parkingSpot);
             // set the parkingSpot on the appropriate position
             AddParkingSpotInFreeList(_parkingLot.FreeParkingSpots[vehicle.SupportedParkingSpot], parkingSpot);
-            _displayService.Update(vehicle.SupportedParkingSpot, 1);
+            
+            
+            _eventBus.Publish(new ParkingEvent(ParkingEventType.EXIST, vehicle.SupportedParkingSpot));
+            // _displayService.Update(vehicle.SupportedParkingSpot, 1);
             return amount;
         }
         throw new NotImplementedException();

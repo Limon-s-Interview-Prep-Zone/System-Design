@@ -30,7 +30,8 @@ Vehicle bike3 = new Bike();
 DisplayBoard displayBoard = DisplayBoard.GetInstance();
 Console.WriteLine($"Free Parking Spot:: {JsonSerializer.Serialize(displayBoard.FreeParkingSpots)}");
 
-IParkingService parkingService = new ParkingService(new NearestFirstParkingStrategy());
+var parkingService = new ParkingService(new NearestFirstParkingStrategy());
+// add observer
 IPaymentService paymentService = new PaymentService();
 
 ParkingTicket parkingTicket1 = parkingService.Entry(bike1);
