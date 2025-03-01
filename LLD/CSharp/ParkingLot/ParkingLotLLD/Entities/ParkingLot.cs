@@ -4,15 +4,14 @@ namespace ParkingLotLLD.Entities;
 
 public class ParkingLot
 {
-    private string Name;
+    private static ParkingLot _parkingLot;
+    private static readonly object _lock = new();
+    private DisplayBoard _displayBoard;
     private List<EntrancePanel> _entrancePanels;
     private List<ExistPanel> _existPanels;
-    private DisplayBoard _displayBoard;
-    private Dictionary<ParkingSpotEnum , List<ParkingSpot.ParkingSpot> > _freeParkingSpots;
-    private Dictionary<ParkingSpotEnum , List<ParkingSpot.ParkingSpot> > _occupiedParkingSpots;
-
-    private static ParkingLot _parkingLot = null;
-    private static readonly object _lock = new object();
+    private Dictionary<ParkingSpotEnum, List<ParkingSpot.ParkingSpot>> _freeParkingSpots;
+    private Dictionary<ParkingSpotEnum, List<ParkingSpot.ParkingSpot>> _occupiedParkingSpots;
+    private string Name;
 
     private ParkingLot(string name)
     {
@@ -20,34 +19,24 @@ public class ParkingLot
         _entrancePanels = new List<EntrancePanel>();
         _existPanels = new List<ExistPanel>();
         _displayBoard = DisplayBoard.GetInstance();
-        
+
         // TODO: should be dynamic
-        _freeParkingSpots = new Dictionary<ParkingSpotEnum, List<ParkingSpot.ParkingSpot>>()
+        _freeParkingSpots = new Dictionary<ParkingSpotEnum, List<ParkingSpot.ParkingSpot>>
         {
-            [ParkingSpotEnum.Mini]=new List<ParkingSpot.ParkingSpot>(),
-            [ParkingSpotEnum.Compact]=new List<ParkingSpot.ParkingSpot>(),
-            [ParkingSpotEnum.Large]=new List<ParkingSpot.ParkingSpot>()
+            [ParkingSpotEnum.Mini] = new(),
+            [ParkingSpotEnum.Compact] = new(),
+            [ParkingSpotEnum.Large] = new()
         };
-        
+
         // TODO: should be dynamic
-        _occupiedParkingSpots = new Dictionary<ParkingSpotEnum, List<ParkingSpot.ParkingSpot>>()
+        _occupiedParkingSpots = new Dictionary<ParkingSpotEnum, List<ParkingSpot.ParkingSpot>>
         {
-            [ParkingSpotEnum.Mini]=new List<ParkingSpot.ParkingSpot>(),
-            [ParkingSpotEnum.Compact]=new List<ParkingSpot.ParkingSpot>(),
-            [ParkingSpotEnum.Large]=new List<ParkingSpot.ParkingSpot>(),
+            [ParkingSpotEnum.Mini] = new(),
+            [ParkingSpotEnum.Compact] = new(),
+            [ParkingSpotEnum.Large] = new()
         };
     }
-    public static ParkingLot GetInstance()
-    {
-        if (_parkingLot == null)
-        {
-            lock (_lock)
-            {
-                _parkingLot = _parkingLot ?? new ParkingLot("ABC");
-            }
-        }
-        return _parkingLot;
-    }
+
     public List<EntrancePanel> EntrancePanels
     {
         get => _entrancePanels;
@@ -76,5 +65,16 @@ public class ParkingLot
     {
         get => _occupiedParkingSpots;
         set => _occupiedParkingSpots = value ?? throw new ArgumentNullException(nameof(value));
+    }
+
+    public static ParkingLot GetInstance()
+    {
+        if (_parkingLot == null)
+            lock (_lock)
+            {
+                _parkingLot = _parkingLot ?? new ParkingLot("ABC");
+            }
+
+        return _parkingLot;
     }
 }

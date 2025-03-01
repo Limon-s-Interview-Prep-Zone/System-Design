@@ -6,5 +6,6 @@ public class EntrancePanel
     {
         Name = name;
     }
+
     public string Name { get; private set; }
 }

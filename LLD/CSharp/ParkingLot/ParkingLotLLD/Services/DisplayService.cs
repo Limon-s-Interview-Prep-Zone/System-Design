@@ -6,7 +6,7 @@ using ParkingLotLLD.PubSub;
 
 namespace ParkingLotLLD.Services;
 
-public class DisplayService: IDisplayService, IObserver
+public class DisplayService : IDisplayService, IObserver
 {
     public void Update(ParkingSpotEnum parkingSpotEnum, int count)
     {
@@ -15,6 +15,7 @@ public class DisplayService: IDisplayService, IObserver
             DisplayBoard.GetInstance().FreeParkingSpots[parkingSpotEnum] = 1;
             return;
         }
+
         DisplayBoard.GetInstance().FreeParkingSpots[parkingSpotEnum] += count;
     }
 
@@ -25,15 +26,12 @@ public class DisplayService: IDisplayService, IObserver
             DisplayBoard.GetInstance().FreeParkingSpots[@event.ParkingSpotEnum] = 1;
             return;
         }
-        int change = 0;
+
+        var change = 0;
         if (@event.ParkingEventType.Equals(ParkingEventType.ENTRY))
-        {
-            change=-1;
-        }
+            change = -1;
         else
-        {
-            change=1;
-        }
+            change = 1;
         DisplayBoard.GetInstance().FreeParkingSpots[@event.ParkingSpotEnum] += change;
     }
 }

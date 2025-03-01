@@ -4,24 +4,13 @@ namespace ParkingLotLLD.Dtos;
 
 public class ParkingEvent
 {
-    private ParkingEventType _parkingEventType;
-    private ParkingSpotEnum _parkingSpotEnum;
-
     public ParkingEvent(ParkingEventType parkingEventType, ParkingSpotEnum parkingSpotEnum)
     {
-        _parkingEventType = parkingEventType;
-        _parkingSpotEnum = parkingSpotEnum;
+        ParkingEventType = parkingEventType;
+        ParkingSpotEnum = parkingSpotEnum;
     }
 
-    public  ParkingEventType ParkingEventType
-    {
-        get => _parkingEventType;
-        set => _parkingEventType=value;
-    }
+    public ParkingEventType ParkingEventType { get; set; }
 
-    public ParkingSpotEnum ParkingSpotEnum
-    {
-        get => _parkingSpotEnum;
-        set => _parkingSpotEnum = value;
-    }
+    public ParkingSpotEnum ParkingSpotEnum { get; set; }
 }

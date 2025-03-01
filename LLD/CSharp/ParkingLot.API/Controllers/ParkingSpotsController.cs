@@ -6,7 +6,6 @@ namespace ParkingLot.API.Controllers;
 [Route("[controller]")]
 public class ParkingSpotsController : ControllerBase
 {
-    
     private readonly ILogger<ParkingSpotsController> _logger;
 
     public ParkingSpotsController(ILogger<ParkingSpotsController> logger)

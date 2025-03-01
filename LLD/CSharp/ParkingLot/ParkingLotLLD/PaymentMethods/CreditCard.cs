@@ -10,6 +10,7 @@ public class CreditCard : PaymentMethod
         this.creditCard = creditCard;
         this.cvc = cvc;
     }
+
     public override bool InitPayment(int amount)
     {
         // TODO: added payment gateway

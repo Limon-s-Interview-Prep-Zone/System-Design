@@ -2,7 +2,7 @@
 
 namespace ParkingLotLLD.PubSub;
 
-public class EventBus: IEventBus
+public class EventBus : IEventBus
 {
     private static readonly List<IObserver> _observers = new();
 

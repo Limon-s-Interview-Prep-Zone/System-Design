@@ -4,31 +4,24 @@ namespace ParkingLotLLD.Entities;
 
 public class DisplayBoard
 {
-    private static DisplayBoard _displayBoard = null;
-    private static readonly object _lock = new object();
-    private Dictionary<ParkingSpotEnum, int> _freeParkingSpots;
+    private static DisplayBoard _displayBoard;
+    private static readonly object _lock = new();
 
     private DisplayBoard()
     {
-        _freeParkingSpots = new Dictionary<ParkingSpotEnum, int>();
+        FreeParkingSpots = new Dictionary<ParkingSpotEnum, int>();
     }
+
+    public Dictionary<ParkingSpotEnum, int> FreeParkingSpots { get; }
 
     public static DisplayBoard GetInstance()
     {
         if (_displayBoard == null)
-        {
-            lock(_lock)
+            lock (_lock)
             {
-                _displayBoard = _displayBoard??new DisplayBoard();
+                _displayBoard = _displayBoard ?? new DisplayBoard();
             }
-        }
 
         return _displayBoard;
     }
-
-    public Dictionary<ParkingSpotEnum, int> FreeParkingSpots
-    {
-        get { return _freeParkingSpots; }
-    }
-
 }

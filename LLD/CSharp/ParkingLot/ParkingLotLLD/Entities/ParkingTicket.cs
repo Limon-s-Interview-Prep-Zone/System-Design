@@ -2,12 +2,7 @@ namespace ParkingLotLLD.Entities;
 
 public class ParkingTicket
 {
-    private static int nextId=0;
-
-    public int Id { get; private set; }
-    public Vehicle.Vehicle Vehicle { get; private set; }
-    public ParkingSpot.ParkingSpot ParkingSpot { get;  set; }
-    public DateTime Timestamp { get; private set; }
+    private static int nextId;
 
     public ParkingTicket(Vehicle.Vehicle vehicle, ParkingSpot.ParkingSpot parkingSpot)
     {
@@ -16,4 +11,9 @@ public class ParkingTicket
         ParkingSpot = parkingSpot;
         Timestamp = DateTime.UtcNow;
     }
+
+    public int Id { get; private set; }
+    public Vehicle.Vehicle Vehicle { get; private set; }
+    public ParkingSpot.ParkingSpot ParkingSpot { get; set; }
+    public DateTime Timestamp { get; private set; }
 }

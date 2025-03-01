@@ -2,7 +2,7 @@
 
 namespace ParkingLotLLD.Decorator;
 
-public class CarCharge: ParkingSpotDecorator
+public class CarCharge : ParkingSpotDecorator
 {
     public CarCharge(ParkingSpot parkingSpot) : base(parkingSpot)
     {
@@ -10,6 +10,6 @@ public class CarCharge: ParkingSpotDecorator
 
     public override int Cost(int parkingHours)
     {
-        return _parkingSpot.Cost(parkingHours)+ parkingHours*50;
+        return _parkingSpot.Cost(parkingHours) + parkingHours * 50;
     }
 }

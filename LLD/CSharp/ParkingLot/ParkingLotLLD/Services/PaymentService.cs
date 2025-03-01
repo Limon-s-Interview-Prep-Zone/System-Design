@@ -3,7 +3,7 @@ using ParkingLotLLD.PaymentMethods;
 
 namespace ParkingLotLLD.Services;
 
-public class PaymentService: IPaymentService
+public class PaymentService : IPaymentService
 {
     public void AcceptCash(int amount)
     {

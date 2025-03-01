@@ -1,6 +1,6 @@
 ﻿namespace ParkingLotLLD.PaymentMethods;
 
-public class Cash: PaymentMethod
+public class Cash : PaymentMethod
 {
     public override bool InitPayment(int amount)
     {
