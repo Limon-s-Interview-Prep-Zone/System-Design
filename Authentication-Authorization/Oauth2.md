@@ -40,7 +40,7 @@ Workflow:<br>
 
 **Step-by-Step Explanation**
 1. `(A) Authorization Request:` Trello sends Sarah (the Resource Owner) a request to connect with her Google Calendar. Sarah is redirected to Google’s authorization page.
-2. `(B) Authorization Grant:` Sarah approves the request, granting Trello permission to access her calendar data. This approval sends an Authorization Grant back to Trello.
+2. `(B) Authorization Grant:` Sarah approves the request, granting Trello permission to access her calendar data. This approval sends an `Authorization Grant` back to Trello.
 3. (C) `Authorization Grant to Authorization Server:` Trello sends the Authorization Grant to Google’s Authorization Server and requests an access token.
 4. `(D) Access Token:` Google’s Authorization Server validates the grant and issues an Access Token to Trello.
 5. `(E) Access Token to Resource Server:` Trello uses the Access Token to make an authorized request to the Google Calendar API (the Resource Server), requesting access to Sarah’s calendar events.
