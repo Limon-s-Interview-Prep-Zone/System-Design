@@ -1,0 +1,155 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 620" width="100%" height="100%" style="background:#ffffff; font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-angle">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#1e293b"/>
+    </marker>
+    <marker id="arrow-blue" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-angle">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#2563eb"/>
+    </marker>
+    <marker id="arrow-green" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-angle">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#059669"/>
+    </marker>
+    <marker id="arrow-red" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-angle">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#dc2626"/>
+    </marker>
+    <filter id="card-shadow" x="-4%" y="-4%" width="108%" height="108%">
+      <feDropShadow dx="0" dy="2" stdDeviation="3" flood-opacity="0.08"/>
+    </filter>
+  </defs>
+
+  <style>
+    .title { font-size: 20px; font-weight: 700; fill: #0f172a; text-anchor: middle; }
+    .subtitle { font-size: 13px; fill: #64748b; text-anchor: middle; }
+    .card { rx: 8; stroke-width: 1.5; filter: url(#card-shadow); }
+    .card-sync { fill: #f8fafc; stroke: #cbd5e1; }
+    .card-async { fill: #f0fdf4; stroke: #86efac; }
+    .svc-box { rx: 6; stroke-width: 1.5; fill: #ffffff; filter: url(#card-shadow); }
+    .svc-title { font-size: 13px; font-weight: 700; fill: #0f172a; text-anchor: middle; }
+    .svc-desc { font-size: 11px; fill: #64748b; text-anchor: middle; }
+    .broker-box { rx: 8; stroke-width: 2; fill: #eff6ff; stroke: #3b82f6; }
+    .broker-text { font-size: 13px; font-weight: 700; fill: #1e40af; text-anchor: middle; }
+    .msg-text { font-size: 11px; font-weight: 600; fill: #334155; }
+    .tag { font-size: 10.5px; font-weight: 600; }
+  </style>
+
+  <!-- Title -->
+  <text x="480" y="32" class="title">Microservice Communication Patterns: Synchronous vs. Asynchronous</text>
+  <text x="480" y="52" class="subtitle">Architectural trade-offs between direct blocking calls and event-driven decoupling</text>
+
+  <!-- LEFT SECTION: SYNCHRONOUS -->
+  <rect x="20" y="75" width="450" height="520" class="card card-sync"/>
+  <rect x="35" y="90" width="160" height="26" rx="4" fill="#fee2e2"/>
+  <text x="115" y="107" font-size="12" font-weight="700" fill="#991b1b" text-anchor="middle">Synchronous (REST / gRPC)</text>
+
+  <!-- Service A (Order) -->
+  <rect x="50" y="140" width="150" height="70" class="svc-box" stroke="#3b82f6"/>
+  <text x="125" y="170" class="svc-title">Order Service</text>
+  <text x="125" y="190" class="svc-desc">Client (Calling Service)</text>
+
+  <!-- Service B (Payment) -->
+  <rect x="290" y="140" width="150" height="70" class="svc-box" stroke="#64748b"/>
+  <text x="365" y="170" class="svc-title">Payment Service</text>
+  <text x="365" y="190" class="svc-desc">Downstream Dependency</text>
+
+  <!-- Direct Request Arrow -->
+  <line x1="200" y1="165" x2="280" y2="165" stroke="#1e293b" stroke-width="2" marker-end="url(#arrow)"/>
+  <text x="240" y="157" class="msg-text" text-anchor="middle">1. Request (HTTP/gRPC)</text>
+
+  <!-- Direct Response Arrow -->
+  <line x1="280" y1="185" x2="200" y2="185" stroke="#2563eb" stroke-width="2" stroke-dasharray="4,4" marker-end="url(#arrow-blue)"/>
+  <text x="240" y="202" class="msg-text" fill="#2563eb" text-anchor="middle">2. Response</text>
+
+  <!-- Cascading Service C -->
+  <rect x="290" y="250" width="150" height="60" class="svc-box" stroke="#dc2626"/>
+  <text x="365" y="278" class="svc-title">Bank Gateway (3rd Party)</text>
+  <text x="365" y="296" class="svc-desc">Slow / Latent Endpoint</text>
+
+  <line x1="365" y1="210" x2="365" y2="242" stroke="#dc2626" stroke-width="1.8" marker-end="url(#arrow-red)"/>
+  <text x="375" y="232" font-size="10.5" fill="#dc2626" font-weight="600">Cascading Hop</text>
+
+  <!-- Sync Characteristics Box -->
+  <rect x="40" y="335" width="410" height="240" rx="6" fill="#ffffff" stroke="#e2e8f0" stroke-width="1"/>
+  <text x="55" y="360" font-size="12" font-weight="700" fill="#0f172a">Characteristics &amp; Trade-offs:</text>
+
+  <circle cx="55" cy="382" r="3" fill="#ef4444"/>
+  <text x="68" y="386" font-size="11" fill="#334155"><tspan font-weight="600">Temporal Coupling:</tspan> Both services must be online simultaneously.</text>
+
+  <circle cx="55" cy="410" r="3" fill="#ef4444"/>
+  <text x="68" y="414" font-size="11" fill="#334155"><tspan font-weight="600">Thread Blocking:</tspan> Calling service holds threads/connections while waiting.</text>
+
+  <circle cx="55" cy="438" r="3" fill="#ef4444"/>
+  <text x="68" y="442" font-size="11" fill="#334155"><tspan font-weight="600">Cascading Latency:</tspan> Latency = Sum of all hops (T_Order + T_Payment + T_Bank).</text>
+
+  <circle cx="55" cy="466" r="3" fill="#ef4444"/>
+  <text x="68" y="470" font-size="11" fill="#334155"><tspan font-weight="600">Single Point of Failure:</tspan> Failure in downstream service fails caller directly.</text>
+
+  <circle cx="55" cy="494" r="3" fill="#10b981"/>
+  <text x="68" y="498" font-size="11" fill="#334155"><tspan font-weight="600">Benefit:</tspan> Immediate consistency, simple programming model (familiar RPC).</text>
+
+  <rect x="55" y="525" width="380" height="36" rx="4" fill="#f8fafc" stroke="#cbd5e1"/>
+  <text x="245" y="547" font-size="11" fill="#475569" font-weight="600" text-anchor="middle">Best For: Immediate read queries, interactive UX validations</text>
+
+  <!-- RIGHT SECTION: ASYNCHRONOUS -->
+  <rect x="490" y="75" width="450" height="520" class="card card-async"/>
+  <rect x="505" y="90" width="190" height="26" rx="4" fill="#dcfce7"/>
+  <text x="600" y="107" font-size="12" font-weight="700" fill="#166534" text-anchor="middle">Asynchronous (Event-Driven Broker)</text>
+
+  <!-- Service A (Producer) -->
+  <rect x="510" y="140" width="130" height="70" class="svc-box" stroke="#059669"/>
+  <text x="575" y="170" class="svc-title">Order Service</text>
+  <text x="575" y="190" class="svc-desc">Publisher / Producer</text>
+
+  <!-- Message Broker Box -->
+  <rect x="670" y="130" width="100" height="180" class="broker-box"/>
+  <text x="720" y="160" class="broker-text">Message</text>
+  <text x="720" y="178" class="broker-text">Broker</text>
+  <text x="720" y="200" font-size="10" fill="#2563eb" text-anchor="middle">RabbitMQ /</text>
+  <text x="720" y="214" font-size="10" fill="#2563eb" text-anchor="middle">Kafka</text>
+  <text x="720" y="240" font-size="9" fill="#64748b" text-anchor="middle">[ Durable Queue ]</text>
+  <text x="720" y="260" font-size="9" fill="#64748b" text-anchor="middle">[ Topic / Stream ]</text>
+  <text x="720" y="285" font-size="9" fill="#059669" font-weight="700" text-anchor="middle">Decoupled Buffer</text>
+
+  <!-- Publish Arrow -->
+  <line x1="640" y1="175" x2="662" y2="175" stroke="#059669" stroke-width="2" marker-end="url(#arrow-green)"/>
+  <text x="655" y="165" font-size="10" font-weight="700" fill="#059669" text-anchor="middle">Publish</text>
+
+  <!-- Consumer 1: Payment Service -->
+  <rect x="800" y="135" width="125" height="55" class="svc-box" stroke="#3b82f6"/>
+  <text x="862" y="160" class="svc-title">Payment Service</text>
+  <text x="862" y="176" class="svc-desc">Subscriber 1</text>
+  <line x1="770" y1="160" x2="792" y2="160" stroke="#3b82f6" stroke-width="1.8" marker-end="url(#arrow-blue)"/>
+
+  <!-- Consumer 2: Inventory Service -->
+  <rect x="800" y="200" width="125" height="55" class="svc-box" stroke="#8b5cf6"/>
+  <text x="862" y="225" class="svc-title">Inventory Service</text>
+  <text x="862" y="241" class="svc-desc">Subscriber 2</text>
+  <line x1="770" y1="225" x2="792" y2="225" stroke="#8b5cf6" stroke-width="1.8" marker-end="url(#arrow-blue)"/>
+
+  <!-- Consumer 3: Notification Service -->
+  <rect x="800" y="265" width="125" height="55" class="svc-box" stroke="#f59e0b"/>
+  <text x="862" y="290" class="svc-title">Email Service</text>
+  <text x="862" y="306" class="svc-desc">Subscriber 3</text>
+  <line x1="770" y1="285" x2="792" y2="285" stroke="#f59e0b" stroke-width="1.8" marker-end="url(#arrow-blue)"/>
+
+  <!-- Async Characteristics Box -->
+  <rect x="510" y="335" width="410" height="240" rx="6" fill="#ffffff" stroke="#bbf7d0" stroke-width="1"/>
+  <text x="525" y="360" font-size="12" font-weight="700" fill="#0f172a">Characteristics &amp; Trade-offs:</text>
+
+  <circle cx="525" cy="382" r="3" fill="#10b981"/>
+  <text x="538" y="386" font-size="11" fill="#334155"><tspan font-weight="600">Zero Temporal Coupling:</tspan> Publisher does not wait for consumers to be online.</text>
+
+  <circle cx="525" cy="410" r="3" fill="#10b981"/>
+  <text x="538" y="414" font-size="11" fill="#334155"><tspan font-weight="600">Load Leveling &amp; Buffering:</tspan> Spikes absorbed by queue; consumers process at own pace.</text>
+
+  <circle cx="525" cy="438" r="3" fill="#10b981"/>
+  <text x="538" y="442" font-size="11" fill="#334155"><tspan font-weight="600">High Extensibility:</tspan> Add new subscribers without modifying publisher code.</text>
+
+  <circle cx="525" cy="466" r="3" fill="#ef4444"/>
+  <text x="538" y="470" font-size="11" fill="#334155"><tspan font-weight="600">Eventual Consistency:</tspan> State converges asynchronously across services.</text>
+
+  <circle cx="525" cy="494" r="3" fill="#ef4444"/>
+  <text x="538" y="498" font-size="11" fill="#334155"><tspan font-weight="600">Complexity:</tspan> Requires Idempotency, Dead-Letter Queues (DLQ), Outbox Pattern.</text>
+
+  <rect x="525" y="525" width="380" height="36" rx="4" fill="#f0fdf4" stroke="#86efac"/>
+  <text x="715" y="547" font-size="11" fill="#166534" font-weight="600" text-anchor="middle">Best For: Order fulfillment, notifications, batch workflows, audit trails</text>
+</svg>

@@ -1,0 +1,116 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 560" width="100%" height="100%" style="background:#ffffff; font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-angle">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#1e293b"/>
+    </marker>
+    <marker id="arrow-blue" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-angle">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#2563eb"/>
+    </marker>
+    <filter id="shadow" x="-5%" y="-5%" width="110%" height="110%">
+      <feDropShadow dx="0" dy="2" stdDeviation="3" flood-opacity="0.08"/>
+    </filter>
+  </defs>
+
+  <style>
+    .title { font-size: 20px; font-weight: 700; fill: #0f172a; text-anchor: middle; }
+    .subtitle { font-size: 13px; fill: #64748b; text-anchor: middle; }
+    .box { rx: 8; stroke-width: 1.5; filter: url(#shadow); }
+    .box-client { fill: #f8fafc; stroke: #94a3b8; }
+    .box-gateway { fill: #eff6ff; stroke: #3b82f6; stroke-width: 2; }
+    .box-internal { rx: 6; fill: #ffffff; stroke: #cbd5e1; stroke-width: 1.5; filter: url(#shadow); }
+    .box-feature { rx: 4; fill: #ffffff; stroke: #93c5fd; stroke-width: 1; }
+    .text-feature { font-size: 11px; font-weight: 600; fill: #1e40af; text-anchor: middle; }
+    .text-title { font-size: 13px; font-weight: 700; fill: #0f172a; text-anchor: middle; }
+    .text-sub { font-size: 10.5px; fill: #64748b; text-anchor: middle; }
+  </style>
+
+  <!-- Title -->
+  <text x="480" y="32" class="title">API Gateway Architecture &amp; Request Pipeline</text>
+  <text x="480" y="52" class="subtitle">Single entry point encapsulating cross-cutting concerns for microservices</text>
+
+  <!-- CLIENTS LAYER -->
+  <rect x="30" y="80" width="160" height="440" rx="8" fill="#f8fafc" stroke="#cbd5e1" stroke-dasharray="4,4"/>
+  <text x="110" y="105" font-size="12" font-weight="700" fill="#475569" text-anchor="middle">CLIENTS</text>
+
+  <rect x="45" y="130" width="130" height="65" class="box box-client"/>
+  <text x="110" y="160" class="text-title">Web App (SPA)</text>
+  <text x="110" y="180" class="text-sub">React / Angular / Blazor</text>
+
+  <rect x="45" y="225" width="130" height="65" class="box box-client"/>
+  <text x="110" y="255" class="text-title">Mobile App</text>
+  <text x="110" y="275" class="text-sub">iOS / Android / Flutter</text>
+
+  <rect x="45" y="320" width="130" height="65" class="box box-client"/>
+  <text x="110" y="350" class="text-title">External Partners</text>
+  <text x="110" y="370" class="text-sub">B2B Third-Party APIs</text>
+
+  <rect x="45" y="415" width="130" height="65" class="box box-client"/>
+  <text x="110" y="445" class="text-title">IoT / Edge</text>
+  <text x="110" y="465" class="text-sub">Constrained Devices</text>
+
+  <!-- Arrows to Gateway -->
+  <line x1="175" y1="162" x2="260" y2="280" stroke="#1e293b" stroke-width="1.8" marker-end="url(#arrow)"/>
+  <line x1="175" y1="257" x2="260" y2="290" stroke="#1e293b" stroke-width="1.8" marker-end="url(#arrow)"/>
+  <line x1="175" y1="352" x2="260" y2="305" stroke="#1e293b" stroke-width="1.8" marker-end="url(#arrow)"/>
+  <line x1="175" y1="447" x2="260" y2="315" stroke="#1e293b" stroke-width="1.8" marker-end="url(#arrow)"/>
+
+  <!-- GATEWAY LAYER -->
+  <rect x="270" y="80" width="370" height="440" class="box box-gateway"/>
+  <rect x="290" y="95" width="330" height="32" rx="5" fill="#3b82f6"/>
+  <text x="455" y="116" font-size="13" font-weight="700" fill="#ffffff" text-anchor="middle">API GATEWAY (e.g., YARP / Envoy / Kong)</text>
+
+  <!-- Pipeline Steps inside Gateway -->
+  <rect x="290" y="145" width="330" height="40" class="box-feature"/>
+  <text x="455" y="170" class="text-feature">1. TLS Termination &amp; IP Whitelist / WAF</text>
+
+  <rect x="290" y="195" width="330" height="40" class="box-feature"/>
+  <text x="455" y="220" class="text-feature">2. Identity &amp; Auth (JWT Validation, OAuth2 / OIDC)</text>
+
+  <rect x="290" y="245" width="330" height="40" class="box-feature"/>
+  <text x="455" y="270" class="text-feature">3. Rate Limiting &amp; Concurrency Throttling</text>
+
+  <rect x="290" y="295" width="330" height="40" class="box-feature"/>
+  <text x="455" y="320" class="text-feature">4. Distributed Tracing (`traceparent`) &amp; Logging</text>
+
+  <rect x="290" y="345" width="330" height="40" class="box-feature"/>
+  <text x="455" y="370" class="text-feature">5. Routing Engine &amp; Path Transformation (/api/v1/*)</text>
+
+  <rect x="290" y="395" width="330" height="40" class="box-feature"/>
+  <text x="455" y="420" class="text-feature">6. Response Caching &amp; API Aggregation (BFF)</text>
+
+  <rect x="290" y="445" width="330" height="45" class="box-feature" fill="#fef3c7" stroke="#f59e0b"/>
+  <text x="455" y="468" class="text-feature" fill="#b45309">7. Resilience (Circuit Breaker, Retries, Load Balancing)</text>
+  <text x="455" y="482" font-size="9.5" fill="#92400e" text-anchor="middle">Fail-fast isolation protecting downstream clusters</text>
+
+  <!-- BACKEND MICROSERVICES LAYER -->
+  <rect x="710" y="80" width="220" height="440" rx="8" fill="#f0fdf4" stroke="#86efac" stroke-dasharray="4,4"/>
+  <text x="820" y="105" font-size="12" font-weight="700" fill="#166534" text-anchor="middle">INTERNAL CLUSTER (Private)</text>
+
+  <!-- Service 1: Order -->
+  <rect x="730" y="130" width="180" height="65" class="box-internal"/>
+  <text x="820" y="160" class="text-title">Order Service</text>
+  <text x="820" y="178" class="text-sub">Port: 5001 (gRPC / HTTP)</text>
+  <line x1="640" y1="365" x2="720" y2="162" stroke="#2563eb" stroke-width="1.8" marker-end="url(#arrow-blue)"/>
+
+  <!-- Service 2: Payment -->
+  <rect x="730" y="225" width="180" height="65" class="box-internal"/>
+  <text x="820" y="255" class="text-title">Payment Service</text>
+  <text x="820" y="273" class="text-sub">Port: 5002 (HTTP / REST)</text>
+  <line x1="640" y1="365" x2="720" y2="257" stroke="#2563eb" stroke-width="1.8" marker-end="url(#arrow-blue)"/>
+
+  <!-- Service 3: Inventory -->
+  <rect x="730" y="320" width="180" height="65" class="box-internal"/>
+  <text x="820" y="350" class="text-title">Inventory Service</text>
+  <text x="820" y="368" class="text-sub">Port: 5003 (gRPC)</text>
+  <line x1="640" y1="365" x2="720" y2="352" stroke="#2563eb" stroke-width="1.8" marker-end="url(#arrow-blue)"/>
+
+  <!-- Service 4: User & Auth -->
+  <rect x="730" y="415" width="180" height="65" class="box-internal"/>
+  <text x="820" y="445" class="text-title">User Service</text>
+  <text x="820" y="463" class="text-sub">Port: 5004 (REST / SQL)</text>
+  <line x1="640" y1="365" x2="720" y2="447" stroke="#2563eb" stroke-width="1.8" marker-end="url(#arrow-blue)"/>
+
+  <!-- Security Perimeter Callout -->
+  <rect x="30" y="528" width="900" height="24" rx="4" fill="#f1f5f9"/>
+  <text x="480" y="544" font-size="11" fill="#475569" font-weight="600" text-anchor="middle">🛡️ Security Perimeter: Clients only talk to API Gateway over HTTPS (443). Backend microservices are isolated inside a private VPC/K8s network.</text>
+</svg>
