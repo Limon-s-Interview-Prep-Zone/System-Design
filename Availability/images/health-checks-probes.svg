@@ -1,0 +1,130 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1020 580" width="100%" height="100%" style="background:#ffffff; font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;">
+  <defs>
+    <marker id="arr-navy" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-angle">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#1e293b"/>
+    </marker>
+    <marker id="arr-blue" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-angle">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#2563eb"/>
+    </marker>
+    <marker id="arr-green" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-angle">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#059669"/>
+    </marker>
+    <marker id="arr-red" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-angle">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#dc2626"/>
+    </marker>
+    <filter id="shadow" x="-4%" y="-4%" width="108%" height="108%">
+      <feDropShadow dx="0" dy="2" stdDeviation="3" flood-opacity="0.08"/>
+    </filter>
+  </defs>
+
+  <style>
+    .title { font-size: 20px; font-weight: 700; fill: #0f172a; text-anchor: middle; }
+    .subtitle { font-size: 13px; fill: #64748b; text-anchor: middle; }
+    .card { rx: 8; stroke-width: 1.5; fill: #ffffff; filter: url(#shadow); }
+    .probe-header { font-size: 12.5px; font-weight: 700; text-anchor: middle; }
+    .node-title { font-size: 12px; font-weight: 700; fill: #0f172a; text-anchor: middle; }
+    .desc { font-size: 10.5px; fill: #334155; }
+    .bold { font-weight: 600; }
+  </style>
+
+  <!-- Title & Subtitle -->
+  <text x="510" y="32" class="title">Kubernetes &amp; Cloud Health Probing Architecture</text>
+  <text x="510" y="52" class="subtitle">Failure detection mechanics: Distinguishing between startup initialization, container restarts, and load balancer traffic cutoffs</text>
+
+  <!-- LEFT: 3 PROBE COMPARISON CARDS -->
+  <!-- Card 1: Startup Probe -->
+  <g transform="translate(30, 75)">
+    <rect width="300" height="235" class="card" stroke="#cbd5e1" fill="#f8fafc"/>
+    <rect width="300" height="34" rx="8" fill="#e0f2fe"/>
+    <text x="150" y="22" class="probe-header" fill="#0369a1">1. Startup Probe (/health/startup)</text>
+
+    <text x="15" y="60" class="desc"><tspan class="bold">Purpose:</tspan> Protect slow-initializing applications.</text>
+    <text x="15" y="80" class="desc"><tspan class="bold">Checks:</tspan> DB migrations, cache warm-up, JIT compile.</text>
+    <text x="15" y="100" class="desc"><tspan class="bold">Behavior:</tspan> Disables Liveness &amp; Readiness until passed.</text>
+    <text x="15" y="120" class="desc"><tspan class="bold">If Fails:</tspan> Kubelet kills container after max retries.</text>
+
+    <rect x="15" y="140" width="270" height="80" rx="6" fill="#ffffff" stroke="#bae6fd"/>
+    <text x="25" y="162" font-size="10" font-weight="700" fill="#0284c7">Why it prevents downtime:</text>
+    <text x="25" y="180" font-size="9.5" fill="#334155">• Stops Kubernetes from prematurely killing heavy</text>
+    <text x="25" y="195" font-size="9.5" fill="#334155">  services that require 60s to load caches into RAM.</text>
+  </g>
+
+  <!-- Card 2: Liveness Probe -->
+  <g transform="translate(360, 75)">
+    <rect width="300" height="235" class="card" stroke="#fca5a5" fill="#fff5f5"/>
+    <rect width="300" height="34" rx="8" fill="#fee2e2"/>
+    <text x="150" y="22" class="probe-header" fill="#991b1b">2. Liveness Probe (/health/live)</text>
+
+    <text x="15" y="60" class="desc"><tspan class="bold">Purpose:</tspan> Detect unrecoverable deadlocks / fatal crashes.</text>
+    <text x="15" y="80" class="desc"><tspan class="bold">Checks:</tspan> Internal loop responsiveness, memory exhaustion.</text>
+    <text x="15" y="100" class="desc"><tspan class="bold">Rule:</tspan> MUST NOT check external dependencies (DB/Redis)!</text>
+    <text x="15" y="120" class="desc"><tspan class="bold">If Fails:</tspan> Kubelet IMMEDIATELY restarts the container.</text>
+
+    <rect x="15" y="140" width="270" height="80" rx="6" fill="#ffffff" stroke="#fca5a5"/>
+    <text x="25" y="162" font-size="10" font-weight="700" fill="#b91c1c">Critical System Design Pitfall:</text>
+    <text x="25" y="180" font-size="9.5" fill="#7f1d1d">• If Liveness checks DB, a DB outage causes EVERY</text>
+    <text x="25" y="195" font-size="9.5" fill="#7f1d1d">  pod to restart simultaneously (Cascading Death Spiral)!</text>
+  </g>
+
+  <!-- Card 3: Readiness Probe -->
+  <g transform="translate(690, 75)">
+    <rect width="300" height="235" class="card" stroke="#86efac" fill="#f0fdf4"/>
+    <rect width="300" height="34" rx="8" fill="#dcfce7"/>
+    <text x="150" y="22" class="probe-header" fill="#15803d">3. Readiness Probe (/health/ready)</text>
+
+    <text x="15" y="60" class="desc"><tspan class="bold">Purpose:</tspan> Determine if pod can accept customer traffic.</text>
+    <text x="15" y="80" class="desc"><tspan class="bold">Checks:</tspan> Database connectivity, Redis cache, RabbitMQ.</text>
+    <text x="15" y="100" class="desc"><tspan class="bold">Behavior:</tspan> DOES NOT restart container on failure!</text>
+    <text x="15" y="120" class="desc"><tspan class="bold">If Fails:</tspan> Drops pod IP from Load Balancer endpoint list.</text>
+
+    <rect x="15" y="140" width="270" height="80" rx="6" fill="#ffffff" stroke="#86efac"/>
+    <text x="25" y="162" font-size="10" font-weight="700" fill="#15803d">Why it provides High Availability:</text>
+    <text x="25" y="180" font-size="9.5" fill="#14532d">• Prevents 500/503 errors by smoothly routing traffic</text>
+    <text x="25" y="195" font-size="9.5" fill="#14532d">  away from saturated pods without disruptive reboots.</text>
+  </g>
+
+  <!-- BOTTOM: END-TO-END FLOW DIAGRAM -->
+  <g transform="translate(30, 330)">
+    <rect width="960" height="225" class="card" stroke="#94a3b8" fill="#f8fafc"/>
+    <text x="480" y="25" font-size="12.5" font-weight="700" fill="#0f172a" text-anchor="middle">Traffic Routing &amp; Failure Recovery Lifecycle</text>
+
+    <!-- Load Balancer Box -->
+    <rect x="30" y="60" width="150" height="120" rx="6" fill="#eff6ff" stroke="#3b82f6"/>
+    <text x="105" y="85" class="node-title" fill="#1d4ed8">Cloud Load Balancer</text>
+    <text x="105" y="102" font-size="10" fill="#2563eb" text-anchor="middle">(ALB / K8s Ingress)</text>
+    <rect x="45" y="120" width="120" height="45" rx="4" fill="#ffffff" stroke="#93c5fd"/>
+    <text x="105" y="137" font-size="9.5" font-weight="700" fill="#1e40af" text-anchor="middle">Active Pod Pool:</text>
+    <text x="105" y="152" font-size="9" fill="#059669" text-anchor="middle">Pod 1 (Healthy) ✓</text>
+
+    <!-- Pod 1 Healthy -->
+    <rect x="290" y="50" width="180" height="65" rx="6" fill="#ecfdf5" stroke="#10b981" stroke-width="2"/>
+    <text x="380" y="73" class="node-title" fill="#047857">Pod 1 (Healthy)</text>
+    <text x="380" y="90" font-size="9.5" fill="#059669" text-anchor="middle">Readiness: 200 OK</text>
+    <text x="380" y="103" font-size="9" fill="#047857" text-anchor="middle">Receives 100% User Traffic</text>
+
+    <!-- Route Line to Pod 1 -->
+    <line x1="180" y1="82" x2="280" y2="82" stroke="#059669" stroke-width="2" marker-end="url(#arr-green)"/>
+    <text x="230" y="75" font-size="9" font-weight="700" fill="#059669" text-anchor="middle">Forward Traffic</text>
+
+    <!-- Pod 2 Saturated -->
+    <rect x="290" y="135" width="180" height="65" rx="6" fill="#fef2f2" stroke="#f87171"/>
+    <text x="380" y="158" class="node-title" fill="#991b1b">Pod 2 (Degraded/Overload)</text>
+    <text x="380" y="175" font-size="9.5" fill="#dc2626" text-anchor="middle">Readiness: 503 Unhealthy</text>
+    <text x="380" y="188" font-size="9" fill="#991b1b" text-anchor="middle">Removed from Endpoints</text>
+
+    <!-- Cut Line to Pod 2 -->
+    <line x1="180" y1="150" x2="280" y2="150" stroke="#dc2626" stroke-width="1.5" stroke-dasharray="4,4" marker-end="url(#arr-red)"/>
+    <text x="230" y="143" font-size="9" font-weight="700" fill="#dc2626" text-anchor="middle">Traffic Blocked</text>
+
+    <!-- Action Explanation Boxes -->
+    <rect x="520" y="50" width="410" height="65" rx="5" fill="#ffffff" stroke="#cbd5e1"/>
+    <text x="535" y="72" font-size="10.5" font-weight="700" fill="#059669">When Pod 1 is Ready:</text>
+    <text x="535" y="90" font-size="9.5" fill="#334155">• Endpoint controller registers IP in CoreDNS and iptables/IPVS.</text>
+    <text x="535" y="104" font-size="9.5" fill="#334155">• Traffic flows with zero connection resets.</text>
+
+    <rect x="520" y="135" width="410" height="65" rx="5" fill="#ffffff" stroke="#cbd5e1"/>
+    <text x="535" y="157" font-size="10.5" font-weight="700" fill="#dc2626">When Pod 2 Fails Readiness:</text>
+    <text x="535" y="175" font-size="9.5" fill="#334155">• Load Balancer stops routing new connections instantly.</text>
+    <text x="535" y="189" font-size="9.5" fill="#334155">• Container remains running; drains in-flight requests cleanly.</text>
+  </g>
+</svg>

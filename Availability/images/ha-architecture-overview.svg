@@ -1,0 +1,139 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1020 580" width="100%" height="100%" style="background:#ffffff; font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;">
+  <defs>
+    <filter id="shadow" x="-4%" y="-4%" width="108%" height="108%">
+      <feDropShadow dx="0" dy="2" stdDeviation="3" flood-opacity="0.08"/>
+    </filter>
+  </defs>
+
+  <style>
+    .title { font-size: 20px; font-weight: 700; fill: #0f172a; text-anchor: middle; }
+    .subtitle { font-size: 13px; fill: #64748b; text-anchor: middle; }
+    .pillar-card { rx: 8; stroke-width: 1.5; fill: #ffffff; filter: url(#shadow); }
+    .pillar-header { font-size: 12px; font-weight: 700; text-anchor: middle; }
+    .item-text { font-size: 10.5px; fill: #334155; }
+    .highlight { font-weight: 600; }
+  </style>
+
+  <!-- Title & Header -->
+  <text x="510" y="32" class="title">High Availability (HA) Architectural Taxonomy: The 8 Core Pillars</text>
+  <text x="510" y="52" class="subtitle">An enterprise-grade system design framework for delivering 99.999% reliability without single points of failure</text>
+
+  <!-- Top Tier: Row 1 (Pillars 1 to 4) -->
+  <!-- Pillar 1: Global Routing & Ingress -->
+  <g transform="translate(25, 75)">
+    <rect width="220" height="215" class="pillar-card" stroke="#3b82f6"/>
+    <rect width="220" height="32" rx="8" fill="#eff6ff"/>
+    <text x="110" y="21" class="pillar-header" fill="#1d4ed8">1. Global Routing &amp; Ingress</text>
+    <text x="15" y="55" class="item-text">• <tspan class="highlight">Anycast DNS:</tspan> BGP nearest-PoP</text>
+    <text x="15" y="75" class="item-text">• <tspan class="highlight">Geo-DNS / Latency:</tspan> Route 53</text>
+    <text x="15" y="95" class="item-text">• <tspan class="highlight">GSLB:</tspan> Multi-region failover</text>
+    <text x="15" y="115" class="item-text">• <tspan class="highlight">Multi-CDN:</tspan> Origin shield bypass</text>
+    <text x="15" y="135" class="item-text">• <tspan class="highlight">DDoS Mitigation:</tspan> Cloudflare / AWS</text>
+    <rect x="15" y="160" width="190" height="40" rx="4" fill="#f8fafc" stroke="#cbd5e1"/>
+    <text x="110" y="184" font-size="10" font-weight="600" fill="#2563eb" text-anchor="middle">Goal: No DNS/Ingress SPOF</text>
+  </g>
+
+  <!-- Pillar 2: Compute & Cluster Redundancy -->
+  <g transform="translate(270, 75)">
+    <rect width="220" height="215" class="pillar-card" stroke="#10b981"/>
+    <rect width="220" height="32" rx="8" fill="#ecfdf5"/>
+    <text x="110" y="21" class="pillar-header" fill="#047857">2. Compute &amp; Container HA</text>
+    <text x="15" y="55" class="item-text">• <tspan class="highlight">Multi-AZ Nodes:</tspan> Distributed pods</text>
+    <text x="15" y="75" class="item-text">• <tspan class="highlight">Liveness Probes:</tspan> Deadlock restart</text>
+    <text x="15" y="95" class="item-text">• <tspan class="highlight">Readiness Probes:</tspan> Traffic cutoff</text>
+    <text x="15" y="115" class="item-text">• <tspan class="highlight">Horizontal Autoscaling:</tspan> K8s HPA</text>
+    <text x="15" y="135" class="item-text">• <tspan class="highlight">Pod Anti-Affinity:</tspan> Split across racks</text>
+    <rect x="15" y="160" width="190" height="40" rx="4" fill="#f8fafc" stroke="#cbd5e1"/>
+    <text x="110" y="184" font-size="10" font-weight="600" fill="#059669" text-anchor="middle">Goal: Self-healing compute layer</text>
+  </g>
+
+  <!-- Pillar 3: Resiliency & Graceful Degradation -->
+  <g transform="translate(515, 75)">
+    <rect width="220" height="215" class="pillar-card" stroke="#f59e0b"/>
+    <rect width="220" height="32" rx="8" fill="#fffbeb"/>
+    <text x="110" y="21" class="pillar-header" fill="#b45309">3. Resiliency &amp; Isolation</text>
+    <text x="15" y="55" class="item-text">• <tspan class="highlight">Circuit Breaker:</tspan> Trip failing hops</text>
+    <text x="15" y="75" class="item-text">• <tspan class="highlight">Bulkhead Isolation:</tspan> Thread pools</text>
+    <text x="15" y="95" class="item-text">• <tspan class="highlight">Retry with Jitter:</tspan> Exponential backoff</text>
+    <text x="15" y="115" class="item-text">• <tspan class="highlight">Load Shedding:</tspan> Drop 503 on peak</text>
+    <text x="15" y="135" class="item-text">• <tspan class="highlight">Stale Cache Fallback:</tspan> Read degrades</text>
+    <rect x="15" y="160" width="190" height="40" rx="4" fill="#f8fafc" stroke="#cbd5e1"/>
+    <text x="110" y="184" font-size="10" font-weight="600" fill="#d97706" text-anchor="middle">Goal: Prevent cascading failures</text>
+  </g>
+
+  <!-- Pillar 4: Data Tier High Availability -->
+  <g transform="translate(760, 75)">
+    <rect width="220" height="215" class="pillar-card" stroke="#6366f1"/>
+    <rect width="220" height="32" rx="8" fill="#eef2ff"/>
+    <text x="110" y="21" class="pillar-header" fill="#4338ca">4. Data Tier Replication</text>
+    <text x="15" y="55" class="item-text">• <tspan class="highlight">Sync Replication:</tspan> RPO=0 zero loss</text>
+    <text x="15" y="75" class="item-text">• <tspan class="highlight">Async Read Replicas:</tspan> Scale reads</text>
+    <text x="15" y="95" class="item-text">• <tspan class="highlight">Quorum Reads/Writes:</tspan> R + W &gt; N</text>
+    <text x="15" y="115" class="item-text">• <tspan class="highlight">Auto-Promotion:</tspan> Patroni / Raft</text>
+    <text x="15" y="135" class="item-text">• <tspan class="highlight">Multi-Leader CRDTs:</tspan> Dual write</text>
+    <rect x="15" y="160" width="190" height="40" rx="4" fill="#f8fafc" stroke="#cbd5e1"/>
+    <text x="110" y="184" font-size="10" font-weight="600" fill="#4f46e5" text-anchor="middle">Goal: Continuous data persistence</text>
+  </g>
+
+
+  <!-- Bottom Tier: Row 2 (Pillars 5 to 8) -->
+  <!-- Pillar 5: Failover & Consensus Topologies -->
+  <g transform="translate(25, 310)">
+    <rect width="220" height="235" class="pillar-card" stroke="#8b5cf6"/>
+    <rect width="220" height="32" rx="8" fill="#f5f3ff"/>
+    <text x="110" y="21" class="pillar-header" fill="#6d28d9">5. Failover &amp; Consensus</text>
+    <text x="15" y="55" class="item-text">• <tspan class="highlight">Active-Passive:</tspan> Cold / Warm / Hot</text>
+    <text x="15" y="75" class="item-text">• <tspan class="highlight">Active-Active:</tspan> Multi-region live</text>
+    <text x="15" y="95" class="item-text">• <tspan class="highlight">Raft / Paxos / etcd:</tspan> Leader election</text>
+    <text x="15" y="115" class="item-text">• <tspan class="highlight">Quorum Calculation:</tspan> ⌊N/2⌋ + 1</text>
+    <text x="15" y="135" class="item-text">• <tspan class="highlight">Split-Brain Fence:</tspan> Fencing tokens</text>
+    <text x="15" y="155" class="item-text">• <tspan class="highlight">STONITH / Watchdogs:</tspan> Kill zombie</text>
+    <rect x="15" y="180" width="190" height="40" rx="4" fill="#f8fafc" stroke="#cbd5e1"/>
+    <text x="110" y="204" font-size="10" font-weight="600" fill="#7c3aed" text-anchor="middle">Goal: Deterministic leader failover</text>
+  </g>
+
+  <!-- Pillar 6: Disaster Recovery (DR) -->
+  <g transform="translate(270, 310)">
+    <rect width="220" height="235" class="pillar-card" stroke="#ec4899"/>
+    <rect width="220" height="32" rx="8" fill="#fdf2f8"/>
+    <text x="110" y="21" class="pillar-header" fill="#be185d">6. Disaster Recovery (DR)</text>
+    <text x="15" y="55" class="item-text">• <tspan class="highlight">RTO:</tspan> Recovery Time Objective</text>
+    <text x="15" y="75" class="item-text">• <tspan class="highlight">RPO:</tspan> Recovery Point Objective</text>
+    <text x="15" y="95" class="item-text">• <tspan class="highlight">Backup &amp; Restore:</tspan> Hours / Days</text>
+    <text x="15" y="115" class="item-text">• <tspan class="highlight">Pilot Light:</tspan> Core DB sync, idle app</text>
+    <text x="15" y="135" class="item-text">• <tspan class="highlight">Warm Standby:</tspan> Scaled-down live</text>
+    <text x="15" y="155" class="item-text">• <tspan class="highlight">Active-Active DR:</tspan> Zero downtime</text>
+    <rect x="15" y="180" width="190" height="40" rx="4" fill="#f8fafc" stroke="#cbd5e1"/>
+    <text x="110" y="204" font-size="10" font-weight="600" fill="#db2777" text-anchor="middle">Goal: Catastrophic disaster survival</text>
+  </g>
+
+  <!-- Pillar 7: Zero-Downtime Deployment -->
+  <g transform="translate(515, 310)">
+    <rect width="220" height="235" class="pillar-card" stroke="#0ea5e9"/>
+    <rect width="220" height="32" rx="8" fill="#f0f9ff"/>
+    <text x="110" y="21" class="pillar-header" fill="#0369a1">7. Zero-Downtime Releases</text>
+    <text x="15" y="55" class="item-text">• <tspan class="highlight">Blue-Green:</tspan> Instant cutover router</text>
+    <text x="15" y="75" class="item-text">• <tspan class="highlight">Canary Release:</tspan> 5% ➔ 25% ➔ 100%</text>
+    <text x="15" y="95" class="item-text">• <tspan class="highlight">Rolling Deployments:</tspan> Pod by pod</text>
+    <text x="15" y="115" class="item-text">• <tspan class="highlight">Expand-Contract:</tspan> DB migration</text>
+    <text x="15" y="135" class="item-text">• <tspan class="highlight">Graceful Shutdown:</tspan> Drain in-flight</text>
+    <text x="15" y="155" class="item-text">• <tspan class="highlight">Feature Flags:</tspan> Instant kill-switch</text>
+    <rect x="15" y="180" width="190" height="40" rx="4" fill="#f8fafc" stroke="#cbd5e1"/>
+    <text x="110" y="204" font-size="10" font-weight="600" fill="#0284c7" text-anchor="middle">Goal: Deploy during peak hours</text>
+  </g>
+
+  <!-- Pillar 8: SRE Governance & Chaos -->
+  <g transform="translate(760, 310)">
+    <rect width="220" height="235" class="pillar-card" stroke="#64748b"/>
+    <rect width="220" height="32" rx="8" fill="#f8fafc"/>
+    <text x="110" y="21" class="pillar-header" fill="#334155">8. SRE Metrics &amp; Chaos</text>
+    <text x="15" y="55" class="item-text">• <tspan class="highlight">SLI:</tspan> Quantitative uptime measure</text>
+    <text x="15" y="75" class="item-text">• <tspan class="highlight">SLO:</tspan> Target reliability objective</text>
+    <text x="15" y="95" class="item-text">• <tspan class="highlight">SLA:</tspan> Customer contract &amp; credits</text>
+    <text x="15" y="115" class="item-text">• <tspan class="highlight">Error Budget:</tspan> Burn rate policies</text>
+    <text x="15" y="135" class="item-text">• <tspan class="highlight">MTBF / MTTR / MTTD:</tspan> Incident KPIs</text>
+    <text x="15" y="155" class="item-text">• <tspan class="highlight">Chaos Engineering:</tspan> Chaos Monkey</text>
+    <rect x="15" y="180" width="190" height="40" rx="4" fill="#f8fafc" stroke="#cbd5e1"/>
+    <text x="110" y="204" font-size="10" font-weight="600" fill="#475569" text-anchor="middle">Goal: Measurable continuous resilience</text>
+  </g>
+</svg>
