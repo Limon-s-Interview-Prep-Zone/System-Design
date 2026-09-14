@@ -1,0 +1,128 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 560" width="100%" height="100%" style="background:#ffffff; font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;">
+  <defs>
+    <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-angle">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#1e293b"/>
+    </marker>
+    <marker id="arr-blue" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-angle">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#2563eb"/>
+    </marker>
+    <marker id="arr-emerald" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-angle">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#059669"/>
+    </marker>
+    <filter id="shadow" x="-5%" y="-5%" width="110%" height="110%">
+      <feDropShadow dx="0" dy="2" stdDeviation="3" flood-opacity="0.08"/>
+    </filter>
+  </defs>
+
+  <style>
+    .title { font-size: 20px; font-weight: 700; fill: #0f172a; text-anchor: middle; }
+    .subtitle { font-size: 13px; fill: #64748b; text-anchor: middle; }
+    .box { rx: 8; stroke-width: 1.5; filter: url(#shadow); }
+    .box-blue { fill: #eff6ff; stroke: #3b82f6; }
+    .box-green { fill: #f0fdf4; stroke: #10b981; }
+    .box-slate { fill: #f8fafc; stroke: #94a3b8; }
+    .text-title { font-size: 13px; font-weight: 700; fill: #0f172a; text-anchor: middle; }
+    .text-desc { font-size: 10.5px; fill: #64748b; text-anchor: middle; }
+  </style>
+
+  <!-- Title -->
+  <text x="480" y="32" class="title">Proxy Architecture: Forward Proxy vs. Reverse Proxy</text>
+  <text x="480" y="52" class="subtitle">Comparing client-side interception with server-side ingress gateway</text>
+
+  <!-- SECTION 1: FORWARD PROXY -->
+  <g transform="translate(20, 75)">
+    <rect x="0" y="0" width="920" height="215" rx="8" fill="#f8fafc" stroke="#cbd5e1" class="box"/>
+    <rect x="15" y="12" width="180" height="24" rx="4" fill="#dbeafe"/>
+    <text x="105" y="28" font-size="12" font-weight="700" fill="#1e40af" text-anchor="middle">1. Forward Proxy (Client Proxy)</text>
+    <text x="210" y="28" font-size="11" fill="#475569">Sits in front of internal clients to regulate outbound internet access</text>
+
+    <!-- Clients (Private LAN) -->
+    <rect x="25" y="55" width="170" height="135" rx="6" fill="#ffffff" stroke="#94a3b8" stroke-dasharray="3,3"/>
+    <text x="110" y="75" font-size="11" font-weight="700" fill="#334155" text-anchor="middle">Private Corporate LAN</text>
+    <rect x="40" y="90" width="140" height="40" rx="4" class="box box-slate"/>
+    <text x="110" y="115" class="text-title">Internal Employee</text>
+    <rect x="40" y="140" width="140" height="40" rx="4" class="box box-slate"/>
+    <text x="110" y="165" class="text-title">Internal Service</text>
+
+    <!-- Forward Proxy -->
+    <rect x="265" y="55" width="220" height="135" rx="6" class="box box-blue"/>
+    <text x="375" y="80" font-size="13" font-weight="700" fill="#1e40af" text-anchor="middle">Forward Proxy</text>
+    <text x="375" y="98" font-size="10.5" fill="#2563eb" text-anchor="middle">(Squid, Envoy Egress, Zscaler)</text>
+    <line x1="280" y1="108" x2="470" y2="108" stroke="#bfdbfe" stroke-width="1"/>
+    <text x="280" y="125" font-size="10" fill="#334155">• Hides Client IP Addresses</text>
+    <text x="280" y="145" font-size="10" fill="#334155">• Content Filtering &amp; Policy Control</text>
+    <text x="280" y="165" font-size="10" fill="#334155">• Caches frequent outbound downloads</text>
+
+    <!-- Arrow LAN to Proxy -->
+    <line x1="195" y1="120" x2="255" y2="120" stroke="#1e293b" stroke-width="2" marker-end="url(#arr)"/>
+
+    <!-- Public Internet Cloud -->
+    <rect x="540" y="80" width="140" height="85" rx="25" fill="#f1f5f9" stroke="#94a3b8" stroke-width="1.5"/>
+    <text x="610" y="120" font-size="12" font-weight="700" fill="#475569" text-anchor="middle">Public Internet</text>
+    <text x="610" y="138" font-size="10" fill="#64748b" text-anchor="middle">(WAN)</text>
+
+    <!-- Arrow Proxy to Internet -->
+    <line x1="485" y1="120" x2="530" y2="120" stroke="#2563eb" stroke-width="2" marker-end="url(#arr-blue)"/>
+
+    <!-- Target Servers -->
+    <rect x="735" y="55" width="165" height="135" rx="6" fill="#ffffff" stroke="#94a3b8"/>
+    <text x="817" y="75" font-size="11" font-weight="700" fill="#334155" text-anchor="middle">External Web Servers</text>
+    <rect x="750" y="90" width="135" height="40" rx="4" class="box box-slate"/>
+    <text x="817" y="115" class="text-title">google.com</text>
+    <rect x="750" y="140" width="135" height="40" rx="4" class="box box-slate"/>
+    <text x="817" y="165" class="text-title">github.com</text>
+
+    <!-- Arrow Internet to External -->
+    <line x1="680" y1="120" x2="725" y2="120" stroke="#1e293b" stroke-width="2" marker-end="url(#arr)"/>
+  </g>
+
+  <!-- SECTION 2: REVERSE PROXY -->
+  <g transform="translate(20, 310)">
+    <rect x="0" y="0" width="920" height="225" rx="8" fill="#f8fafc" stroke="#cbd5e1" class="box"/>
+    <rect x="15" y="12" width="180" height="24" rx="4" fill="#dcfce7"/>
+    <text x="105" y="28" font-size="12" font-weight="700" fill="#15803d" text-anchor="middle">2. Reverse Proxy (Server Ingress)</text>
+    <text x="210" y="28" font-size="11" fill="#475569">Sits in front of backend servers to shield infrastructure and distribute load</text>
+
+    <!-- External Clients (Public Internet) -->
+    <rect x="25" y="55" width="170" height="150" rx="6" fill="#ffffff" stroke="#94a3b8"/>
+    <text x="110" y="75" font-size="11" font-weight="700" fill="#334155" text-anchor="middle">Public Internet Clients</text>
+    <rect x="40" y="90" width="140" height="40" rx="4" class="box box-slate"/>
+    <text x="110" y="115" class="text-title">Web Browser</text>
+    <rect x="40" y="145" width="140" height="40" rx="4" class="box box-slate"/>
+    <text x="110" y="170" class="text-title">Mobile App</text>
+
+    <!-- Arrow Client to Reverse Proxy -->
+    <line x1="195" y1="130" x2="255" y2="130" stroke="#1e293b" stroke-width="2" marker-end="url(#arr)"/>
+    <text x="225" y="122" font-size="9.5" font-weight="600" text-anchor="middle">HTTPS</text>
+
+    <!-- Reverse Proxy -->
+    <rect x="265" y="55" width="260" height="150" rx="6" class="box box-green"/>
+    <text x="395" y="80" font-size="13" font-weight="700" fill="#15803d" text-anchor="middle">Reverse Proxy / Ingress</text>
+    <text x="395" y="98" font-size="10.5" fill="#059669" text-anchor="middle">(Nginx / YARP [.NET] / Envoy / HAProxy)</text>
+    <line x1="280" y1="108" x2="510" y2="108" stroke="#bbf7d0" stroke-width="1"/>
+    <text x="280" y="125" font-size="10" fill="#334155">• Hides Backend Private Server IPs</text>
+    <text x="280" y="143" font-size="10" fill="#334155">• SSL/TLS Termination (Offload CPU)</text>
+    <text x="280" y="161" font-size="10" fill="#334155">• Load Balancing &amp; Health Probes</text>
+    <text x="280" y="179" font-size="10" fill="#334155">• Static Asset Caching &amp; Gzip / Brotli</text>
+
+    <!-- Arrow Proxy to Internal -->
+    <line x1="525" y1="130" x2="585" y2="130" stroke="#059669" stroke-width="2" marker-end="url(#arr-emerald)"/>
+    <text x="555" y="122" font-size="9.5" font-weight="600" fill="#059669" text-anchor="middle">HTTP/gRPC</text>
+
+    <!-- Internal Microservices (Private VPC) -->
+    <rect x="595" y="55" width="310" height="150" rx="6" fill="#ffffff" stroke="#10b981" stroke-dasharray="4,4"/>
+    <text x="750" y="75" font-size="11" font-weight="700" fill="#15803d" text-anchor="middle">Private Backend Network / Kubernetes VPC</text>
+
+    <rect x="610" y="90" width="135" height="45" rx="4" class="box box-slate"/>
+    <text x="677" y="112" class="text-title">API Instance 1</text>
+    <text x="677" y="126" class="text-desc">10.0.2.14:8080</text>
+
+    <rect x="760" y="90" width="135" height="45" rx="4" class="box box-slate"/>
+    <text x="827" y="112" class="text-title">API Instance 2</text>
+    <text x="827" y="126" class="text-desc">10.0.2.15:8080</text>
+
+    <rect x="685" y="145" width="140" height="45" rx="4" class="box box-slate"/>
+    <text x="755" y="167" class="text-title">API Instance 3</text>
+    <text x="755" y="181" class="text-desc">10.0.2.16:8080</text>
+  </g>
+</svg>

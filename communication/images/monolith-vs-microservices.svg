@@ -1,0 +1,191 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1020 680" width="100%" height="100%" style="background:#ffffff; font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;">
+  <defs>
+    <marker id="arr-navy" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-angle">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#1e293b"/>
+    </marker>
+    <marker id="arr-blue" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-angle">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#2563eb"/>
+    </marker>
+    <marker id="arr-green" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-angle">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#059669"/>
+    </marker>
+    <filter id="shadow" x="-5%" y="-5%" width="110%" height="110%">
+      <feDropShadow dx="0" dy="2" stdDeviation="3" flood-opacity="0.08"/>
+    </filter>
+  </defs>
+
+  <style>
+    .title { font-size: 20px; font-weight: 700; fill: #0f172a; text-anchor: middle; }
+    .subtitle { font-size: 13px; fill: #64748b; text-anchor: middle; }
+    .card { rx: 8; stroke-width: 1.5; filter: url(#shadow); }
+    .node-box { rx: 6; stroke-width: 1.5; fill: #ffffff; filter: url(#shadow); }
+    .node-title { font-size: 13px; font-weight: 700; fill: #0f172a; text-anchor: middle; }
+    .node-desc { font-size: 11px; fill: #64748b; text-anchor: middle; }
+    .badge { font-size: 11.5px; font-weight: 700; text-anchor: middle; }
+    .section-title { font-size: 13px; font-weight: 700; fill: #1e293b; }
+    .bullet { font-size: 11px; fill: #334155; }
+    .highlight { font-weight: 600; }
+  </style>
+
+  <!-- Title & Header -->
+  <text x="510" y="32" class="title">Architectural Decision Framework: Monolith vs. Modular Monolith vs. Microservices</text>
+  <text x="510" y="52" class="subtitle">Comparing architectural coupling, boundary management, team autonomy, and operational complexity</text>
+
+  <!-- COLUMN 1: TRADITIONAL MONOLITH -->
+  <rect x="20" y="75" width="310" height="420" rx="8" fill="#f8fafc" stroke="#cbd5e1" class="card"/>
+  <rect x="35" y="90" width="180" height="26" rx="4" fill="#fee2e2"/>
+  <text x="125" y="107" class="badge" fill="#991b1b">1. Traditional Monolith</text>
+
+  <!-- Monolith Process Box -->
+  <rect x="40" y="130" width="270" height="175" rx="6" fill="#ffffff" stroke="#94a3b8" stroke-dasharray="4,4"/>
+  <text x="175" y="150" font-size="11" font-weight="700" fill="#475569" text-anchor="middle">Single Deployable Process (.NET App)</text>
+
+  <rect x="55" y="165" width="240" height="30" rx="4" fill="#f1f5f9" stroke="#cbd5e1"/>
+  <text x="175" y="184" class="node-title">UI &amp; API Controller Layer</text>
+
+  <rect x="55" y="205" width="240" height="45" rx="4" fill="#fef2f2" stroke="#fca5a5"/>
+  <text x="175" y="224" class="node-title">Tightly Coupled Business Logic</text>
+  <text x="175" y="240" font-size="10" fill="#7f1d1d" text-anchor="middle">Shared memory • Direct class dependencies</text>
+
+  <rect x="55" y="260" width="240" height="30" rx="4" fill="#f1f5f9" stroke="#cbd5e1"/>
+  <text x="175" y="280" font-size="11" font-weight="600" fill="#475569" text-anchor="middle">Data Access Layer (Shared ORM)</text>
+
+  <!-- Monolith Database -->
+  <path d="M 175 305 L 175 330" stroke="#64748b" stroke-width="1.5" marker-end="url(#arr-navy)"/>
+  <rect x="100" y="335" width="150" height="45" rx="6" fill="#e0e7ff" stroke="#6366f1" stroke-width="1.5"/>
+  <text x="175" y="355" class="node-title" fill="#3730a3">Single Shared DB</text>
+  <text x="175" y="369" font-size="9.5" fill="#4338ca" text-anchor="middle">ACID Transactions • FK Constraints</text>
+
+  <!-- Summary Monolith -->
+  <rect x="35" y="395" width="280" height="85" rx="4" fill="#ffffff" stroke="#e2e8f0"/>
+  <text x="45" y="413" class="bullet">✓ <tspan class="highlight">Zero network overhead</tspan> (In-memory calls)</text>
+  <text x="45" y="430" class="bullet">✓ <tspan class="highlight">Simple ACID</tspan> transactions &amp; easy debugging</text>
+  <text x="45" y="447" class="bullet" fill="#dc2626">✗ <tspan class="highlight">Single blast radius</tspan> (Memory leak kills all)</text>
+  <text x="45" y="464" class="bullet" fill="#dc2626">✗ <tspan class="highlight">Team merge conflicts</tspan> as team scales past 20</text>
+
+
+  <!-- COLUMN 2: MODULAR MONOLITH -->
+  <rect x="355" y="75" width="310" height="420" rx="8" fill="#eff6ff" stroke="#93c5fd" class="card"/>
+  <rect x="370" y="90" width="180" height="26" rx="4" fill="#dbeafe"/>
+  <text x="460" y="107" class="badge" fill="#1e40af">2. Modular Monolith</text>
+
+  <!-- Modular Process Box -->
+  <rect x="375" y="130" width="270" height="175" rx="6" fill="#ffffff" stroke="#3b82f6"/>
+  <text x="510" y="150" font-size="11" font-weight="700" fill="#1e40af" text-anchor="middle">Single Process with Bounded Contexts</text>
+
+  <!-- Modules -->
+  <rect x="385" y="165" width="75" height="75" rx="4" fill="#f0fdf4" stroke="#86efac"/>
+  <text x="422" y="195" font-size="10.5" font-weight="700" fill="#166534" text-anchor="middle">Order</text>
+  <text x="422" y="210" font-size="9" fill="#15803d" text-anchor="middle">Module</text>
+
+  <rect x="472" y="165" width="75" height="75" rx="4" fill="#fefce8" stroke="#fde047"/>
+  <text x="510" y="195" font-size="10.5" font-weight="700" fill="#854d0e" text-anchor="middle">Billing</text>
+  <text x="510" y="210" font-size="9" fill="#a16207" text-anchor="middle">Module</text>
+
+  <rect x="560" y="165" width="75" height="75" rx="4" fill="#faf5ff" stroke="#d8b4fe"/>
+  <text x="597" y="195" font-size="10.5" font-weight="700" fill="#6b21a8" text-anchor="middle">Catalog</text>
+  <text x="597" y="210" font-size="9" fill="#7e22ce" text-anchor="middle">Module</text>
+
+  <!-- In-Process Mediator -->
+  <rect x="385" y="250" width="250" height="42" rx="4" fill="#e0f2fe" stroke="#38bdf8"/>
+  <text x="510" y="267" font-size="10" font-weight="700" fill="#0369a1" text-anchor="middle">In-Process MediatR / Domain Events</text>
+  <text x="510" y="281" font-size="9" fill="#0284c7" text-anchor="middle">Encapsulated contracts • Strict module isolation</text>
+
+  <!-- DB with Isolated Schemas -->
+  <path d="M 510 305 L 510 330" stroke="#2563eb" stroke-width="1.5" marker-end="url(#arr-blue)"/>
+  <rect x="420" y="335" width="180" height="45" rx="6" fill="#e0e7ff" stroke="#6366f1" stroke-width="1.5"/>
+  <text x="510" y="355" class="node-title" fill="#3730a3">Single DB (Isolated Schemas)</text>
+  <text x="510" y="369" font-size="9.5" fill="#4338ca" text-anchor="middle">orders.* • billing.* • catalog.*</text>
+
+  <!-- Summary Modular Monolith -->
+  <rect x="370" y="395" width="280" height="85" rx="4" fill="#ffffff" stroke="#e2e8f0"/>
+  <text x="380" y="413" class="bullet">✓ <tspan class="highlight">No distributed system tax</tspan> (Zero latency penalty)</text>
+  <text x="380" y="430" class="bullet">✓ <tspan class="highlight">Independent team ownership</tspan> within modules</text>
+  <text x="380" y="447" class="bullet">✓ <tspan class="highlight">Effortless extraction</tspan> to microservices later</text>
+  <text x="380" y="464" class="bullet" fill="#b45309">⚡ <tspan class="highlight">Recommended default</tspan> for most growing systems</text>
+
+
+  <!-- COLUMN 3: MICROSERVICES ARCHITECTURE -->
+  <rect x="690" y="75" width="310" height="420" rx="8" fill="#f0fdf4" stroke="#86efac" class="card"/>
+  <rect x="705" y="90" width="180" height="26" rx="4" fill="#dcfce7"/>
+  <text x="795" y="107" class="badge" fill="#15803d">3. Microservices</text>
+
+  <!-- API Gateway -->
+  <rect x="725" y="130" width="240" height="32" rx="4" fill="#eff6ff" stroke="#3b82f6"/>
+  <text x="845" y="151" font-size="11" font-weight="700" fill="#1d4ed8" text-anchor="middle">API Gateway (YARP / Envoy)</text>
+
+  <!-- Service 1 -->
+  <rect x="710" y="175" width="80" height="50" class="node-box" stroke="#10b981"/>
+  <text x="750" y="196" font-size="10.5" font-weight="700" fill="#065f46" text-anchor="middle">Order Svc</text>
+  <text x="750" y="210" font-size="8.5" fill="#047857" text-anchor="middle">Container A</text>
+
+  <!-- Service 2 -->
+  <rect x="805" y="175" width="80" height="50" class="node-box" stroke="#f59e0b"/>
+  <text x="845" y="196" font-size="10.5" font-weight="700" fill="#92400e" text-anchor="middle">Billing Svc</text>
+  <text x="845" y="210" font-size="8.5" fill="#b45309" text-anchor="middle">Container B</text>
+
+  <!-- Service 3 -->
+  <rect x="900" y="175" width="80" height="50" class="node-box" stroke="#8b5cf6"/>
+  <text x="940" y="196" font-size="10.5" font-weight="700" fill="#5b21b6" text-anchor="middle">Catalog Svc</text>
+  <text x="940" y="210" font-size="8.5" fill="#6d28d9" text-anchor="middle">Container C</text>
+
+  <!-- Message Broker / Event Bus -->
+  <rect x="710" y="240" width="270" height="32" rx="4" fill="#fef3c7" stroke="#f59e0b"/>
+  <text x="845" y="260" font-size="10.5" font-weight="700" fill="#92400e" text-anchor="middle">Kafka / RabbitMQ (Async Event Bus)</text>
+
+  <!-- Private DBs -->
+  <rect x="715" y="290" width="70" height="35" rx="4" fill="#e0e7ff" stroke="#6366f1"/>
+  <text x="750" y="306" font-size="9" font-weight="700" fill="#3730a3" text-anchor="middle">Order DB</text>
+  <text x="750" y="318" font-size="8" fill="#4338ca" text-anchor="middle">(Postgres)</text>
+
+  <rect x="810" y="290" width="70" height="35" rx="4" fill="#e0e7ff" stroke="#6366f1"/>
+  <text x="845" y="306" font-size="9" font-weight="700" fill="#3730a3" text-anchor="middle">Billing DB</text>
+  <text x="845" y="318" font-size="8" fill="#4338ca" text-anchor="middle">(SQL Svr)</text>
+
+  <rect x="905" y="290" width="70" height="35" rx="4" fill="#e0e7ff" stroke="#6366f1"/>
+  <text x="940" y="306" font-size="9" font-weight="700" fill="#3730a3" text-anchor="middle">Catalog DB</text>
+  <text x="940" y="318" font-size="8" fill="#4338ca" text-anchor="middle">(MongoDB)</text>
+
+  <!-- Summary Microservices -->
+  <rect x="705" y="345" width="280" height="135" rx="4" fill="#ffffff" stroke="#e2e8f0"/>
+  <text x="715" y="363" class="bullet">✓ <tspan class="highlight">Autonomous deployments</tspan> (Deploy without coordination)</text>
+  <text x="715" y="380" class="bullet">✓ <tspan class="highlight">Asymmetric scaling</tspan> (Scale high-load pods only)</text>
+  <text x="715" y="397" class="bullet">✓ <tspan class="highlight">Isolated blast radius</tspan> &amp; polyglot stacks</text>
+  <text x="715" y="414" class="bullet" fill="#dc2626">✗ <tspan class="highlight">High operational tax</tspan> (K8s, Tracing, CI/CD)</text>
+  <text x="715" y="431" class="bullet" fill="#dc2626">✗ <tspan class="highlight">Eventual consistency</tspan> &amp; dual-write / Sagas</text>
+  <text x="715" y="448" class="bullet" fill="#dc2626">✗ <tspan class="highlight">Network latency</tspan> &amp; cascading failure risks</text>
+
+  <!-- BOTTOM SECTION: DECISION MATRIX TREE -->
+  <rect x="20" y="515" width="980" height="145" rx="8" fill="#f8fafc" stroke="#94a3b8" class="card"/>
+  <text x="40" y="540" font-size="13" font-weight="700" fill="#0f172a">Executive Decision Framework: When to Choose Which Architecture?</text>
+
+  <!-- Flow Items -->
+  <g transform="translate(40, 555)">
+    <!-- Decision 1 -->
+    <rect x="0" y="0" width="215" height="85" rx="6" fill="#ffffff" stroke="#cbd5e1"/>
+    <text x="107" y="20" font-size="11" font-weight="700" fill="#0f172a" text-anchor="middle">Startup / MVP / &lt; 20 Devs</text>
+    <text x="10" y="40" font-size="10" fill="#475569">• Rapid iteration required</text>
+    <text x="10" y="55" font-size="10" fill="#475569">• Domain boundaries still shifting</text>
+    <text x="107" y="75" font-size="10.5" font-weight="700" fill="#991b1b" text-anchor="middle">➔ Monolith</text>
+
+    <!-- Arrow -->
+    <path d="M 225 42 L 245 42" stroke="#64748b" stroke-width="1.5" marker-end="url(#arr-navy)"/>
+
+    <!-- Decision 2 -->
+    <rect x="255" y="0" width="295" height="85" rx="6" fill="#ffffff" stroke="#3b82f6"/>
+    <text x="402" y="20" font-size="11" font-weight="700" fill="#1e40af" text-anchor="middle">Growing Org / 20–100 Devs / High Scale</text>
+    <text x="265" y="40" font-size="10" fill="#475569">• Distinct bounded contexts identified</text>
+    <text x="265" y="55" font-size="10" fill="#475569">• Want team independence without distributed tax</text>
+    <text x="402" y="75" font-size="10.5" font-weight="700" fill="#2563eb" text-anchor="middle">➔ Modular Monolith (Sweet Spot)</text>
+
+    <!-- Arrow -->
+    <path d="M 560 42 L 580 42" stroke="#64748b" stroke-width="1.5" marker-end="url(#arr-navy)"/>
+
+    <!-- Decision 3 -->
+    <rect x="590" y="0" width="350" height="85" rx="6" fill="#ffffff" stroke="#10b981"/>
+    <text x="765" y="20" font-size="11" font-weight="700" fill="#065f46" text-anchor="middle">Enterprise / 100+ Devs / Extreme Asymmetry</text>
+    <text x="600" y="40" font-size="10" fill="#475569">• Autonomous squads releasing 10+ times/day</text>
+    <text x="600" y="55" font-size="10" fill="#475569">• Asymmetric compute (e.g., GPU AI, high-traffic billing)</text>
+    <text x="765" y="75" font-size="10.5" font-weight="700" fill="#059669" text-anchor="middle">➔ Microservices with Event-Driven Core</text>
+  </g>
+</svg>
