@@ -1,0 +1,171 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1020 620" width="100%" height="100%" style="background:#ffffff; font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;">
+  <defs>
+    <marker id="arr-navy" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-angle">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#1e293b"/>
+    </marker>
+    <marker id="arr-blue" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-angle">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#2563eb"/>
+    </marker>
+    <filter id="shadow" x="-4%" y="-4%" width="108%" height="108%">
+      <feDropShadow dx="0" dy="2" stdDeviation="3" flood-opacity="0.08"/>
+    </filter>
+  </defs>
+
+  <style>
+    .title { font-size: 20px; font-weight: 700; fill: #0f172a; text-anchor: middle; }
+    .subtitle { font-size: 13px; fill: #64748b; text-anchor: middle; }
+    .card { rx: 8; stroke-width: 1.5; fill: #ffffff; filter: url(#shadow); }
+    .header-badge { font-size: 11.5px; font-weight: 700; text-anchor: middle; }
+    .node-title { font-size: 12px; font-weight: 700; fill: #0f172a; text-anchor: middle; }
+    .mono-text { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace; font-size: 10px; }
+    .desc { font-size: 10.5px; fill: #334155; }
+    .bold { font-weight: 600; }
+  </style>
+
+  <!-- Title & Subtitle -->
+  <text x="510" y="32" class="title">Distributed Tracing &amp; W3C Context Propagation</text>
+  <text x="510" y="52" class="subtitle">End-to-end request lifecycle: Header injection, Span DAG hierarchy, Baggage, and Log correlation</text>
+
+  <!-- TOP SECTION: W3C TRACECONTEXT SPECIFICATION BOX -->
+  <g transform="translate(30, 75)">
+    <rect width="960" height="120" class="card" stroke="#3b82f6" fill="#eff6ff"/>
+    <rect width="960" height="28" rx="8" fill="#1e40af"/>
+    <text x="480" y="19" font-size="12" font-weight="700" fill="#ffffff" text-anchor="middle">W3C TraceContext Standard: The traceparent HTTP Header Wire Format</text>
+
+    <!-- Header Breakdown Anatomy -->
+    <g transform="translate(40, 42)">
+      <!-- Label -->
+      <text x="0" y="24" font-size="12" font-weight="700" fill="#1e293b">Header Value:</text>
+      
+      <!-- Box 1: Version -->
+      <rect x="100" y="5" width="40" height="30" rx="4" fill="#fee2e2" stroke="#ef4444"/>
+      <text x="120" y="25" class="mono-text" font-weight="700" fill="#991b1b" text-anchor="middle">00</text>
+      <text x="120" y="50" font-size="9" fill="#7f1d1d" text-anchor="middle">Version (2 hex)</text>
+
+      <text x="148" y="25" font-size="16" font-weight="700" fill="#64748b">-</text>
+
+      <!-- Box 2: TraceID -->
+      <rect x="160" y="5" width="310" height="30" rx="4" fill="#dbeafe" stroke="#3b82f6"/>
+      <text x="315" y="25" class="mono-text" font-weight="700" fill="#1e40af" text-anchor="middle">4bf92f3577b34da6a3ce929d0e0e4736</text>
+      <text x="315" y="50" font-size="9" fill="#1e3a8a" text-anchor="middle">Trace ID (16 bytes / 32 hex chars — Unique per business transaction)</text>
+
+      <text x="478" y="25" font-size="16" font-weight="700" fill="#64748b">-</text>
+
+      <!-- Box 3: ParentSpanID -->
+      <rect x="490" y="5" width="180" height="30" rx="4" fill="#dcfce7" stroke="#10b981"/>
+      <text x="580" y="25" class="mono-text" font-weight="700" fill="#065f46" text-anchor="middle">00f067aa0ba902b7</text>
+      <text x="580" y="50" font-size="9" fill="#047857" text-anchor="middle">Parent Span ID (8 bytes / 16 hex chars)</text>
+
+      <text x="678" y="25" font-size="16" font-weight="700" fill="#64748b">-</text>
+
+      <!-- Box 4: TraceFlags -->
+      <rect x="690" y="5" width="40" height="30" rx="4" fill="#fef3c7" stroke="#f59e0b"/>
+      <text x="710" y="25" class="mono-text" font-weight="700" fill="#92400e" text-anchor="middle">01</text>
+      <text x="710" y="50" font-size="9" fill="#78350f" text-anchor="middle">Flags (01 = Sampled)</text>
+    </g>
+  </g>
+
+  <!-- MIDDLE SECTION: MULTI-SERVICE CALL TOPOLOGY -->
+  <!-- Service A: API Gateway -->
+  <g transform="translate(30, 215)">
+    <rect width="210" height="150" class="card" stroke="#3b82f6"/>
+    <rect width="210" height="28" rx="8" fill="#eff6ff"/>
+    <text x="105" y="19" class="node-title" fill="#1d4ed8">1. API Gateway (Root)</text>
+
+    <text x="15" y="50" class="desc">• Creates <tspan class="bold">TraceId: 4bf92f35...</tspan></text>
+    <text x="15" y="70" class="desc">• Generates <tspan class="bold">SpanId_A: 00f067aa...</tspan></text>
+    <text x="15" y="90" class="desc">• Injects W3C <tspan class="bold">traceparent</tspan></text>
+    <text x="15" y="110" class="desc">• Injects <tspan class="bold">baggage: tenant=nike</tspan></text>
+    <rect x="15" y="122" width="180" height="20" rx="3" fill="#dbeafe"/>
+    <text x="105" y="136" font-size="9" font-weight="700" fill="#1e40af" text-anchor="middle">Span 1 (Duration: 180ms)</text>
+  </g>
+
+  <!-- Arrow A to B -->
+  <path d="M 240 280 L 290 280" stroke="#2563eb" stroke-width="2" marker-end="url(#arr-blue)"/>
+  <text x="265" y="270" font-size="8" font-weight="700" fill="#2563eb" text-anchor="middle">HTTP/2</text>
+
+  <!-- Service B: Order Service -->
+  <g transform="translate(300, 215)">
+    <rect width="210" height="150" class="card" stroke="#10b981"/>
+    <rect width="210" height="28" rx="8" fill="#ecfdf5"/>
+    <text x="105" y="19" class="node-title" fill="#047857">2. Order Microservice</text>
+
+    <text x="15" y="50" class="desc">• Extracts <tspan class="bold">TraceId</tspan> from header</text>
+    <text x="15" y="70" class="desc">• ParentSpanId = <tspan class="bold">SpanId_A</tspan></text>
+    <text x="15" y="90" class="desc">• Generates <tspan class="bold">SpanId_B: 5a73e8bc...</tspan></text>
+    <text x="15" y="110" class="desc">• Reads baggage: <tspan class="bold">tenant=nike</tspan></text>
+    <rect x="15" y="122" width="180" height="20" rx="3" fill="#dcfce7"/>
+    <text x="105" y="136" font-size="9" font-weight="700" fill="#065f46" text-anchor="middle">Span 2 (Duration: 140ms)</text>
+  </g>
+
+  <!-- Arrow B to C -->
+  <path d="M 510 280 L 560 280" stroke="#2563eb" stroke-width="2" marker-end="url(#arr-blue)"/>
+  <text x="535" y="270" font-size="8" font-weight="700" fill="#2563eb" text-anchor="middle">gRPC</text>
+
+  <!-- Service C: Payment Service -->
+  <g transform="translate(570, 215)">
+    <rect width="200" height="150" class="card" stroke="#f59e0b"/>
+    <rect width="200" height="28" rx="8" fill="#fffbeb"/>
+    <text x="100" y="19" class="node-title" fill="#b45309">3. Payment Service</text>
+
+    <text x="15" y="50" class="desc">• Inherits <tspan class="bold">TraceId</tspan></text>
+    <text x="15" y="70" class="desc">• ParentSpanId = <tspan class="bold">SpanId_B</tspan></text>
+    <text x="15" y="90" class="desc">• Generates <tspan class="bold">SpanId_C: 98fd4110...</tspan></text>
+    <text x="15" y="110" class="desc">• Calls Stripe / DB</text>
+    <rect x="15" y="122" width="170" height="20" rx="3" fill="#fef3c7"/>
+    <text x="100" y="136" font-size="9" font-weight="700" fill="#92400e" text-anchor="middle">Span 3 (Duration: 90ms)</text>
+  </g>
+
+  <!-- Arrow C to D -->
+  <path d="M 770 280 L 815 280" stroke="#2563eb" stroke-width="2" marker-end="url(#arr-blue)"/>
+  <text x="792" y="270" font-size="8" font-weight="700" fill="#2563eb" text-anchor="middle">TCP</text>
+
+  <!-- Component D: PostgreSQL Database -->
+  <g transform="translate(825, 215)">
+    <rect width="165" height="150" class="card" stroke="#6366f1"/>
+    <rect width="165" height="28" rx="8" fill="#eef2ff"/>
+    <text x="82" y="19" class="node-title" fill="#4338ca">4. PostgreSQL DB</text>
+
+    <text x="10" y="50" class="desc">• Client span created</text>
+    <text x="10" y="70" class="desc">• <tspan class="bold">db.system:</tspan> postgresql</text>
+    <text x="10" y="90" class="desc">• <tspan class="bold">db.statement:</tspan> INSERT</text>
+    <text x="10" y="110" class="desc">• Latency: 25ms</text>
+    <rect x="10" y="122" width="145" height="20" rx="3" fill="#e0e7ff"/>
+    <text x="82" y="136" font-size="9" font-weight="700" fill="#3730a3" text-anchor="middle">Span 4 (Duration: 25ms)</text>
+  </g>
+
+  <!-- BOTTOM SECTION: WATERFALL GANTT CHART & LOG CORRELATION -->
+  <g transform="translate(30, 385)">
+    <rect width="960" height="215" class="card" stroke="#cbd5e1" fill="#f8fafc"/>
+    <rect width="960" height="26" rx="8" fill="#334155"/>
+    <text x="480" y="18" font-size="11.5" font-weight="700" fill="#ffffff" text-anchor="middle">Visual Trace Waterfall (Jaeger / Tempo DAG) &amp; Correlated Structured Log Line</text>
+
+    <!-- Trace Gantt Chart Lines -->
+    <g transform="translate(30, 40)">
+      <!-- Span 1 Bar -->
+      <text x="0" y="15" font-size="10.5" font-weight="700" fill="#1e40af">Span 1: GET /checkout (API Gateway)</text>
+      <rect x="260" y="4" width="360" height="15" rx="3" fill="#3b82f6"/>
+      <text x="630" y="16" font-size="9.5" fill="#64748b">180ms</text>
+
+      <!-- Span 2 Bar -->
+      <text x="20" y="40" font-size="10" font-weight="600" fill="#065f46">Span 2: OrderService.CreateOrder()</text>
+      <rect x="300" y="29" width="280" height="15" rx="3" fill="#10b981"/>
+      <text x="590" y="41" font-size="9.5" fill="#64748b">140ms</text>
+
+      <!-- Span 3 Bar -->
+      <text x="40" y="65" font-size="10" font-weight="600" fill="#92400e">Span 3: PaymentService.Authorize()</text>
+      <rect x="380" y="54" width="180" height="15" rx="3" fill="#f59e0b"/>
+      <text x="570" y="66" font-size="9.5" fill="#64748b">90ms</text>
+
+      <!-- Span 4 Bar -->
+      <text x="60" y="90" font-size="10" font-weight="600" fill="#4338ca">Span 4: pg_query(INSERT INTO payments...)</text>
+      <rect x="430" y="79" width="50" height="15" rx="3" fill="#6366f1"/>
+      <text x="490" y="91" font-size="9.5" fill="#64748b">25ms</text>
+    </g>
+
+    <!-- Correlated Log Box -->
+    <rect x="25" y="145" width="910" height="55" rx="5" fill="#0f172a"/>
+    <text x="40" y="165" font-size="10" font-weight="700" fill="#38bdf8">Correlated Structured JSON Log (Serilog / Loki):</text>
+    <text x="40" y="185" class="mono-text" fill="#a7f3d0">{"time":"2026-09-14T08:00:01Z","level":"INFO","msg":"Payment charged successfully","TraceId":"4bf92f3577b34da6a3ce929d0e0e4736","SpanId":"98fd4110...","tenant":"nike"}</text>
+  </g>
+</svg>

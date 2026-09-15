@@ -1,0 +1,151 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1020 580" width="100%" height="100%" style="background:#ffffff; font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;">
+  <defs>
+    <marker id="arr-navy" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-angle">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#1e293b"/>
+    </marker>
+    <marker id="arr-blue" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-angle">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#2563eb"/>
+    </marker>
+    <marker id="arr-green" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-angle">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#059669"/>
+    </marker>
+    <marker id="arr-red" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-angle">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#dc2626"/>
+    </marker>
+    <filter id="shadow" x="-4%" y="-4%" width="108%" height="108%">
+      <feDropShadow dx="0" dy="2" stdDeviation="3" flood-opacity="0.08"/>
+    </filter>
+  </defs>
+
+  <style>
+    .title { font-size: 20px; font-weight: 700; fill: #0f172a; text-anchor: middle; }
+    .subtitle { font-size: 13px; fill: #64748b; text-anchor: middle; }
+    .card { rx: 8; stroke-width: 1.5; fill: #ffffff; filter: url(#shadow); }
+    .state-circle { rx: 20; stroke-width: 2; filter: url(#shadow); }
+    .state-title { font-size: 11.5px; font-weight: 700; text-anchor: middle; }
+    .event-label { font-size: 9.5px; font-weight: 600; }
+    .node-title { font-size: 12px; font-weight: 700; fill: #0f172a; text-anchor: middle; }
+    .desc { font-size: 10px; fill: #334155; }
+    .bold { font-weight: 600; }
+  </style>
+
+  <!-- Title & Subtitle -->
+  <text x="510" y="32" class="title">MassTransit Automatonymous State Machine Architecture</text>
+  <text x="510" y="52" class="subtitle">Orchestrating distributed transactions via Correlation IDs, State Transitions, and EF Core Outbox</text>
+
+  <!-- LEFT: FINITE STATE MACHINE (FSM) GRAPH -->
+  <g transform="translate(30, 75)">
+    <rect width="600" height="475" class="card" stroke="#3b82f6" fill="#f8fafc"/>
+    <rect width="600" height="32" rx="8" fill="#1e40af"/>
+    <text x="300" y="21" font-size="12" font-weight="700" fill="#ffffff" text-anchor="middle">OrderStateMachine : MassTransitStateMachine&lt;OrderState&gt;</text>
+
+    <!-- State 1: Initial -->
+    <g transform="translate(30, 70)">
+      <circle cx="40" cy="40" r="30" fill="#f1f5f9" stroke="#64748b" stroke-width="2"/>
+      <text x="40" y="44" class="state-title" fill="#334155">Initial</text>
+    </g>
+
+    <!-- Transition Initial -> Submitted -->
+    <path d="M 100 110 L 170 110" stroke="#2563eb" stroke-width="2" marker-end="url(#arr-blue)"/>
+    <text x="135" y="98" class="event-label" fill="#1d4ed8" text-anchor="middle">OrderSubmitted</text>
+    <text x="135" y="125" font-size="8.5" fill="#64748b" text-anchor="middle">CorrelateById()</text>
+
+    <!-- State 2: Submitted -->
+    <g transform="translate(175, 70)">
+      <rect x="0" y="10" width="130" height="60" rx="6" fill="#eff6ff" stroke="#3b82f6" stroke-width="2"/>
+      <text x="65" y="36" class="state-title" fill="#1e40af">Submitted</text>
+      <text x="65" y="52" font-size="8.5" fill="#2563eb" text-anchor="middle">Publish(ReserveStock)</text>
+    </g>
+
+    <!-- Transition Submitted -> AwaitingPayment -->
+    <path d="M 305 110 L 375 110" stroke="#2563eb" stroke-width="2" marker-end="url(#arr-blue)"/>
+    <text x="340" y="98" class="event-label" fill="#1d4ed8" text-anchor="middle">InventoryReserved</text>
+
+    <!-- State 3: AwaitingPayment -->
+    <g transform="translate(380, 70)">
+      <rect x="0" y="10" width="150" height="60" rx="6" fill="#fefce8" stroke="#f59e0b" stroke-width="2"/>
+      <text x="75" y="36" class="state-title" fill="#b45309">AwaitingPayment</text>
+      <text x="75" y="52" font-size="8.5" fill="#d97706" text-anchor="middle">Publish(ProcessPayment)</text>
+    </g>
+
+    <!-- BRANCHING FROM AwaitingPayment -->
+    <!-- Branch 1: SUCCESS (Happy Path) -->
+    <path d="M 455 140 L 455 200 L 400 240" stroke="#059669" stroke-width="2" marker-end="url(#arr-green)"/>
+    <rect x="360" y="175" width="135" height="22" rx="4" fill="#ecfdf5" stroke="#10b981"/>
+    <text x="427" y="190" font-size="9" font-weight="700" fill="#047857" text-anchor="middle">✓ PaymentCompleted</text>
+
+    <!-- State 4: Completed -->
+    <g transform="translate(260, 240)">
+      <rect x="0" y="10" width="140" height="60" rx="6" fill="#ecfdf5" stroke="#10b981" stroke-width="2"/>
+      <text x="70" y="36" class="state-title" fill="#047857">Completed</text>
+      <text x="70" y="52" font-size="8.5" fill="#059669" text-anchor="middle">Finalized / ShipOrder</text>
+    </g>
+
+    <!-- Branch 2: FAILURE (Compensation Path) -->
+    <path d="M 530 140 L 530 200 L 530 240" stroke="#dc2626" stroke-width="2" marker-end="url(#arr-red)"/>
+    <rect x="470" y="175" width="120" height="22" rx="4" fill="#fee2e2" stroke="#ef4444"/>
+    <text x="530" y="190" font-size="9" font-weight="700" fill="#dc2626" text-anchor="middle">⚡ PaymentFailed</text>
+
+    <!-- State 5: Faulted / Compensating -->
+    <g transform="translate(460, 240)">
+      <rect x="0" y="10" width="130" height="60" rx="6" fill="#fee2e2" stroke="#ef4444" stroke-width="2"/>
+      <text x="65" y="34" class="state-title" fill="#991b1b">Faulted</text>
+      <text x="65" y="48" font-size="8" fill="#dc2626" text-anchor="middle">ReleaseInventory</text>
+      <text x="65" y="60" font-size="8" fill="#dc2626" text-anchor="middle">&amp; CancelOrder</text>
+    </g>
+
+    <!-- Transition to Final State -->
+    <path d="M 330 310 L 330 360 L 380 380" stroke="#64748b" stroke-width="1.5" marker-end="url(#arr-navy)"/>
+    <path d="M 525 310 L 525 360 L 460 380" stroke="#64748b" stroke-width="1.5" marker-end="url(#arr-navy)"/>
+
+    <!-- Final State -->
+    <g transform="translate(380, 360)">
+      <circle cx="40" cy="40" r="28" fill="#ffffff" stroke="#0f172a" stroke-width="3"/>
+      <circle cx="40" cy="40" r="20" fill="#0f172a"/>
+      <text x="40" y="85" font-size="9.5" font-weight="700" fill="#0f172a" text-anchor="middle">Final State</text>
+    </g>
+
+    <!-- Bottom FSM Code Note -->
+    <rect x="25" y="420" width="550" height="40" rx="5" fill="#ffffff" stroke="#cbd5e1"/>
+    <text x="35" y="438" font-size="9" fill="#334155"><tspan class="bold">MassTransit automatonymous syntax:</tspan> During(AwaitingPayment, When(PaymentFailed).Then(..).TransitionTo(Faulted))</text>
+    <text x="35" y="452" font-size="8.5" fill="#64748b">Correlation: All messages carry `context.Message.CorrelationId == saga.CorrelationId`</text>
+  </g>
+
+
+  <!-- RIGHT: SAGA REPOSITORY & OUTBOX PERSISTENCE -->
+  <g transform="translate(650, 75)">
+    <rect width="340" height="475" class="card" stroke="#cbd5e1" fill="#f8fafc"/>
+    <rect width="340" height="32" rx="8" fill="#334155"/>
+    <text x="170" y="21" font-size="12" font-weight="700" fill="#ffffff" text-anchor="middle">Saga State Persistence (EF Core)</text>
+
+    <!-- Table 1: OrderState Table -->
+    <rect x="20" y="50" width="300" height="150" rx="6" fill="#ffffff" stroke="#3b82f6"/>
+    <rect x="20" y="50" width="300" height="26" rx="6" fill="#eff6ff"/>
+    <text x="170" y="68" font-size="11" font-weight="700" fill="#1e40af" text-anchor="middle">Database Table: OrderState (Saga Instance)</text>
+    
+    <text x="35" y="95" class="desc">• <tspan class="bold">CorrelationId (PK):</tspan> Guid (UUID)</text>
+    <text x="35" y="115" class="desc">• <tspan class="bold">CurrentState:</tspan> varchar(64) [AwaitingPayment]</text>
+    <text x="35" y="135" class="desc">• <tspan class="bold">OrderId:</tspan> varchar(36) [ORD-9876]</text>
+    <text x="35" y="155" class="desc">• <tspan class="bold">PaymentId:</tspan> varchar(36) [NULL / PAY-123]</text>
+    <text x="35" y="175" class="desc">• <tspan class="bold">RowVersion / xmin:</tspan> Optimistic Concurrency Token</text>
+
+    <!-- Outbox Pattern Bridge -->
+    <rect x="20" y="215" width="300" height="110" rx="6" fill="#ffffff" stroke="#10b981"/>
+    <rect x="20" y="215" width="300" height="26" rx="6" fill="#ecfdf5"/>
+    <text x="170" y="233" font-size="11" font-weight="700" fill="#047857" text-anchor="middle">MassTransit Transactional Outbox</text>
+    
+    <text x="35" y="260" class="desc">1. State update &amp; outbound commands written</text>
+    <text x="35" y="275" class="desc">   to DB in <tspan class="bold">one single local ACID transaction</tspan>.</text>
+    <text x="35" y="295" class="desc">2. Background daemon publishes Outbox table rows</text>
+    <text x="35" y="310" class="desc">   to RabbitMQ/Azure Service Bus reliably.</text>
+
+    <!-- Technology & NuGet Callout -->
+    <rect x="20" y="340" width="300" height="120" rx="6" fill="#ffffff" stroke="#cbd5e1"/>
+    <text x="35" y="362" font-size="10.5" font-weight="700" fill="#0f172a">Recommended NuGet Packages:</text>
+    <text x="35" y="382" font-size="9.5" fill="#2563eb">• MassTransit</text>
+    <text x="35" y="398" font-size="9.5" fill="#2563eb">• MassTransit.RabbitMQ</text>
+    <text x="35" y="414" font-size="9.5" fill="#2563eb">• MassTransit.EntityFrameworkCoreIntegration</text>
+    <text x="35" y="430" font-size="9.5" fill="#059669">• Npgsql.EntityFrameworkCore.PostgreSQL</text>
+    <text x="35" y="446" font-size="8.5" fill="#64748b">Zero dual-write bugs • Optimistic locking built-in</text>
+  </g>
+</svg>

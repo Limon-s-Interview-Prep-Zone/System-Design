@@ -1,0 +1,131 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1020 620" width="100%" height="100%" style="background:#ffffff; font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;">
+  <defs>
+    <marker id="arr-navy" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-angle">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#1e293b"/>
+    </marker>
+    <marker id="arr-blue" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-angle">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#2563eb"/>
+    </marker>
+    <marker id="arr-green" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-angle">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#059669"/>
+    </marker>
+    <marker id="arr-red" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-angle">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#dc2626"/>
+    </marker>
+    <filter id="shadow" x="-4%" y="-4%" width="108%" height="108%">
+      <feDropShadow dx="0" dy="2" stdDeviation="3" flood-opacity="0.08"/>
+    </filter>
+  </defs>
+
+  <style>
+    .title { font-size: 20px; font-weight: 700; fill: #0f172a; text-anchor: middle; }
+    .subtitle { font-size: 13px; fill: #64748b; text-anchor: middle; }
+    .card { rx: 8; stroke-width: 1.5; fill: #ffffff; filter: url(#shadow); }
+    .actor-box { rx: 6; stroke-width: 1.5; fill: #ffffff; filter: url(#shadow); }
+    .actor-title { font-size: 12px; font-weight: 700; fill: #0f172a; text-anchor: middle; }
+    .actor-sub { font-size: 9.5px; fill: #64748b; text-anchor: middle; }
+    .step-text { font-size: 10px; font-weight: 600; }
+    .desc { font-size: 10.5px; fill: #334155; }
+    .bold { font-weight: 600; }
+  </style>
+
+  <!-- Title & Subtitle -->
+  <text x="510" y="32" class="title">Saga Failure &amp; Semantic Compensation Flow</text>
+  <text x="510" y="52" class="subtitle">Backward recovery sequence: Why compensating transactions are semantic undos rather than storage rollbacks</text>
+
+  <!-- SEQUENCE DIAGRAM PARTICIPANTS -->
+  <g transform="translate(40, 75)">
+    <!-- Actor 1: Customer / Client -->
+    <rect x="0" y="0" width="130" height="45" class="actor-box" stroke="#94a3b8"/>
+    <text x="65" y="20" class="actor-title">Customer / Web</text>
+    <text x="65" y="34" class="actor-sub">Initiator</text>
+    <line x1="65" y1="45" x2="65" y2="430" stroke="#cbd5e1" stroke-width="1.5" stroke-dasharray="4,4"/>
+
+    <!-- Actor 2: Saga Orchestrator -->
+    <rect x="210" y="0" width="160" height="45" class="actor-box" stroke="#f59e0b" fill="#fffbeb"/>
+    <text x="290" y="20" class="actor-title" fill="#b45309">Saga Orchestrator</text>
+    <text x="290" y="34" class="actor-sub" fill="#92400e">State Machine Host</text>
+    <line x1="290" y1="45" x2="290" y2="430" stroke="#f59e0b" stroke-width="1.5" stroke-dasharray="4,4"/>
+
+    <!-- Actor 3: Order Service -->
+    <rect x="440" y="0" width="140" height="45" class="actor-box" stroke="#3b82f6"/>
+    <text x="510" y="20" class="actor-title">Order Service</text>
+    <text x="510" y="34" class="actor-sub">Local DB 1</text>
+    <line x1="510" y1="45" x2="510" y2="430" stroke="#cbd5e1" stroke-width="1.5" stroke-dasharray="4,4"/>
+
+    <!-- Actor 4: Inventory Service -->
+    <rect x="640" y="0" width="140" height="45" class="actor-box" stroke="#10b981"/>
+    <text x="710" y="20" class="actor-title">Inventory Service</text>
+    <text x="710" y="34" class="actor-sub">Local DB 2</text>
+    <line x1="710" y1="45" x2="710" y2="430" stroke="#cbd5e1" stroke-width="1.5" stroke-dasharray="4,4"/>
+
+    <!-- Actor 5: Payment Service -->
+    <rect x="830" y="0" width="130" height="45" class="actor-box" stroke="#ef4444"/>
+    <text x="895" y="20" class="actor-title">Payment Service</text>
+    <text x="895" y="34" class="actor-sub">Stripe / Bank API</text>
+    <line x1="895" y1="45" x2="895" y2="430" stroke="#cbd5e1" stroke-width="1.5" stroke-dasharray="4,4"/>
+
+    <!-- MESSAGE INTERACTIONS -->
+    <!-- 1. Submit Order -->
+    <line x1="65" y1="70" x2="290" y2="70" stroke="#1e293b" stroke-width="1.5" marker-end="url(#arr-navy)"/>
+    <text x="175" y="65" class="step-text" fill="#1e293b">1. SubmitOrder (OrderId)</text>
+
+    <!-- 2. Create Order in Order Svc -->
+    <line x1="290" y1="95" x2="510" y2="95" stroke="#2563eb" stroke-width="1.5" marker-end="url(#arr-blue)"/>
+    <text x="400" y="90" class="step-text" fill="#2563eb">2. CreatePendingOrder()</text>
+
+    <!-- 2b. Order Created OK -->
+    <line x1="510" y1="120" x2="290" y2="120" stroke="#059669" stroke-width="1.5" stroke-dasharray="3,3" marker-end="url(#arr-green)"/>
+    <text x="400" y="115" class="step-text" fill="#059669">✓ OrderCreated (State: PENDING)</text>
+
+    <!-- 3. Reserve Inventory -->
+    <line x1="290" y1="150" x2="710" y2="150" stroke="#2563eb" stroke-width="1.5" marker-end="url(#arr-blue)"/>
+    <text x="500" y="145" class="step-text" fill="#2563eb">3. ReserveInventory(Qty: 2)</text>
+
+    <!-- 3b. Inventory Reserved OK -->
+    <line x1="710" y1="175" x2="290" y2="175" stroke="#059669" stroke-width="1.5" stroke-dasharray="3,3" marker-end="url(#arr-green)"/>
+    <text x="500" y="170" class="step-text" fill="#059669">✓ InventoryReserved (Stock -2)</text>
+
+    <!-- 4. Process Payment -->
+    <line x1="290" y1="210" x2="895" y2="210" stroke="#2563eb" stroke-width="1.5" marker-end="url(#arr-blue)"/>
+    <text x="590" y="205" class="step-text" fill="#2563eb">4. ProcessPayment($150)</text>
+
+    <!-- 4b. PAYMENT FAILS (CARD DECLINED) -->
+    <line x1="895" y1="245" x2="290" y2="245" stroke="#dc2626" stroke-width="2" marker-end="url(#arr-red)"/>
+    <rect x="520" y="235" width="220" height="22" rx="4" fill="#fee2e2" stroke="#ef4444"/>
+    <text x="630" y="250" font-size="9.5" font-weight="700" fill="#dc2626" text-anchor="middle">⚡ 4b. PaymentFailed (Card Declined)</text>
+
+    <!-- ORCHESTRATOR TRANSITIONS TO COMPENSATING STATE -->
+    <rect x="220" y="270" width="140" height="25" rx="4" fill="#fee2e2" stroke="#dc2626"/>
+    <text x="290" y="286" font-size="9" font-weight="700" fill="#991b1b" text-anchor="middle">State: Rollback Triggered</text>
+
+    <!-- 5. COMPENSATING TRANSACTION 1: Release Inventory -->
+    <line x1="290" y1="315" x2="710" y2="315" stroke="#dc2626" stroke-width="2" marker-end="url(#arr-red)"/>
+    <text x="500" y="310" class="step-text" fill="#dc2626">5. Compensate: ReleaseInventory(Qty: 2)</text>
+
+    <line x1="710" y1="340" x2="290" y2="340" stroke="#059669" stroke-width="1.5" stroke-dasharray="3,3" marker-end="url(#arr-green)"/>
+    <text x="500" y="335" class="step-text" fill="#059669">✓ InventoryReleased (Stock +2 restored)</text>
+
+    <!-- 6. COMPENSATING TRANSACTION 2: Cancel Order -->
+    <line x1="290" y1="370" x2="510" y2="370" stroke="#dc2626" stroke-width="2" marker-end="url(#arr-red)"/>
+    <text x="400" y="365" class="step-text" fill="#dc2626">6. Compensate: CancelOrder()</text>
+
+    <line x1="510" y1="395" x2="290" y2="395" stroke="#059669" stroke-width="1.5" stroke-dasharray="3,3" marker-end="url(#arr-green)"/>
+    <text x="400" y="390" class="step-text" fill="#059669">✓ OrderCancelled (State: REJECTED)</text>
+
+    <!-- 7. Inform Client -->
+    <line x1="290" y1="420" x2="65" y2="420" stroke="#dc2626" stroke-width="1.5" stroke-dasharray="3,3" marker-end="url(#arr-red)"/>
+    <text x="175" y="415" class="step-text" fill="#dc2626">7. OrderFailedResponse</text>
+  </g>
+
+  <!-- BOTTOM EXPLANATION BOX -->
+  <g transform="translate(40, 520)">
+    <rect width="940" height="85" class="card" stroke="#94a3b8" fill="#f8fafc"/>
+    <rect width="940" height="22" rx="8" fill="#0f172a"/>
+    <text x="470" y="15" font-size="11" font-weight="700" fill="#ffffff" text-anchor="middle">Critical Architectural Concept: Semantic Undo vs. Storage Rollback</text>
+
+    <text x="25" y="42" class="desc">• In a local SQL database, `ROLLBACK` wipes the transaction log as if the write never happened.</text>
+    <text x="25" y="60" class="desc">• In a Saga, <tspan class="bold">you cannot un-ring a bell</tspan>. Step 2 already committed to disk. The compensating transaction executes an <tspan class="bold">offsetting business action</tspan></text>
+    <text x="25" y="75" class="desc">  (e.g., creating an inventory restock event, issuing a credit refund, sending a cancellation email). History is appended, never rewritten.</text>
+  </g>
+</svg>

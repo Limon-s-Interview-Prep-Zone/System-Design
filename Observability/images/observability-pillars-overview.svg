@@ -1,0 +1,150 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1020 580" width="100%" height="100%" style="background:#ffffff; font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;">
+  <defs>
+    <filter id="shadow" x="-4%" y="-4%" width="108%" height="108%">
+      <feDropShadow dx="0" dy="2" stdDeviation="3" flood-opacity="0.08"/>
+    </filter>
+  </defs>
+
+  <style>
+    .title { font-size: 20px; font-weight: 700; fill: #0f172a; text-anchor: middle; }
+    .subtitle { font-size: 13px; fill: #64748b; text-anchor: middle; }
+    .pillar-card { rx: 8; stroke-width: 1.5; fill: #ffffff; filter: url(#shadow); }
+    .card-header { font-size: 13px; font-weight: 700; text-anchor: middle; }
+    .question-badge { font-size: 10.5px; font-weight: 700; text-anchor: middle; }
+    .item-text { font-size: 10.5px; fill: #334155; }
+    .highlight { font-weight: 600; }
+  </style>
+
+  <!-- Title & Subtitle -->
+  <text x="510" y="32" class="title">The 3 (+1) Pillars of Observability: Telemetry Taxonomy</text>
+  <text x="510" y="52" class="subtitle">Correlating Metrics, Logs, Traces, and Continuous Profiling to infer internal system health</text>
+
+  <!-- PILLAR 1: METRICS -->
+  <g transform="translate(25, 75)">
+    <rect width="220" height="340" class="pillar-card" stroke="#3b82f6"/>
+    <rect width="220" height="36" rx="8" fill="#eff6ff"/>
+    <text x="110" y="23" class="card-header" fill="#1d4ed8">1. Metrics (M)</text>
+
+    <rect x="15" y="48" width="190" height="26" rx="4" fill="#dbeafe"/>
+    <text x="110" y="65" class="question-badge" fill="#1e40af">Question: "What is broken?"</text>
+
+    <!-- Content Items -->
+    <text x="15" y="100" class="item-text">• <tspan class="highlight">Type:</tspan> Aggregated time-series</text>
+    <text x="15" y="120" class="item-text">• <tspan class="highlight">Primitives:</tspan> Counter, Gauge,</text>
+    <text x="25" y="135" class="item-text">Histogram, Summary</text>
+    <text x="15" y="160" class="item-text">• <tspan class="highlight">Strength:</tspan> Low storage footprint,</text>
+    <text x="25" y="175" class="item-text">instant mathematical queries</text>
+    <text x="15" y="200" class="item-text">• <tspan class="highlight">Limitation:</tspan> Lacks fine context;</text>
+    <text x="25" y="215" class="item-text">cardinality explosion risk</text>
+
+    <!-- Tech Stack -->
+    <rect x="15" y="245" width="190" height="75" rx="5" fill="#f8fafc" stroke="#cbd5e1"/>
+    <text x="25" y="265" font-size="10.5" font-weight="700" fill="#0f172a">Industry Engines:</text>
+    <text x="25" y="283" font-size="9.5" fill="#334155">• Prometheus / Thanos / Cortex</text>
+    <text x="25" y="298" font-size="9.5" fill="#334155">• InfluxDB / AWS CloudWatch</text>
+    <text x="25" y="313" font-size="9.5" fill="#2563eb">• System.Diagnostics.Metrics</text>
+  </g>
+
+  <!-- PILLAR 2: LOGS -->
+  <g transform="translate(270, 75)">
+    <rect width="220" height="340" class="pillar-card" stroke="#f59e0b"/>
+    <rect width="220" height="36" rx="8" fill="#fffbeb"/>
+    <text x="110" y="23" class="card-header" fill="#b45309">2. Logs (L)</text>
+
+    <rect x="15" y="48" width="190" height="26" rx="4" fill="#fef3c7"/>
+    <text x="110" y="65" class="question-badge" fill="#92400e">Question: "Why did it break?"</text>
+
+    <!-- Content Items -->
+    <text x="15" y="100" class="item-text">• <tspan class="highlight">Type:</tspan> Discrete event timestamp</text>
+    <text x="15" y="120" class="item-text">• <tspan class="highlight">Format:</tspan> Structured JSON</text>
+    <text x="25" y="135" class="item-text">with key-value pairs</text>
+    <text x="15" y="160" class="item-text">• <tspan class="highlight">Strength:</tspan> High descriptive context,</text>
+    <text x="25" y="175" class="item-text">exact stack traces &amp; errors</text>
+    <text x="15" y="200" class="item-text">• <tspan class="highlight">Limitation:</tspan> Huge storage volume;</text>
+    <text x="25" y="215" class="item-text">expensive indexing cost</text>
+
+    <!-- Tech Stack -->
+    <rect x="15" y="245" width="190" height="75" rx="5" fill="#f8fafc" stroke="#cbd5e1"/>
+    <text x="25" y="265" font-size="10.5" font-weight="700" fill="#0f172a">Industry Engines:</text>
+    <text x="25" y="283" font-size="9.5" fill="#334155">• Grafana Loki / Fluentd</text>
+    <text x="25" y="298" font-size="9.5" fill="#334155">• Elasticsearch / OpenSearch</text>
+    <text x="25" y="313" font-size="9.5" fill="#b45309">• Serilog Structured JSON</text>
+  </g>
+
+  <!-- PILLAR 3: DISTRIBUTED TRACES -->
+  <g transform="translate(515, 75)">
+    <rect width="220" height="340" class="pillar-card" stroke="#10b981"/>
+    <rect width="220" height="36" rx="8" fill="#ecfdf5"/>
+    <text x="110" y="23" class="card-header" fill="#047857">3. Traces (T)</text>
+
+    <rect x="15" y="48" width="190" height="26" rx="4" fill="#dcfce7"/>
+    <text x="110" y="65" class="question-badge" fill="#15803d">Question: "Where is the delay?"</text>
+
+    <!-- Content Items -->
+    <text x="15" y="100" class="item-text">• <tspan class="highlight">Type:</tspan> Request execution journey</text>
+    <text x="15" y="120" class="item-text">• <tspan class="highlight">Primitives:</tspan> TraceId, SpanId,</text>
+    <text x="25" y="135" class="item-text">ParentId, Timestamps, Tags</text>
+    <text x="15" y="160" class="item-text">• <tspan class="highlight">Strength:</tspan> Maps distributed DAG,</text>
+    <text x="25" y="175" class="item-text">uncovers multi-hop bottlenecks</text>
+    <text x="15" y="200" class="item-text">• <tspan class="highlight">Limitation:</tspan> Instrumentation tax;</text>
+    <text x="25" y="215" class="item-text">requires sampling at scale</text>
+
+    <!-- Tech Stack -->
+    <rect x="15" y="245" width="190" height="75" rx="5" fill="#f8fafc" stroke="#cbd5e1"/>
+    <text x="25" y="265" font-size="10.5" font-weight="700" fill="#0f172a">Industry Engines:</text>
+    <text x="25" y="283" font-size="9.5" fill="#334155">• Jaeger / Grafana Tempo</text>
+    <text x="25" y="298" font-size="9.5" fill="#334155">• AWS X-Ray / Zipkin</text>
+    <text x="25" y="313" font-size="9.5" fill="#059669">• System.Diagnostics.Activity</text>
+  </g>
+
+  <!-- PILLAR 4: CONTINUOUS PROFILING -->
+  <g transform="translate(760, 75)">
+    <rect width="220" height="340" class="pillar-card" stroke="#8b5cf6"/>
+    <rect width="220" height="36" rx="8" fill="#f5f3ff"/>
+    <text x="110" y="23" class="card-header" fill="#6d28d9">4. Continuous Profiling</text>
+
+    <rect x="15" y="48" width="190" height="26" rx="4" fill="#ede9fe"/>
+    <text x="110" y="65" class="question-badge" fill="#5b21b6">Question: "Which code is hot?"</text>
+
+    <!-- Content Items -->
+    <text x="15" y="100" class="item-text">• <tspan class="highlight">Type:</tspan> In-production call stack</text>
+    <text x="15" y="120" class="item-text">• <tspan class="highlight">Visualization:</tspan> Flame graphs,</text>
+    <text x="25" y="135" class="item-text">CPU cycles, Heap allocations</text>
+    <text x="15" y="160" class="item-text">• <tspan class="highlight">Strength:</tspan> Pinpoints line of code</text>
+    <text x="25" y="175" class="item-text">causing memory/CPU leaks</text>
+    <text x="15" y="200" class="item-text">• <tspan class="highlight">Limitation:</tspan> Continuous overhead</text>
+    <text x="25" y="215" class="item-text">(must be &lt; 2% CPU runtime tax)</text>
+
+    <!-- Tech Stack -->
+    <rect x="15" y="245" width="190" height="75" rx="5" fill="#f8fafc" stroke="#cbd5e1"/>
+    <text x="25" y="265" font-size="10.5" font-weight="700" fill="#0f172a">Industry Engines:</text>
+    <text x="25" y="283" font-size="9.5" fill="#334155">• Pyroscope (Grafana) / Parca</text>
+    <text x="25" y="298" font-size="9.5" fill="#334155">• Datadog Continuous Profiler</text>
+    <text x="25" y="313" font-size="9.5" fill="#7c3aed">• dotnet-trace / dotnet-dump</text>
+  </g>
+
+  <!-- BOTTOM BAR: TELEMETRY CORRELATION FABRIC -->
+  <g transform="translate(25, 435)">
+    <rect width="955" height="115" rx="8" fill="#f8fafc" stroke="#94a3b8" class="pillar-card"/>
+    <rect width="955" height="28" rx="8" fill="#0f172a"/>
+    <text x="477" y="19" font-size="12" font-weight="700" fill="#ffffff" text-anchor="middle">Unified Telemetry Correlation Fabric: The OpenTelemetry Standard</text>
+
+    <g transform="translate(25, 45)">
+      <rect width="270" height="50" rx="5" fill="#eff6ff" stroke="#3b82f6"/>
+      <text x="135" y="22" font-size="11" font-weight="700" fill="#1e40af" text-anchor="middle">Step 1: Alert on Metric</text>
+      <text x="135" y="38" font-size="9.5" fill="#2563eb" text-anchor="middle">Prometheus: Error rate &gt; 1% SLO burn</text>
+
+      <text x="305" y="30" font-size="16" fill="#64748b" text-anchor="middle">➔</text>
+
+      <rect x="330" y="0" width="270" height="50" rx="5" fill="#ecfdf5" stroke="#10b981"/>
+      <text x="465" y="22" font-size="11" font-weight="700" fill="#065f46" text-anchor="middle">Step 2: Inspect Trace DAG</text>
+      <text x="465" y="38" font-size="9.5" fill="#059669" text-anchor="middle">Tempo: TraceId reveals DB query timeout</text>
+
+      <text x="615" y="30" font-size="16" fill="#64748b" text-anchor="middle">➔</text>
+
+      <rect x="640" y="0" width="270" height="50" rx="5" fill="#fffbeb" stroke="#f59e0b"/>
+      <text x="775" y="22" font-size="11" font-weight="700" fill="#92400e" text-anchor="middle">Step 3: Correlate Logs &amp; Code</text>
+      <text x="775" y="38" font-size="9.5" fill="#b45309" text-anchor="middle">Loki: Filter by TraceId + Pyroscope flame graph</text>
+    </g>
+  </g>
+</svg>

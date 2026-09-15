@@ -1,0 +1,149 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1020 580" width="100%" height="100%" style="background:#ffffff; font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;">
+  <defs>
+    <marker id="arr-navy" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-angle">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#1e293b"/>
+    </marker>
+    <marker id="arr-blue" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-angle">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#2563eb"/>
+    </marker>
+    <marker id="arr-red" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-angle">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#dc2626"/>
+    </marker>
+    <marker id="arr-green" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-angle">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#059669"/>
+    </marker>
+    <filter id="shadow" x="-4%" y="-4%" width="108%" height="108%">
+      <feDropShadow dx="0" dy="2" stdDeviation="3" flood-opacity="0.08"/>
+    </filter>
+  </defs>
+
+  <style>
+    .title { font-size: 20px; font-weight: 700; fill: #0f172a; text-anchor: middle; }
+    .subtitle { font-size: 13px; fill: #64748b; text-anchor: middle; }
+    .card { rx: 8; stroke-width: 1.5; fill: #ffffff; filter: url(#shadow); }
+    .header-badge { font-size: 12px; font-weight: 700; text-anchor: middle; }
+    .node-title { font-size: 12px; font-weight: 700; fill: #0f172a; text-anchor: middle; }
+    .desc { font-size: 10.5px; fill: #334155; }
+    .bold { font-weight: 600; }
+  </style>
+
+  <!-- Title & Subtitle -->
+  <text x="510" y="32" class="title">Distributed Transactions: Why 2-Phase Commit (2PC) Fails vs. The Saga Pattern</text>
+  <text x="510" y="52" class="subtitle">Replacing blocking distributed row locks with asynchronous local transactions and semantic compensations</text>
+
+  <!-- LEFT COLUMN: TWO-PHASE COMMIT (2PC) -->
+  <g transform="translate(30, 75)">
+    <rect width="460" height="375" class="card" stroke="#fca5a5" fill="#fff5f5"/>
+    <rect width="460" height="32" rx="8" fill="#fee2e2"/>
+    <text x="230" y="21" class="header-badge" fill="#991b1b">Two-Phase Commit (2PC / XA) — Why It Fails</text>
+
+    <!-- Coordinator Node -->
+    <rect x="155" y="50" width="150" height="50" rx="6" fill="#ffffff" stroke="#ef4444" stroke-width="2"/>
+    <text x="230" y="72" class="node-title" fill="#991b1b">2PC Coordinator</text>
+    <text x="230" y="88" font-size="9" fill="#dc2626" font-weight="700" text-anchor="middle">Single Point of Failure (SPOF)</text>
+
+    <!-- 3 Participant Databases -->
+    <g transform="translate(15, 125)">
+      <!-- DB 1 -->
+      <rect x="0" y="0" width="130" height="50" rx="5" fill="#ffffff" stroke="#94a3b8"/>
+      <text x="65" y="22" class="node-title">Order DB</text>
+      <text x="65" y="38" font-size="8.5" fill="#dc2626" font-weight="700" text-anchor="middle">🔒 LOCKED ROWS</text>
+
+      <!-- DB 2 -->
+      <rect x="150" y="0" width="130" height="50" rx="5" fill="#ffffff" stroke="#94a3b8"/>
+      <text x="215" y="22" class="node-title">Inventory DB</text>
+      <text x="215" y="38" font-size="8.5" fill="#dc2626" font-weight="700" text-anchor="middle">🔒 LOCKED ROWS</text>
+
+      <!-- DB 3 -->
+      <rect x="300" y="0" width="130" height="50" rx="5" fill="#ffffff" stroke="#94a3b8"/>
+      <text x="365" y="22" class="node-title">Payment DB</text>
+      <text x="365" y="38" font-size="8.5" fill="#dc2626" font-weight="700" text-anchor="middle">🔒 LOCKED ROWS</text>
+
+      <!-- Lock Arrows from Coordinator -->
+      <path d="M 215 -25 L 65 -5" stroke="#dc2626" stroke-width="1.5" stroke-dasharray="3,3" marker-end="url(#arr-red)"/>
+      <path d="M 215 -25 L 215 -5" stroke="#dc2626" stroke-width="1.5" stroke-dasharray="3,3" marker-end="url(#arr-red)"/>
+      <path d="M 215 -25 L 365 -5" stroke="#dc2626" stroke-width="1.5" stroke-dasharray="3,3" marker-end="url(#arr-red)"/>
+    </g>
+
+    <!-- Failure Reasons Box -->
+    <rect x="20" y="195" width="420" height="160" rx="6" fill="#ffffff" stroke="#fca5a5"/>
+    <text x="35" y="217" font-size="11" font-weight="700" fill="#991b1b">Fatal Flaws in Cloud Microservices:</text>
+    <text x="35" y="238" class="desc">1. <tspan class="bold">Distributed Row Locks:</tspan> All DBs hold row locks across network hops.</text>
+    <text x="35" y="255" class="desc">   Throughput plummets; latency spikes exponentially.</text>
+    <text x="35" y="275" class="desc">2. <tspan class="bold">Coordinator Hang / SPOF:</tspan> If coordinator dies between Prepare &amp;</text>
+    <text x="35" y="292" class="desc">   Commit, all databases remain indefinitely locked in doubt!</text>
+    <text x="35" y="312" class="desc">3. <tspan class="bold">No Cloud Support:</tspan> DynamoDB, MongoDB, Stripe, and Kafka</text>
+    <text x="35" y="329" class="desc">   simply <tspan class="bold">do not support XA / 2PC protocols</tspan>.</text>
+    <text x="35" y="347" class="desc">4. <tspan class="bold">CAP Theorem:</tspan> 2PC is CP (chooses deadlock over availability).</text>
+  </g>
+
+
+  <!-- RIGHT COLUMN: THE SAGA PATTERN -->
+  <g transform="translate(530, 75)">
+    <rect width="460" height="375" class="card" stroke="#86efac" fill="#f0fdf4"/>
+    <rect width="460" height="32" rx="8" fill="#dcfce7"/>
+    <text x="230" y="21" class="header-badge" fill="#15803d">The Saga Pattern — Asynchronous Local Transactions</text>
+
+    <!-- Sequence of 3 Local Steps -->
+    <g transform="translate(20, 50)">
+      <!-- Step 1: Order Svc -->
+      <rect x="0" y="0" width="125" height="60" rx="5" fill="#ffffff" stroke="#10b981" stroke-width="1.5"/>
+      <text x="62" y="20" class="node-title" fill="#047857">1. Order Service</text>
+      <text x="62" y="36" font-size="8.5" fill="#059669" font-weight="700" text-anchor="middle">Local TX 1 (ACID)</text>
+      <text x="62" y="49" font-size="8" fill="#64748b" text-anchor="middle">Status: PENDING</text>
+
+      <!-- Arrow 1 to 2 -->
+      <path d="M 125 30 L 145 30" stroke="#059669" stroke-width="2" marker-end="url(#arr-green)"/>
+
+      <!-- Step 2: Inventory Svc -->
+      <rect x="150" y="0" width="125" height="60" rx="5" fill="#ffffff" stroke="#10b981" stroke-width="1.5"/>
+      <text x="212" y="20" class="node-title" fill="#047857">2. Inventory Svc</text>
+      <text x="212" y="36" font-size="8.5" fill="#059669" font-weight="700" text-anchor="middle">Local TX 2 (ACID)</text>
+      <text x="212" y="49" font-size="8" fill="#64748b" text-anchor="middle">Reserve Stock</text>
+
+      <!-- Arrow 2 to 3 -->
+      <path d="M 275 30 L 295 30" stroke="#059669" stroke-width="2" marker-end="url(#arr-green)"/>
+
+      <!-- Step 3: Payment Svc -->
+      <rect x="300" y="0" width="120" height="60" rx="5" fill="#ffffff" stroke="#10b981" stroke-width="1.5"/>
+      <text x="360" y="20" class="node-title" fill="#047857">3. Payment Svc</text>
+      <text x="360" y="36" font-size="8.5" fill="#059669" font-weight="700" text-anchor="middle">Local TX 3 (ACID)</text>
+      <text x="360" y="49" font-size="8" fill="#64748b" text-anchor="middle">Charge Card</text>
+    </g>
+
+    <!-- Compensation Flow Highlight -->
+    <g transform="translate(20, 125)">
+      <rect width="420" height="55" rx="5" fill="#fef2f2" stroke="#ef4444" stroke-dasharray="3,3"/>
+      <text x="210" y="22" font-size="10.5" font-weight="700" fill="#dc2626" text-anchor="middle">Backward Recovery / Compensation Trigger:</text>
+      <text x="210" y="40" font-size="9.5" fill="#7f1d1d" text-anchor="middle">If Step 3 (Payment) FAILS ➔ Compensate Step 2 (Release Stock) ➔ Cancel Order</text>
+    </g>
+
+    <!-- Saga Benefits Box -->
+    <rect x="20" y="195" width="420" height="160" rx="6" fill="#ffffff" stroke="#86efac"/>
+    <text x="35" y="217" font-size="11" font-weight="700" fill="#15803d">Why Saga Succeeds in Microservices:</text>
+    <text x="35" y="238" class="desc">1. <tspan class="bold">No Distributed Locks:</tspan> Each service locks rows for milliseconds only.</text>
+    <text x="35" y="255" class="desc">   High throughput, high concurrency, zero network lock holding.</text>
+    <text x="35" y="275" class="desc">2. <tspan class="bold">Polyglot Friendly:</tspan> Works with Postgres, MongoDB, Kafka,</text>
+    <text x="35" y="292" class="desc">   and third-party external REST APIs (Stripe, PayPal, FedEx).</text>
+    <text x="35" y="312" class="desc">3. <tspan class="bold">Eventual Consistency (BASE):</tspan> Highly available cloud execution.</text>
+    <text x="35" y="329" class="desc">4. <tspan class="bold">Fault Isolation:</tspan> Downstream failure cleanly triggers semantic rollback.</text>
+    <text x="35" y="347" class="desc">5. <tspan class="bold">Forward or Backward Recovery:</tspan> Flexible failure handling.</text>
+  </g>
+
+  <!-- BOTTOM COMPARISON SUMMARY BAR -->
+  <g transform="translate(30, 465)">
+    <rect width="960" height="95" class="card" stroke="#94a3b8" fill="#f8fafc"/>
+    <rect width="960" height="24" rx="8" fill="#0f172a"/>
+    <text x="480" y="17" font-size="11" font-weight="700" fill="#ffffff" text-anchor="middle">The Architectural Paradigm Shift: ACID vs. BASE</text>
+
+    <g transform="translate(30, 35)">
+      <text x="0" y="20" font-size="11" font-weight="700" fill="#991b1b">ACID (2-Phase Commit):</text>
+      <text x="0" y="38" class="desc">• Atomic, Consistent, Isolated, Durable.</text>
+      <text x="0" y="52" class="desc">• Guaranteed immediate consistency, but unscalable &amp; fragile in distributed microservices.</text>
+
+      <text x="490" y="20" font-size="11" font-weight="700" fill="#059669">BASE (Saga Pattern):</text>
+      <text x="490" y="38" class="desc">• Basically Available, Soft State, Eventual Consistency.</text>
+      <text x="490" y="52" class="desc">• Embraces asynchronous event messaging, semantic compensation, and resilient cloud scale.</text>
+    </g>
+  </g>
+</svg>

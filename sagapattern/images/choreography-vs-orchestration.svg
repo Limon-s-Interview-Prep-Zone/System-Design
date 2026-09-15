@@ -1,0 +1,142 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1020 580" width="100%" height="100%" style="background:#ffffff; font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;">
+  <defs>
+    <marker id="arr-navy" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-angle">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#1e293b"/>
+    </marker>
+    <marker id="arr-blue" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-angle">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#2563eb"/>
+    </marker>
+    <marker id="arr-green" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-angle">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#059669"/>
+    </marker>
+    <filter id="shadow" x="-4%" y="-4%" width="108%" height="108%">
+      <feDropShadow dx="0" dy="2" stdDeviation="3" flood-opacity="0.08"/>
+    </filter>
+  </defs>
+
+  <style>
+    .title { font-size: 20px; font-weight: 700; fill: #0f172a; text-anchor: middle; }
+    .subtitle { font-size: 13px; fill: #64748b; text-anchor: middle; }
+    .card { rx: 8; stroke-width: 1.5; fill: #ffffff; filter: url(#shadow); }
+    .header-badge { font-size: 12px; font-weight: 700; text-anchor: middle; }
+    .node-title { font-size: 12px; font-weight: 700; fill: #0f172a; text-anchor: middle; }
+    .desc { font-size: 10.5px; fill: #334155; }
+    .bold { font-weight: 600; }
+  </style>
+
+  <!-- Title & Subtitle -->
+  <text x="510" y="32" class="title">Saga Execution Models: Choreography vs. Orchestration</text>
+  <text x="510" y="52" class="subtitle">Comparing decentralized pub/sub event meshes against centralized command-driven state machines</text>
+
+  <!-- LEFT: CHOREOGRAPHY SAGA -->
+  <g transform="translate(30, 75)">
+    <rect width="460" height="380" class="card" stroke="#93c5fd" fill="#eff6ff"/>
+    <rect width="460" height="32" rx="8" fill="#dbeafe"/>
+    <text x="230" y="21" class="header-badge" fill="#1e40af">Pattern A: Choreography (Decentralized Pub/Sub)</text>
+
+    <!-- Visual Event Loop -->
+    <g transform="translate(30, 50)">
+      <!-- Order Service -->
+      <rect x="0" y="0" width="115" height="50" rx="5" fill="#ffffff" stroke="#3b82f6"/>
+      <text x="57" y="22" class="node-title">Order Svc</text>
+      <text x="57" y="38" font-size="8" fill="#2563eb" text-anchor="middle">Publishes OrderCreated</text>
+
+      <!-- Arrow 1 to 2 -->
+      <path d="M 115 25 L 145 25" stroke="#2563eb" stroke-width="1.5" marker-end="url(#arr-blue)"/>
+
+      <!-- Inventory Service -->
+      <rect x="150" y="0" width="115" height="50" rx="5" fill="#ffffff" stroke="#10b981"/>
+      <text x="207" y="22" class="node-title">Inventory Svc</text>
+      <text x="207" y="38" font-size="8" fill="#059669" text-anchor="middle">Publishes InvReserved</text>
+
+      <!-- Arrow 2 to 3 -->
+      <path d="M 265 25 L 295 25" stroke="#2563eb" stroke-width="1.5" marker-end="url(#arr-blue)"/>
+
+      <!-- Payment Service -->
+      <rect x="300" y="0" width="105" height="50" rx="5" fill="#ffffff" stroke="#f59e0b"/>
+      <text x="352" y="22" class="node-title">Payment Svc</text>
+      <text x="352" y="38" font-size="8" fill="#b45309" text-anchor="middle">Publishes PaymentDone</text>
+
+      <!-- Circular Feedback Arrow -->
+      <path d="M 352 50 L 352 80 L 57 80 L 57 55" stroke="#6366f1" stroke-width="1.5" stroke-dasharray="3,3" marker-end="url(#arr-navy)"/>
+      <text x="200" y="75" font-size="8.5" fill="#4338ca" text-anchor="middle">Events bounce in circular peer mesh ("Pinball Machine")</text>
+    </g>
+
+    <!-- Characteristics Box -->
+    <rect x="25" y="150" width="410" height="210" rx="6" fill="#ffffff" stroke="#cbd5e1"/>
+    <text x="35" y="172" font-size="11" font-weight="700" fill="#0f172a">Trade-offs &amp; Architectural Profile:</text>
+    <text x="35" y="193" class="desc">✓ <tspan class="bold">Zero Central Coordinator:</tspan> Services remain loosely coupled.</text>
+    <text x="35" y="211" class="desc">✓ <tspan class="bold">Ideal for Simple Flows:</tspan> Perfect for 2 to 3 steps with low complexity.</text>
+    <text x="35" y="229" class="desc" fill="#dc2626">✗ <tspan class="bold">"Pinball Machine" Architecture:</tspan> Impossible to know current state</text>
+    <text x="35" y="246" class="desc" fill="#dc2626">   of a business transaction without querying 5 different databases.</text>
+    <text x="35" y="266" class="desc" fill="#dc2626">✗ <tspan class="bold">Cyclic Dependency Risk:</tspan> Services must know about each other's events.</text>
+    <text x="35" y="284" class="desc" fill="#dc2626">✗ <tspan class="bold">Compensation Nightmare:</tspan> Multi-step rollback triggers event storm.</text>
+    <text x="35" y="302" class="desc" fill="#dc2626">✗ <tspan class="bold">Testing Complexity:</tspan> End-to-end integration tests are brittle.</text>
+    <text x="35" y="325" font-size="10" font-weight="700" fill="#2563eb">Best For: Small teams, simple 2-step async workflows.</text>
+  </g>
+
+
+  <!-- RIGHT: ORCHESTRATION SAGA -->
+  <g transform="translate(530, 75)">
+    <rect width="460" height="380" class="card" stroke="#86efac" fill="#f0fdf4"/>
+    <rect width="460" height="32" rx="8" fill="#dcfce7"/>
+    <text x="230" y="21" class="header-badge" fill="#15803d">Pattern B: Orchestration (Centralized State Machine)</text>
+
+    <!-- Central Orchestrator Hub & Spoke -->
+    <g transform="translate(30, 45)">
+      <!-- Central Orchestrator -->
+      <rect x="110" y="0" width="180" height="42" rx="6" fill="#fef3c7" stroke="#f59e0b" stroke-width="2"/>
+      <text x="200" y="20" class="node-title" fill="#b45309">Order Saga Orchestrator</text>
+      <text x="200" y="34" font-size="8" fill="#92400e" text-anchor="middle">MassTransit / Temporal State Machine</text>
+
+      <!-- Spoke 1: Inventory -->
+      <rect x="0" y="70" width="110" height="45" rx="5" fill="#ffffff" stroke="#10b981"/>
+      <text x="55" y="90" class="node-title">Inventory Svc</text>
+      <text x="55" y="104" font-size="7.5" fill="#64748b" text-anchor="middle">Executes Command</text>
+
+      <!-- Spoke 2: Payment -->
+      <rect x="145" y="70" width="110" height="45" rx="5" fill="#ffffff" stroke="#10b981"/>
+      <text x="200" y="90" class="node-title">Payment Svc</text>
+      <text x="200" y="104" font-size="7.5" fill="#64748b" text-anchor="middle">Executes Command</text>
+
+      <!-- Spoke 3: Shipping -->
+      <rect x="290" y="70" width="110" height="45" rx="5" fill="#ffffff" stroke="#10b981"/>
+      <text x="345" y="90" class="node-title">Shipping Svc</text>
+      <text x="345" y="104" font-size="7.5" fill="#64748b" text-anchor="middle">Executes Command</text>
+
+      <!-- Arrows between Orchestrator and Spokes -->
+      <line x1="140" y1="42" x2="65" y2="70" stroke="#2563eb" stroke-width="1.5" marker-end="url(#arr-blue)"/>
+      <line x1="200" y1="42" x2="200" y2="70" stroke="#2563eb" stroke-width="1.5" marker-end="url(#arr-blue)"/>
+      <line x1="260" y1="42" x2="335" y2="70" stroke="#2563eb" stroke-width="1.5" marker-end="url(#arr-blue)"/>
+    </g>
+
+    <!-- Characteristics Box -->
+    <rect x="25" y="150" width="410" height="210" rx="6" fill="#ffffff" stroke="#cbd5e1"/>
+    <text x="35" y="172" font-size="11" font-weight="700" fill="#0f172a">Trade-offs &amp; Architectural Profile:</text>
+    <text x="35" y="193" class="desc">✓ <tspan class="bold">Single Source of Truth:</tspan> The orchestrator DB stores current state</text>
+    <text x="35" y="211" class="desc">   (e.g., `OrderSubmitted`, `InventoryReserved`, `PaymentFailed`).</text>
+    <text x="35" y="229" class="desc">✓ <tspan class="bold">Decoupled Participants:</tspan> Services know nothing about each other.</text>
+    <text x="35" y="246" class="desc">✓ <tspan class="bold">Clean Compensations:</tspan> Central coordinator issues reverse commands.</text>
+    <text x="35" y="266" class="desc">✓ <tspan class="bold">Easy Observability:</tspan> Inspect 1 saga instance to see exact progress.</text>
+    <text x="35" y="284" class="desc" fill="#d97706">⚡ <tspan class="bold">Orchestrator Responsibility:</tspan> Must avoid "God Object" anti-pattern;</text>
+    <text x="35" y="302" class="desc" fill="#d97706">   services must retain their own internal domain business logic.</text>
+    <text x="35" y="325" font-size="10" font-weight="700" fill="#059669">Best For: Enterprise core workflows (Checkout, Booking, Billing).</text>
+  </g>
+
+  <!-- BOTTOM COMPARISON SUMMARY BAR -->
+  <g transform="translate(30, 470)">
+    <rect width="960" height="95" class="card" stroke="#94a3b8" fill="#f8fafc"/>
+    <rect width="960" height="24" rx="8" fill="#0f172a"/>
+    <text x="480" y="17" font-size="11" font-weight="700" fill="#ffffff" text-anchor="middle">Architectural Verdict: When to Choose Choreography vs. Orchestration?</text>
+
+    <g transform="translate(30, 35)">
+      <text x="0" y="18" font-size="10.5" font-weight="700" fill="#1e40af">Choose Choreography When:</text>
+      <text x="0" y="34" class="desc">• Simple 2–4 service linear workflows.</text>
+      <text x="0" y="48" class="desc">• Team is small and wants to avoid maintaining a state machine database.</text>
+
+      <text x="490" y="18" font-size="10.5" font-weight="700" fill="#059669">Choose Orchestration (Recommended for Complex Systems) When:</text>
+      <text x="490" y="34" class="desc">• 5+ microservices involved or complex branching / timeout compensation logic.</text>
+      <text x="490" y="48" class="desc">• Business requires auditing current state of every in-flight transaction.</text>
+    </g>
+  </g>
+</svg>

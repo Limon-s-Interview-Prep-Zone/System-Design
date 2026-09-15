@@ -1,0 +1,209 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1020 580" width="100%" height="100%" style="background:#ffffff; font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;">
+  <defs>
+    <marker id="arr-navy" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-angle">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#1e293b"/>
+    </marker>
+    <marker id="arr-blue" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-angle">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#2563eb"/>
+    </marker>
+    <filter id="shadow" x="-4%" y="-4%" width="108%" height="108%">
+      <feDropShadow dx="0" dy="2" stdDeviation="3" flood-opacity="0.08"/>
+    </filter>
+  </defs>
+
+  <style>
+    .title { font-size: 20px; font-weight: 700; fill: #0f172a; text-anchor: middle; }
+    .subtitle { font-size: 13px; fill: #64748b; text-anchor: middle; }
+    .card { rx: 8; stroke-width: 1.5; fill: #ffffff; filter: url(#shadow); }
+    .node-title { font-size: 12px; font-weight: 700; fill: #0f172a; text-anchor: middle; }
+    .node-desc { font-size: 10px; fill: #64748b; text-anchor: middle; }
+    .header-badge { font-size: 11.5px; font-weight: 700; text-anchor: middle; }
+    .stage-title { font-size: 12px; font-weight: 700; text-anchor: middle; }
+    .desc { font-size: 10px; fill: #334155; }
+    .bold { font-weight: 600; }
+  </style>
+
+  <!-- Title & Subtitle -->
+  <text x="510" y="32" class="title">OpenTelemetry (OTel) Collector Pipeline Architecture</text>
+  <text x="510" y="52" class="subtitle">Decoupling telemetry collection, transformation, PII scrubbing, and multi-backend fan-out via OTLP</text>
+
+  <!-- COLUMN 1: CLIENT APPLICATIONS & AGENTS -->
+  <g transform="translate(20, 75)">
+    <rect width="180" height="470" class="card" stroke="#cbd5e1" fill="#f8fafc"/>
+    <rect width="180" height="32" rx="8" fill="#e2e8f0"/>
+    <text x="90" y="21" class="header-badge" fill="#334155">1. Application Services</text>
+
+    <!-- App 1: .NET 8/9 API -->
+    <rect x="15" y="55" width="150" height="65" rx="5" fill="#ffffff" stroke="#3b82f6"/>
+    <text x="90" y="78" class="node-title" fill="#1e40af">.NET 8/9 Web API</text>
+    <text x="90" y="94" class="node-desc">ActivitySource / Meter</text>
+    <text x="90" y="108" font-size="8.5" fill="#2563eb" font-weight="700" text-anchor="middle">OTel .NET SDK</text>
+
+    <!-- App 2: Go Microservice -->
+    <rect x="15" y="135" width="150" height="65" rx="5" fill="#ffffff" stroke="#10b981"/>
+    <text x="90" y="158" class="node-title" fill="#047857">Go Microservice</text>
+    <text x="90" y="174" class="node-desc">High-throughput gRPC</text>
+    <text x="90" y="188" font-size="8.5" fill="#059669" font-weight="700" text-anchor="middle">OTel Go SDK</text>
+
+    <!-- App 3: Python AI Worker -->
+    <rect x="15" y="215" width="150" height="65" rx="5" fill="#ffffff" stroke="#f59e0b"/>
+    <text x="90" y="238" class="node-title" fill="#b45309">Python ML Worker</text>
+    <text x="90" y="254" class="node-desc">PyTorch / FastApi</text>
+    <text x="90" y="268" font-size="8.5" fill="#d97706" font-weight="700" text-anchor="middle">Auto-Instrumentation</text>
+
+    <!-- App 4: Kubernetes Nodes -->
+    <rect x="15" y="295" width="150" height="65" rx="5" fill="#ffffff" stroke="#6366f1"/>
+    <text x="90" y="318" class="node-title" fill="#4338ca">K8s Host DaemonSet</text>
+    <text x="90" y="334" class="node-desc">CPU, RAM, Disk I/O</text>
+    <text x="90" y="348" font-size="8.5" fill="#4f46e5" font-weight="700" text-anchor="middle">kubeletstats receiver</text>
+
+    <!-- Output Protocol -->
+    <rect x="15" y="380" width="150" height="75" rx="5" fill="#eff6ff" stroke="#3b82f6"/>
+    <text x="90" y="402" font-size="10.5" font-weight="700" fill="#1d4ed8" text-anchor="middle">Wire Protocol:</text>
+    <text x="90" y="420" font-size="9.5" fill="#1e40af" text-anchor="middle">OTLP / gRPC (:4317)</text>
+    <text x="90" y="438" font-size="9.5" fill="#1e40af" text-anchor="middle">OTLP / HTTP (:4318)</text>
+  </g>
+
+  <!-- Arrow Apps to Collector -->
+  <path d="M 200 310 L 235 310" stroke="#2563eb" stroke-width="2" marker-end="url(#arr-blue)"/>
+  <text x="217" y="300" font-size="8" font-weight="700" fill="#2563eb" text-anchor="middle">Push</text>
+
+
+  <!-- COLUMN 2: THE OPENTELEMETRY COLLECTOR CORE -->
+  <g transform="translate(245, 75)">
+    <rect width="500" height="470" class="card" stroke="#3b82f6" fill="#ffffff"/>
+    <rect width="500" height="32" rx="8" fill="#1e40af"/>
+    <text x="250" y="21" class="header-badge" fill="#ffffff">2. OpenTelemetry Collector (Agent / Gateway)</text>
+
+    <!-- PIPELINE SUB-SECTION 1: RECEIVERS -->
+    <g transform="translate(15, 50)">
+      <rect width="140" height="395" rx="6" fill="#f8fafc" stroke="#cbd5e1"/>
+      <rect width="140" height="26" rx="6" fill="#dbeafe"/>
+      <text x="70" y="18" class="stage-title" fill="#1e40af">A. Receivers</text>
+
+      <rect x="10" y="38" width="120" height="55" rx="4" fill="#ffffff" stroke="#93c5fd"/>
+      <text x="70" y="58" class="node-title">otlp</text>
+      <text x="70" y="74" class="node-desc">gRPC &amp; HTTP</text>
+
+      <rect x="10" y="105" width="120" height="55" rx="4" fill="#ffffff" stroke="#cbd5e1"/>
+      <text x="70" y="125" class="node-title">prometheus</text>
+      <text x="70" y="141" class="node-desc">Pull scrape /metrics</text>
+
+      <rect x="10" y="172" width="120" height="55" rx="4" fill="#ffffff" stroke="#cbd5e1"/>
+      <text x="70" y="192" class="node-title">filelog</text>
+      <text x="70" y="208" class="node-desc">K8s container logs</text>
+
+      <rect x="10" y="239" width="120" height="55" rx="4" fill="#ffffff" stroke="#cbd5e1"/>
+      <text x="70" y="259" class="node-title">hostmetrics</text>
+      <text x="70" y="275" class="node-desc">OS memory / disk</text>
+
+      <rect x="10" y="306" width="120" height="75" rx="4" fill="#eff6ff" stroke="#3b82f6"/>
+      <text x="70" y="326" font-size="9.5" font-weight="700" fill="#1d4ed8" text-anchor="middle">Responsibility:</text>
+      <text x="70" y="342" font-size="8.5" fill="#1e40af" text-anchor="middle">Ingests raw data</text>
+      <text x="70" y="357" font-size="8.5" fill="#1e40af" text-anchor="middle">converts to internal</text>
+      <text x="70" y="371" font-size="8.5" fill="#1e40af" text-anchor="middle">OTel pdata format</text>
+    </g>
+
+    <!-- Arrow Receivers to Processors -->
+    <path d="M 160 250 L 175 250" stroke="#64748b" stroke-width="2" marker-end="url(#arr-navy)"/>
+
+    <!-- PIPELINE SUB-SECTION 2: PROCESSORS -->
+    <g transform="translate(180, 50)">
+      <rect width="140" height="395" rx="6" fill="#f8fafc" stroke="#cbd5e1"/>
+      <rect width="140" height="26" rx="6" fill="#fef3c7"/>
+      <text x="70" y="18" class="stage-title" fill="#92400e">B. Processors</text>
+
+      <rect x="10" y="38" width="120" height="55" rx="4" fill="#ffffff" stroke="#fde047"/>
+      <text x="70" y="58" class="node-title">memory_limiter</text>
+      <text x="70" y="74" class="node-desc">Prevents OOM drop</text>
+
+      <rect x="10" y="105" width="120" height="55" rx="4" fill="#ffffff" stroke="#fde047"/>
+      <text x="70" y="125" class="node-title">batch</text>
+      <text x="70" y="141" class="node-desc">Groups 10k items/sec</text>
+
+      <rect x="10" y="172" width="120" height="55" rx="4" fill="#ffffff" stroke="#ef4444"/>
+      <text x="70" y="192" class="node-title" fill="#991b1b">transform (PII)</text>
+      <text x="70" y="208" class="node-desc" fill="#dc2626">Redacts passwords</text>
+
+      <rect x="10" y="239" width="120" height="55" rx="4" fill="#ffffff" stroke="#fde047"/>
+      <text x="70" y="259" class="node-title">tail_sampling</text>
+      <text x="70" y="275" class="node-desc">Keep 100% errors</text>
+
+      <rect x="10" y="306" width="120" height="75" rx="4" fill="#fffbeb" stroke="#f59e0b"/>
+      <text x="70" y="326" font-size="9.5" font-weight="700" fill="#b45309" text-anchor="middle">Responsibility:</text>
+      <text x="70" y="342" font-size="8.5" fill="#92400e" text-anchor="middle">Filters, sanitizes,</text>
+      <text x="70" y="357" font-size="8.5" fill="#92400e" text-anchor="middle">samples, batches</text>
+      <text x="70" y="371" font-size="8.5" fill="#92400e" text-anchor="middle">to optimize cost</text>
+    </g>
+
+    <!-- Arrow Processors to Exporters -->
+    <path d="M 325 250 L 340 250" stroke="#64748b" stroke-width="2" marker-end="url(#arr-navy)"/>
+
+    <!-- PIPELINE SUB-SECTION 3: EXPORTERS -->
+    <g transform="translate(345, 50)">
+      <rect width="140" height="395" rx="6" fill="#f8fafc" stroke="#cbd5e1"/>
+      <rect width="140" height="26" rx="6" fill="#dcfce7"/>
+      <text x="70" y="18" class="stage-title" fill="#15803d">C. Exporters</text>
+
+      <rect x="10" y="38" width="120" height="55" rx="4" fill="#ffffff" stroke="#86efac"/>
+      <text x="70" y="58" class="node-title">otlp (Tempo)</text>
+      <text x="70" y="74" class="node-desc">Traces storage</text>
+
+      <rect x="10" y="105" width="120" height="55" rx="4" fill="#ffffff" stroke="#86efac"/>
+      <text x="70" y="125" class="node-title">prometheusremotewrite</text>
+      <text x="70" y="141" class="node-desc">Metrics TSDB</text>
+
+      <rect x="10" y="172" width="120" height="55" rx="4" fill="#ffffff" stroke="#86efac"/>
+      <text x="70" y="192" class="node-title">otlphttp (Loki)</text>
+      <text x="70" y="208" class="node-desc">Structured logs</text>
+
+      <rect x="10" y="239" width="120" height="55" rx="4" fill="#ffffff" stroke="#86efac"/>
+      <text x="70" y="259" class="node-title">datadog / aws</text>
+      <text x="70" y="275" class="node-desc">Commercial SaaS</text>
+
+      <rect x="10" y="306" width="120" height="75" rx="4" fill="#ecfdf5" stroke="#10b981"/>
+      <text x="70" y="326" font-size="9.5" font-weight="700" fill="#047857" text-anchor="middle">Responsibility:</text>
+      <text x="70" y="342" font-size="8.5" fill="#065f46" text-anchor="middle">Translates internal</text>
+      <text x="70" y="357" font-size="8.5" fill="#065f46" text-anchor="middle">model into target</text>
+      <text x="70" y="371" font-size="8.5" fill="#065f46" text-anchor="middle">backend protocols</text>
+    </g>
+  </g>
+
+  <!-- Arrow Collector to Backends -->
+  <path d="M 750 310 L 785 310" stroke="#2563eb" stroke-width="2" marker-end="url(#arr-blue)"/>
+  <text x="767" y="300" font-size="8" font-weight="700" fill="#2563eb" text-anchor="middle">Export</text>
+
+
+  <!-- COLUMN 3: OBSERVABILITY BACKENDS & UI -->
+  <g transform="translate(795, 75)">
+    <rect width="205" height="470" class="card" stroke="#cbd5e1" fill="#f8fafc"/>
+    <rect width="205" height="32" rx="8" fill="#e2e8f0"/>
+    <text x="102" y="21" class="header-badge" fill="#334155">3. Storage &amp; Dashboards</text>
+
+    <!-- Backend 1: Metrics -->
+    <rect x="15" y="55" width="175" height="75" rx="5" fill="#ffffff" stroke="#3b82f6"/>
+    <text x="102" y="78" class="node-title" fill="#1e40af">Prometheus / M3DB</text>
+    <text x="102" y="95" class="node-desc">Time-series indexing</text>
+    <text x="102" y="112" font-size="9" fill="#2563eb" text-anchor="middle">PromQL Alerting Rules</text>
+
+    <!-- Backend 2: Traces -->
+    <rect x="15" y="145" width="175" height="75" rx="5" fill="#ffffff" stroke="#10b981"/>
+    <text x="102" y="168" class="node-title" fill="#047857">Grafana Tempo / Jaeger</text>
+    <text x="102" y="185" class="node-desc">Object-store backed (S3)</text>
+    <text x="102" y="202" font-size="9" fill="#059669" text-anchor="middle">Span DAG Waterfall View</text>
+
+    <!-- Backend 3: Logs -->
+    <rect x="15" y="235" width="175" height="75" rx="5" fill="#ffffff" stroke="#f59e0b"/>
+    <text x="102" y="258" class="node-title" fill="#b45309">Grafana Loki / OpenSearch</text>
+    <text x="102" y="275" class="node-desc">LogQL stream filtering</text>
+    <text x="102" y="292" font-size="9" fill="#d97706" text-anchor="middle">Indexed by TraceId label</text>
+
+    <!-- Visualization: Grafana -->
+    <rect x="15" y="325" width="175" height="130" rx="5" fill="#0f172a"/>
+    <text x="102" y="352" font-size="12" font-weight="700" fill="#f8fafc" text-anchor="middle">Grafana 11 / Dashboards</text>
+    <text x="102" y="372" font-size="9.5" fill="#38bdf8" text-anchor="middle">Unified Single-Pane-of-Glass</text>
+    <text x="25" y="400" font-size="9" fill="#cbd5e1">• Correlated Jump: Metric ➔ Trace</text>
+    <text x="25" y="420" font-size="9" fill="#cbd5e1">• Jump: Trace ➔ Correlated Logs</text>
+    <text x="25" y="440" font-size="9" fill="#cbd5e1">• SLO Error Budget Dashboards</text>
+  </g>
+</svg>
