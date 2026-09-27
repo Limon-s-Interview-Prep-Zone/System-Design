@@ -1,0 +1,115 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 480" width="100%" height="100%" style="background:#ffffff; font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;">
+  <defs>
+    <marker id="es-arr" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-angle">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#475569"/>
+    </marker>
+    <filter id="sticky-shadow" x="-5%" y="-5%" width="110%" height="110%">
+      <feDropShadow dx="1" dy="4" stdDeviation="3" flood-opacity="0.12"/>
+    </filter>
+  </defs>
+
+  <style>
+    .es-title { font-size: 22px; font-weight: 800; fill: #0f172a; text-anchor: middle; }
+    .es-subtitle { font-size: 13px; fill: #64748b; text-anchor: middle; }
+    .sticky-type { font-size: 9px; font-weight: 800; letter-spacing: 0.5px; }
+    .sticky-name { font-size: 12px; font-weight: 700; }
+    .sticky-desc { font-size: 10px; line-height: 1.35; }
+    .legend-title { font-size: 12px; font-weight: 800; fill: #334155; }
+  </style>
+
+  <!-- Titles -->
+  <text x="600" y="32" class="es-title">EventStorming: Collaborative Strategic &amp; Tactical Domain Discovery</text>
+  <text x="600" y="54" class="es-subtitle">Cross-Functional Modeling: Discovering Invariants, Aggregates, Boundaries &amp; Reactive Policies</text>
+
+  <!-- Timeline Arrow -->
+  <path d="M 50 85 L 1150 85" stroke="#cbd5e1" stroke-width="2" stroke-dasharray="6,4" marker-end="url(#es-arr)"/>
+  <text x="1150" y="78" font-size="11" font-weight="700" fill="#64748b" text-anchor="end">TIME FLOWS LEFT TO RIGHT →</text>
+
+  <!-- STICKY 1: Actor / User (Small yellow) -->
+  <g transform="translate(60, 120)" filter="url(#sticky-shadow)">
+    <rect x="0" y="0" width="130" height="150" rx="4" fill="#fef08a" stroke="#eab308" stroke-width="1.5"/>
+    <text x="10" y="24" class="sticky-type" fill="#854d0e">ACTOR / USER</text>
+    <text x="10" y="48" class="sticky-name" fill="#713f12">Shopper</text>
+    <text x="10" y="75" class="sticky-desc" fill="#713f12">• Browses store</text>
+    <text x="10" y="93" class="sticky-desc" fill="#713f12">• Views Cart</text>
+    <text x="10" y="111" class="sticky-desc" fill="#713f12">• Clicks Checkout</text>
+  </g>
+
+  <!-- STICKY 2: Command (Blue) -->
+  <g transform="translate(210, 120)" filter="url(#sticky-shadow)">
+    <rect x="0" y="0" width="140" height="150" rx="4" fill="#93c5fd" stroke="#2563eb" stroke-width="1.5"/>
+    <text x="10" y="24" class="sticky-type" fill="#1e40af">COMMAND (BLUE)</text>
+    <text x="10" y="48" class="sticky-name" fill="#1e3a8a">SubmitOrder</text>
+    <text x="10" y="75" class="sticky-desc" fill="#1e3a8a">• User intent</text>
+    <text x="10" y="93" class="sticky-desc" fill="#1e3a8a">• DTO payload</text>
+    <text x="10" y="111" class="sticky-desc" fill="#1e3a8a">• Can be rejected</text>
+  </g>
+
+  <!-- STICKY 3: Aggregate Root (Yellow) -->
+  <g transform="translate(370, 105)" filter="url(#sticky-shadow)">
+    <rect x="0" y="0" width="160" height="180" rx="4" fill="#fde047" stroke="#ca8a04" stroke-width="2"/>
+    <text x="10" y="24" class="sticky-type" fill="#854d0e">AGGREGATE ROOT (YELLOW)</text>
+    <text x="10" y="48" class="sticky-name" fill="#713f12">Order Aggregate</text>
+    <text x="10" y="72" class="sticky-desc" fill="#713f12">• Validates items &gt; 0</text>
+    <text x="10" y="90" class="sticky-desc" fill="#713f12">• Enforces invariants</text>
+    <text x="10" y="108" class="sticky-desc" fill="#713f12">• Single transaction</text>
+    <text x="10" y="126" class="sticky-desc" fill="#713f12">• State: Submitted</text>
+    <text x="10" y="152" font-size="10" font-weight="700" fill="#a16207">Transaction Boundary</text>
+  </g>
+
+  <!-- STICKY 4: Domain Event (Orange) -->
+  <g transform="translate(550, 120)" filter="url(#sticky-shadow)">
+    <rect x="0" y="0" width="150" height="150" rx="4" fill="#fdba74" stroke="#ea580c" stroke-width="2"/>
+    <text x="10" y="24" class="sticky-type" fill="#9a3412">DOMAIN EVENT (ORANGE)</text>
+    <text x="10" y="48" class="sticky-name" fill="#7c2d12">OrderPlaced</text>
+    <text x="10" y="75" class="sticky-desc" fill="#7c2d12">• Past-tense business fact</text>
+    <text x="10" y="93" class="sticky-desc" fill="#7c2d12">• Immutable snapshot</text>
+    <text x="10" y="111" class="sticky-desc" fill="#7c2d12">• Saved to Outbox</text>
+  </g>
+
+  <!-- STICKY 5: Policy / Reaction (Lilac / Purple) -->
+  <g transform="translate(720, 120)" filter="url(#sticky-shadow)">
+    <rect x="0" y="0" width="160" height="150" rx="4" fill="#e9d5ff" stroke="#9333ea" stroke-width="1.5"/>
+    <text x="10" y="24" class="sticky-type" fill="#6b21a8">POLICY / REACTION (PURPLE)</text>
+    <text x="10" y="48" class="sticky-name" fill="#581c87">Stock Allocation Policy</text>
+    <text x="10" y="75" class="sticky-desc" fill="#581c87">• "Whenever OrderPlaced,</text>
+    <text x="18" y="91" class="sticky-desc" fill="#581c87">then ReserveStock"</text>
+    <text x="10" y="111" class="sticky-desc" fill="#581c87">• Cross-context reaction</text>
+  </g>
+
+  <!-- STICKY 6: External System (Pink) -->
+  <g transform="translate(900, 120)" filter="url(#sticky-shadow)">
+    <rect x="0" y="0" width="140" height="150" rx="4" fill="#fbcfe8" stroke="#db2777" stroke-width="1.5"/>
+    <text x="10" y="24" class="sticky-type" fill="#9d174d">EXTERNAL SYSTEM (PINK)</text>
+    <text x="10" y="48" class="sticky-name" fill="#831843">Payment Gateway</text>
+    <text x="10" y="75" class="sticky-desc" fill="#831843">• Stripe API / Webhook</text>
+    <text x="10" y="93" class="sticky-desc" fill="#831843">• 3rd-party vendor</text>
+    <text x="10" y="111" class="sticky-desc" fill="#831843">• Handled via ACL</text>
+  </g>
+
+  <!-- STICKY 7: Read Model (Green) -->
+  <g transform="translate(1060, 120)" filter="url(#sticky-shadow)">
+    <rect x="0" y="0" width="110" height="150" rx="4" fill="#bbf7d0" stroke="#16a34a" stroke-width="1.5"/>
+    <text x="8" y="24" class="sticky-type" fill="#15803d">READ MODEL</text>
+    <text x="8" y="48" class="sticky-name" fill="#14532d">Order View</text>
+    <text x="8" y="75" class="sticky-desc" fill="#14532d">• CQRS Query</text>
+    <text x="8" y="93" class="sticky-desc" fill="#14532d">• User Screen</text>
+    <text x="8" y="111" class="sticky-desc" fill="#14532d">• Flat DTO</text>
+  </g>
+
+  <!-- Bottom Legend and Bounded Context demarcation container -->
+  <rect x="50" y="310" width="1120" height="140" rx="10" fill="#f8fafc" stroke="#e2e8f0" stroke-width="1.5"/>
+  <text x="70" y="338" class="legend-title">EVENTSTORMING CONCEPTS &amp; BOUNDED CONTEXT DEMARCATION</text>
+
+  <!-- Ordering Context Boundary -->
+  <rect x="195" y="355" width="520" height="80" rx="6" fill="#eff6ff" stroke="#3b82f6" stroke-dasharray="4,3"/>
+  <text x="210" y="375" font-size="11" font-weight="700" fill="#1d4ed8">BOUNDED CONTEXT: ORDERING</text>
+  <text x="210" y="395" font-size="10" fill="#1e40af">• Owns Command handling, Aggregate invariant validation, and OrderPlacedEvent publication.</text>
+  <text x="210" y="415" font-size="10" fill="#1e40af">• Ubiquitous Language: Order, LineItem, Customer, Draft, Submitted.</text>
+
+  <!-- Inventory Context Boundary -->
+  <rect x="735" y="355" width="415" height="80" rx="6" fill="#f0fdf4" stroke="#16a34a" stroke-dasharray="4,3"/>
+  <text x="750" y="375" font-size="11" font-weight="700" fill="#15803d">BOUNDED CONTEXT: INVENTORY / FULFILLMENT</text>
+  <text x="750" y="395" font-size="10" fill="#14532d">• Listens to OrderPlacedEvent via Policy, initiates StockReservation.</text>
+  <text x="750" y="415" font-size="10" fill="#14532d">• Decoupled via asynchronous broker; eventual consistency.</text>
+</svg>

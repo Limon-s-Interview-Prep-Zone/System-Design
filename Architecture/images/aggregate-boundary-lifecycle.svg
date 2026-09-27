@@ -1,0 +1,124 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1100 580" width="100%" height="100%" style="background:#ffffff; font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;">
+  <defs>
+    <marker id="ar-slate" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-angle">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#334155"/>
+    </marker>
+    <marker id="ar-indigo" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-angle">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#4f46e5"/>
+    </marker>
+    <marker id="ar-emerald" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-angle">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#059669"/>
+    </marker>
+    <filter id="box-shadow" x="-4%" y="-4%" width="108%" height="108%">
+      <feDropShadow dx="0" dy="2" stdDeviation="3" flood-opacity="0.08"/>
+    </filter>
+  </defs>
+
+  <style>
+    .headline { font-size: 20px; font-weight: 800; fill: #0f172a; text-anchor: middle; }
+    .subtext { font-size: 13px; fill: #64748b; text-anchor: middle; }
+    .section-title { font-size: 13.5px; font-weight: 700; }
+    .desc-text { font-size: 11px; fill: #334155; line-height: 1.4; }
+    .label-badge { font-size: 10px; font-weight: 700; text-anchor: middle; }
+  </style>
+
+  <!-- Title -->
+  <text x="550" y="34" class="headline">Aggregate Consistency Boundary &amp; Eventual Consistency Lifecycle</text>
+  <text x="550" y="55" class="subtext">Protecting Invariants within Transaction Boundaries and Decoupling Side-Effects via Outbox Pattern</text>
+
+  <!-- TRANSACTION 1: ORDER AGGREGATE BOUNDARY -->
+  <g transform="translate(40, 85)" filter="url(#box-shadow)">
+    <!-- Boundary Container -->
+    <rect x="0" y="0" width="380" height="450" rx="12" fill="#faf5ff" stroke="#9333ea" stroke-width="2"/>
+    <rect x="15" y="15" width="220" height="24" rx="4" fill="#f3e8ff"/>
+    <text x="125" y="31" class="label-badge" fill="#7e22ce">AGGREGATE 1 (ACID BOUNDARY)</text>
+    
+    <text x="15" y="66" class="section-title" fill="#581c87">Aggregate Root: Order</text>
+    <text x="15" y="86" class="desc-text">• Only entry point for state changes</text>
+    <text x="15" y="104" class="desc-text">• Enforces Invariant: <tspan font-weight="600">"Total = Sum(Items) - Discount"</tspan></text>
+    <text x="15" y="122" class="desc-text">• Enforces Invariant: <tspan font-weight="600">"Max 20 items per order"</tspan></text>
+
+    <!-- Child Entities / Value Objects Box inside -->
+    <g transform="translate(15, 140)">
+      <rect x="0" y="0" width="350" height="90" rx="6" fill="#ffffff" stroke="#d8b4fe" stroke-width="1.5"/>
+      <text x="12" y="22" font-size="11.5" font-weight="700" fill="#6b21a8">Protected Inner State (Private encapsulated)</text>
+      <text x="12" y="44" class="desc-text">• List&lt;OrderItem&gt; _items (Private backing collection)</text>
+      <text x="12" y="64" class="desc-text">• Address ShippingAddress (Value Object - immutable)</text>
+      <text x="12" y="82" font-size="10" font-weight="600" fill="#dc2626">⛔ Direct DB write or external mutation FORBIDDEN</text>
+    </g>
+
+    <!-- Local DB Atomic Commit -->
+    <g transform="translate(15, 250)">
+      <rect x="0" y="0" width="350" height="170" rx="8" fill="#f8fafc" stroke="#64748b" stroke-width="1.5"/>
+      <text x="12" y="24" class="section-title" fill="#1e293b">Single Atomic Transaction (SQL DbContext)</text>
+      <text x="12" y="48" class="desc-text">1. INSERT INTO [Orders] (State: Created)</text>
+      <text x="12" y="70" class="desc-text">2. INSERT INTO [OrderItems] (...)</text>
+      <text x="12" y="94" font-weight="700" fill="#2563eb" class="desc-text">3. INSERT INTO [OutboxMessages] (OrderCreatedEvent)</text>
+      <line x1="12" y1="110" x2="338" y2="110" stroke="#cbd5e1" stroke-width="1"/>
+      <text x="12" y="132" font-size="11" font-weight="700" fill="#059669">✓ DbContext.SaveChangesAsync() commits ALL in 1 Tx</text>
+      <text x="12" y="152" font-size="10.5" fill="#475569">Guarantees zero ghost events or dual-write failure</text>
+    </g>
+  </g>
+
+  <!-- ASYNCHRONOUS RELAY: OUTBOX WORKER &amp; BUS -->
+  <g transform="translate(450, 150)">
+    <!-- Arrow from DB to Outbox Processor -->
+    <path d="M -30 200 L 30 200" stroke="#2563eb" stroke-width="2.5" marker-end="url(#ar-indigo)" />
+    <text x="0" y="188" font-size="10" font-weight="700" fill="#2563eb" text-anchor="middle">Poll / CDC</text>
+
+    <!-- Outbox Processor Box -->
+    <rect x="30" y="130" width="180" height="140" rx="10" fill="#eff6ff" stroke="#2563eb" stroke-width="2" filter="url(#box-shadow)"/>
+    <text x="120" y="158" font-size="12" font-weight="800" fill="#1e40af" text-anchor="middle">Outbox Publisher</text>
+    <text x="120" y="180" font-size="10.5" fill="#1e3a8a" text-anchor="middle">BackgroundService /</text>
+    <text x="120" y="196" font-size="10.5" fill="#1e3a8a" text-anchor="middle">MassTransit Outbox</text>
+    <line x1="45" y1="210" x2="195" y2="210" stroke="#bfdbfe" stroke-width="1"/>
+    <text x="120" y="230" font-size="10" font-weight="700" fill="#0284c7" text-anchor="middle">Publishes to Broker</text>
+    <text x="120" y="250" font-size="9.5" fill="#64748b" text-anchor="middle">(At-least-once delivery)</text>
+
+    <!-- Message Broker Box -->
+    <g transform="translate(40, 290)">
+      <rect x="0" y="0" width="160" height="85" rx="8" fill="#f0fdf4" stroke="#16a34a" stroke-width="1.5" filter="url(#box-shadow)"/>
+      <text x="80" y="26" font-size="12" font-weight="700" fill="#15803d" text-anchor="middle">Message Bus</text>
+      <text x="80" y="46" font-size="10" fill="#166534" text-anchor="middle">RabbitMQ / Kafka /</text>
+      <text x="80" y="62" font-size="10" fill="#166534" text-anchor="middle">Azure Service Bus</text>
+    </g>
+
+    <path d="M 120 270 L 120 290" stroke="#16a34a" stroke-width="2" marker-end="url(#ar-emerald)" />
+    <path d="M 200 332 L 270 332" stroke="#16a34a" stroke-width="2.5" marker-end="url(#ar-emerald)" />
+    <text x="235" y="322" font-size="10" font-weight="700" fill="#16a34a" text-anchor="middle">Consume</text>
+  </g>
+
+  <!-- TRANSACTION 2: INVENTORY AGGREGATE BOUNDARY -->
+  <g transform="translate(720, 85)" filter="url(#box-shadow)">
+    <!-- Boundary Container -->
+    <rect x="0" y="0" width="340" height="450" rx="12" fill="#f0fdf4" stroke="#16a34a" stroke-width="2"/>
+    <rect x="15" y="15" width="220" height="24" rx="4" fill="#dcfce7"/>
+    <text x="125" y="31" class="label-badge" fill="#15803d">AGGREGATE 2 (SEPARATE Tx)</text>
+
+    <text x="15" y="66" class="section-title" fill="#14532d">Aggregate Root: InventoryItem</text>
+    <text x="15" y="86" class="desc-text">• Independent consistency boundary</text>
+    <text x="15" y="104" class="desc-text">• Referenced only by ProductId (ID reference)</text>
+    <text x="15" y="122" class="desc-text">• Enforces Invariant: <tspan font-weight="600">"AvailableStock &gt;= 0"</tspan></text>
+
+    <!-- Consumer Logic -->
+    <g transform="translate(15, 140)">
+      <rect x="0" y="0" width="310" height="90" rx="6" fill="#ffffff" stroke="#86efac" stroke-width="1.5"/>
+      <text x="12" y="22" font-size="11.5" font-weight="700" fill="#166534">Idempotent Consumer Handler</text>
+      <text x="12" y="44" class="desc-text">• Checks Inbox table for duplicate EventId</text>
+      <text x="12" y="64" class="desc-text">• Calls item.ReserveStock(orderQuantity)</text>
+      <text x="12" y="82" font-size="10.5" font-weight="600" fill="#059669">✓ Prevents double stock reservation</text>
+    </g>
+
+    <!-- Local DB Atomic Commit -->
+    <g transform="translate(15, 250)">
+      <rect x="0" y="0" width="310" height="170" rx="8" fill="#f8fafc" stroke="#64748b" stroke-width="1.5"/>
+      <text x="12" y="24" class="section-title" fill="#1e293b">Independent DB Transaction</text>
+      <text x="12" y="48" class="desc-text">1. UPDATE [Inventory] SET Stock = Stock - Qty</text>
+      <text x="12" y="70" class="desc-text">2. INSERT INTO [InboxMessages] (EventId)</text>
+      <line x1="12" y1="95" x2="298" y2="95" stroke="#cbd5e1" stroke-width="1"/>
+      <text x="12" y="120" font-size="11" font-weight="700" fill="#15803d">Key Rule of Aggregate Design:</text>
+      <text x="12" y="140" font-size="10.5" fill="#334155">"Modify only ONE aggregate per transaction."</text>
+      <text x="12" y="158" font-size="10" font-weight="600" fill="#64748b">Eventual consistency unites the system.</text>
+    </g>
+  </g>
+</svg>

@@ -1,0 +1,214 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 760" width="100%" height="100%" style="background:#ffffff; font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;">
+  <defs>
+    <marker id="arr" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-angle">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#475569"/>
+    </marker>
+    <marker id="arr-purple" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-angle">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#7c3aed"/>
+    </marker>
+    <marker id="arr-teal" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-angle">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#0d9488"/>
+    </marker>
+    <filter id="card-shadow" x="-5%" y="-5%" width="110%" height="110%">
+      <feDropShadow dx="0" dy="3" stdDeviation="4" flood-opacity="0.07"/>
+    </filter>
+  </defs>
+
+  <style>
+    .header { font-size: 22px; font-weight: 800; fill: #0f172a; text-anchor: middle; }
+    .subhead { font-size: 13px; fill: #64748b; text-anchor: middle; }
+    .layer-title { font-size: 13px; font-weight: 800; letter-spacing: 0.5px; }
+    .box-title { font-size: 13px; font-weight: 700; }
+    .txt-body { font-size: 11px; fill: #334155; line-height: 1.4; }
+    .tag { font-size: 9.5px; font-weight: 700; text-anchor: middle; }
+  </style>
+
+  <!-- Headers -->
+  <text x="600" y="32" class="header">Tactical Domain-Driven Design: The 8 Key Building Blocks &amp; Clean Architecture</text>
+  <text x="600" y="54" class="subhead">Clean / Hexagonal Layering: Domain Model Isolation, Invariant Encapsulation &amp; Dependency Inversion</text>
+
+  <!-- OUTER LAYER: INFRASTRUCTURE & PRESENTATION -->
+  <rect x="30" y="75" width="1140" height="660" rx="14" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1.5" />
+  <text x="50" y="100" class="layer-title" fill="#475569">INFRASTRUCTURE &amp; PRESENTATION LAYER (External Adapters, I/O &amp; Drivers)</text>
+
+  <!-- Presentation Box -->
+  <g transform="translate(50, 115)" filter="url(#card-shadow)">
+    <rect x="0" y="0" width="210" height="140" rx="8" fill="#ffffff" stroke="#94a3b8" stroke-width="1.5"/>
+    <text x="12" y="26" class="box-title" fill="#0f172a">API &amp; Endpoints</text>
+    <text x="12" y="50" class="txt-body">• Minimal APIs / Controllers</text>
+    <text x="12" y="70" class="txt-body">• DTO FluentValidation</text>
+    <text x="12" y="90" class="txt-body">• Dispatches Commands/Queries</text>
+    <text x="12" y="110" class="txt-body">• Result Pattern to HTTP Map</text>
+    <text x="12" y="130" class="txt-body" font-weight="600" fill="#2563eb">→ Never expose Domain directly</text>
+  </g>
+
+  <!-- Infrastructure Persistence Box -->
+  <g transform="translate(50, 275)" filter="url(#card-shadow)">
+    <rect x="0" y="0" width="210" height="225" rx="8" fill="#ffffff" stroke="#94a3b8" stroke-width="1.5"/>
+    <text x="12" y="26" class="box-title" fill="#0f172a">Infrastructure Implementations</text>
+    <text x="12" y="48" class="txt-body">• EF Core DbContext Mapping</text>
+    <text x="12" y="68" class="txt-body">• OrderRepository (Implements</text>
+    <text x="18" y="86" class="txt-body" fill="#0d9488">domain IOrderRepository)</text>
+    <text x="12" y="106" class="txt-body">• Backing fields &amp; OwnsOne</text>
+    <text x="12" y="126" class="txt-body">• Transactional Outbox Worker</text>
+    <text x="12" y="146" class="txt-body">• MassTransit / Kafka Bus</text>
+    <text x="12" y="166" class="txt-body">• Redis Cache / Dapper SQL</text>
+    <text x="12" y="200" class="txt-body" font-weight="600" fill="#0d9488">→ Outer layer depends INWARD</text>
+  </g>
+
+  <!-- External Clients / Brokers -->
+  <g transform="translate(50, 520)" filter="url(#card-shadow)">
+    <rect x="0" y="0" width="210" height="190" rx="8" fill="#ffffff" stroke="#94a3b8" stroke-width="1.5"/>
+    <text x="12" y="26" class="box-title" fill="#0f172a">External Integrations &amp; ACL</text>
+    <text x="12" y="48" class="txt-body">• Anti-Corruption Layer (ACL)</text>
+    <text x="12" y="68" class="txt-body">• Payment Gateway (Stripe/Adyen)</text>
+    <text x="12" y="88" class="txt-body">• Message Bus (Kafka / RabbitMQ)</text>
+    <text x="12" y="108" class="txt-body">• Third-Party Webhooks</text>
+    <text x="12" y="128" class="txt-body">• Polly Resilience Pipelines</text>
+    <text x="12" y="165" class="txt-body" font-weight="600" fill="#d97706">→ Translates foreign schemas</text>
+  </g>
+
+  <!-- MIDDLE LAYER: APPLICATION LAYER -->
+  <rect x="285" y="95" width="865" height="620" rx="12" fill="#f1f5f9" stroke="#94a3b8" stroke-width="1.5"/>
+  <text x="305" y="120" class="layer-title" fill="#334155">APPLICATION LAYER (Use Case Orchestration, Transactions &amp; Boundaries)</text>
+
+  <!-- Application Services / Command Handlers -->
+  <g transform="translate(305, 135)" filter="url(#card-shadow)">
+    <rect x="0" y="0" width="225" height="270" rx="8" fill="#ffffff" stroke="#6366f1" stroke-width="1.5"/>
+    <rect x="10" y="10" width="130" height="20" rx="4" fill="#e0e7ff"/>
+    <text x="75" y="24" class="tag" fill="#4338ca">APPLICATION SERVICE</text>
+    <text x="12" y="50" class="box-title" fill="#1e1b4b">Command Handlers (Write)</text>
+    <text x="12" y="72" class="txt-body">• CreateOrderCommandHandler</text>
+    <text x="12" y="92" class="txt-body">• Loads Aggregate via Repo</text>
+    <text x="12" y="112" class="txt-body">• Executes Domain Methods</text>
+    <text x="12" y="132" class="txt-body">• Uses Domain Services</text>
+    <text x="12" y="152" class="txt-body">• Coordinates Unit of Work</text>
+    <text x="12" y="172" class="txt-body">• Dispatches Outbox Messages</text>
+    <text x="12" y="192" class="txt-body">• Returns Result&lt;T&gt; to API</text>
+    <text x="12" y="240" class="txt-body" font-weight="600" fill="#4f46e5">→ Orchestrator; NO Domain Logic</text>
+  </g>
+
+  <!-- CQRS Query Handlers -->
+  <g transform="translate(305, 425)" filter="url(#card-shadow)">
+    <rect x="0" y="0" width="225" height="270" rx="8" fill="#ffffff" stroke="#64748b" stroke-width="1.5"/>
+    <rect x="10" y="10" width="120" height="20" rx="4" fill="#f1f5f9"/>
+    <text x="70" y="24" class="tag" fill="#334155">CQRS READ MODEL</text>
+    <text x="12" y="50" class="box-title" fill="#0f172a">Query Handlers (Read)</text>
+    <text x="12" y="72" class="txt-body">• GetOrderByIdQueryHandler</text>
+    <text x="12" y="92" class="txt-body">• Fast Dapper / Read Replicas</text>
+    <text x="12" y="112" class="txt-body">• Bypasses Aggregates entirely</text>
+    <text x="12" y="132" class="txt-body">• Flat, joined UI DTOs</text>
+    <text x="12" y="152" class="txt-body">• Zero business rule checks</text>
+    <text x="12" y="172" class="txt-body">• High throughput / caching</text>
+    <text x="12" y="240" class="txt-body" font-weight="600" fill="#475569">→ Aggregates are for Writes ONLY</text>
+  </g>
+
+  <!-- INNER LAYER: DOMAIN LAYER (CORE) -->
+  <rect x="550" y="125" width="580" height="570" rx="10" fill="#ffffff" stroke="#7c3aed" stroke-width="2.5"/>
+  <rect x="570" y="140" width="260" height="24" rx="4" fill="#f3e8ff"/>
+  <text x="700" y="156" class="tag" fill="#6b21a8">DOMAIN LAYER: 8 KEY BUILDING BLOCKS (PURE DOMAIN)</text>
+
+  <!-- BLOCK 1: Aggregate Root -->
+  <g transform="translate(570, 175)">
+    <rect x="0" y="0" width="540" height="125" rx="8" fill="#faf5ff" stroke="#a855f7" stroke-width="2"/>
+    <rect x="12" y="10" width="110" height="18" rx="3" fill="#f3e8ff"/>
+    <text x="67" y="23" font-size="9" font-weight="800" fill="#7e22ce">1. AGGREGATE ROOT</text>
+    <text x="135" y="24" class="box-title" fill="#581c87">Order (Transactional Invariant Boundary)</text>
+    <text x="12" y="46" class="txt-body">• OrderId Id (Strongly-Typed ID, persistent identity)</text>
+    <text x="12" y="64" class="txt-body">• IReadOnlyCollection&lt;OrderItem&gt; (Encapsulated private backing field)</text>
+    <text x="12" y="82" class="txt-body">• AddLineItem() / Cancel() → Guarantees invariants; only entry point</text>
+    <text x="12" y="102" class="txt-body">• Raises Domain Events on valid state mutation</text>
+  </g>
+
+  <!-- BLOCK 2 & BLOCK 3: Entity & Value Object -->
+  <g transform="translate(570, 310)">
+    <!-- Block 2: Child Entity -->
+    <rect x="0" y="0" width="260" height="105" rx="6" fill="#f8fafc" stroke="#94a3b8" stroke-width="1.5"/>
+    <rect x="8" y="8" width="100" height="18" rx="3" fill="#e2e8f0"/>
+    <text x="58" y="21" font-size="8.5" font-weight="800" fill="#334155">2. CHILD ENTITY</text>
+    <text x="115" y="22" font-size="11.5" font-weight="700" fill="#0f172a">OrderItem</text>
+    <text x="10" y="44" class="txt-body">• Identity valid only inside aggregate</text>
+    <text x="10" y="62" class="txt-body">• Never referenced directly from outside</text>
+    <text x="10" y="80" class="txt-body">• Mutated solely via Root methods</text>
+    <text x="10" y="96" font-size="9.5" fill="#64748b">Managed by Order Aggregate Root</text>
+  </g>
+
+  <g transform="translate(850, 310)">
+    <!-- Block 3: Value Object -->
+    <rect x="0" y="0" width="260" height="105" rx="6" fill="#eff6ff" stroke="#3b82f6" stroke-width="1.5"/>
+    <rect x="8" y="8" width="110" height="18" rx="3" fill="#dbeafe"/>
+    <text x="63" y="21" font-size="8.5" font-weight="800" fill="#1d4ed8">3. VALUE OBJECT</text>
+    <text x="125" y="22" font-size="11.5" font-weight="700" fill="#1e3a8a">Money / Address</text>
+    <text x="10" y="44" class="txt-body">• Zero conceptual identity (no ID)</text>
+    <text x="10" y="62" class="txt-body">• Immutable (C# readonly record struct)</text>
+    <text x="10" y="80" class="txt-body">• Structural equality (by values)</text>
+    <text x="10" y="96" font-size="9.5" fill="#2563eb">Self-validating upon construction</text>
+  </g>
+
+  <!-- BLOCK 4 & BLOCK 5: Domain Events & Domain Service -->
+  <g transform="translate(570, 425)">
+    <!-- Block 4: Domain Event -->
+    <rect x="0" y="0" width="260" height="115" rx="6" fill="#fff7ed" stroke="#ea580c" stroke-width="1.5"/>
+    <rect x="8" y="8" width="110" height="18" rx="3" fill="#ffedd5"/>
+    <text x="63" y="21" font-size="8.5" font-weight="800" fill="#c2410c">4. DOMAIN EVENT</text>
+    <text x="125" y="22" font-size="11.5" font-weight="700" fill="#9a3412">OrderPlacedEvent</text>
+    <text x="10" y="44" class="txt-body">• Past-tense business fact (immutable)</text>
+    <text x="10" y="62" class="txt-body">• Decouples side-effects &amp; workflows</text>
+    <text x="10" y="80" class="txt-body">• Stored in Outbox atomically</text>
+    <text x="10" y="98" font-size="9.5" fill="#c2410c">Eventual consistency across contexts</text>
+  </g>
+
+  <g transform="translate(850, 425)">
+    <!-- Block 5: Domain Service -->
+    <rect x="0" y="0" width="260" height="115" rx="6" fill="#f0fdf4" stroke="#16a34a" stroke-width="1.5"/>
+    <rect x="8" y="8" width="115" height="18" rx="3" fill="#dcfce7"/>
+    <text x="65" y="21" font-size="8.5" font-weight="800" fill="#15803d">5. DOMAIN SERVICE</text>
+    <text x="130" y="22" font-size="11.5" font-weight="700" fill="#14532d">OrderPricingService</text>
+    <text x="10" y="44" class="txt-body">• Multi-aggregate business logic</text>
+    <text x="10" y="62" class="txt-body">• Pure domain rules, zero I/O</text>
+    <text x="10" y="80" class="txt-body">• Stateless calculation logic</text>
+    <text x="10" y="98" font-size="9.5" fill="#16a34a">Does not fit naturally in single Entity</text>
+  </g>
+
+  <!-- BLOCK 6, 7 & 8: Repository Interface, Factory & Specification -->
+  <g transform="translate(570, 550)">
+    <!-- Block 6: Repository Interface -->
+    <rect x="0" y="0" width="170" height="125" rx="6" fill="#f0fdfa" stroke="#0d9488" stroke-width="1.5"/>
+    <rect x="8" y="8" width="95" height="18" rx="3" fill="#ccfbf1"/>
+    <text x="55" y="21" font-size="8" font-weight="800" fill="#0f766e">6. REPOSITORY</text>
+    <text x="10" y="44" font-size="11" font-weight="700" fill="#115e59">IOrderRepository</text>
+    <text x="10" y="62" class="txt-body">• Exists ONLY for AR</text>
+    <text x="10" y="78" class="txt-body">• Collection facade</text>
+    <text x="10" y="94" class="txt-body">• Add / GetById / Del</text>
+    <text x="10" y="112" font-size="9" fill="#0d9488">Impl in Infrastructure</text>
+  </g>
+
+  <g transform="translate(755, 550)">
+    <!-- Block 7: Factory -->
+    <rect x="0" y="0" width="170" height="125" rx="6" fill="#fefce8" stroke="#ca8a04" stroke-width="1.5"/>
+    <rect x="8" y="8" width="80" height="18" rx="3" fill="#fef9c3"/>
+    <text x="48" y="21" font-size="8" font-weight="800" fill="#a16207">7. FACTORY</text>
+    <text x="10" y="44" font-size="11" font-weight="700" fill="#713f12">OrderFactory</text>
+    <text x="10" y="62" class="txt-body">• Complex AR setup</text>
+    <text x="10" y="78" class="txt-body">• Creation vs Restore</text>
+    <text x="10" y="94" class="txt-body">• Never re-fires events</text>
+    <text x="10" y="112" font-size="9" fill="#a16207">Guarantees valid birth</text>
+  </g>
+
+  <g transform="translate(940, 550)">
+    <!-- Block 8: Specification -->
+    <rect x="0" y="0" width="170" height="125" rx="6" fill="#fdf2f8" stroke="#db2777" stroke-width="1.5"/>
+    <rect x="8" y="8" width="105" height="18" rx="3" fill="#fce7f3"/>
+    <text x="60" y="21" font-size="8" font-weight="800" fill="#9d174d">8. SPECIFICATION</text>
+    <text x="10" y="44" font-size="11" font-weight="700" fill="#831843">HighValueOrderSpec</text>
+    <text x="10" y="62" class="txt-body">• Domain predicate rule</text>
+    <text x="10" y="78" class="txt-body">• In-memory validation</text>
+    <text x="10" y="94" class="txt-body">• DB query expression</text>
+    <text x="10" y="112" font-size="9" fill="#db2777">Composable: And / Or</text>
+  </g>
+
+  <!-- Flow Arrows -->
+  <path d="M 260 185 L 305 185" stroke="#6366f1" stroke-width="2" marker-end="url(#arr)" />
+  <path d="M 530 220 L 570 220" stroke="#7c3aed" stroke-width="2" marker-end="url(#arr-purple)" />
+  <path d="M 570 610 L 260 380" stroke="#0d9488" stroke-width="1.5" stroke-dasharray="4,3" marker-end="url(#arr-teal)"/>
+</svg>
