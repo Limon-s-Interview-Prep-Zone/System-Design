@@ -1,0 +1,103 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 540" width="100%" height="100%">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0f172a" />
+      <stop offset="100%" stop-color="#1e293b" />
+    </linearGradient>
+    <linearGradient id="monoGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1e3a8a" stop-opacity="0.8"/>
+      <stop offset="100%" stop-color="#1e293b" stop-opacity="0.9"/>
+    </linearGradient>
+    <linearGradient id="distGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#312e81" stop-opacity="0.8"/>
+      <stop offset="100%" stop-color="#1e293b" stop-opacity="0.9"/>
+    </linearGradient>
+    <filter id="shadow" x="-5%" y="-5%" width="110%" height="110%">
+      <feDropShadow dx="0" dy="4" stdDeviation="6" flood-color="#000" flood-opacity="0.3"/>
+    </filter>
+  </defs>
+
+  <!-- Background -->
+  <rect width="960" height="540" fill="url(#bgGrad)" rx="12"/>
+
+  <!-- Title -->
+  <text x="480" y="42" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="24" font-weight="bold" fill="#f8fafc" text-anchor="middle">Software Architecture Patterns Taxonomy</text>
+  <text x="480" y="68" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="13" fill="#94a3b8" text-anchor="middle">Single-Process (Monolithic) vs Distributed Architectures: Complexity vs Scalability Spectrum</text>
+
+  <!-- Left Column: Single-Process Patterns -->
+  <rect x="40" y="95" width="420" height="415" rx="10" fill="url(#monoGrad)" stroke="#3b82f6" stroke-width="1.5" filter="url(#shadow)"/>
+  <rect x="55" y="110" width="180" height="26" rx="13" fill="#2563eb" />
+  <text x="145" y="127" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="12" font-weight="bold" fill="#ffffff" text-anchor="middle">SINGLE-PROCESS PATTERNS</text>
+  <text x="55" y="152" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="11" fill="#93c5fd">Zero network serialization overhead • ACID Transactions • Simple Operations</text>
+
+  <!-- Pattern 1: Layered -->
+  <g transform="translate(55, 170)">
+    <rect width="390" height="68" rx="8" fill="#0f172a" stroke="#334155" stroke-width="1"/>
+    <text x="15" y="24" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="14" font-weight="bold" fill="#60a5fa">1. Layered (Logical) Architecture</text>
+    <text x="15" y="42" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="11" fill="#cbd5e1">Presentation → Business Logic → Data Access (In 1 process).</text>
+    <text x="15" y="58" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="10" fill="#94a3b8">Best for: Simple line-of-business CRUD apps, standard enterprise portals.</text>
+  </g>
+
+  <!-- Pattern 2: Clean/Hexagonal -->
+  <g transform="translate(55, 250)">
+    <rect width="390" height="68" rx="8" fill="#0f172a" stroke="#334155" stroke-width="1"/>
+    <text x="15" y="24" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="14" font-weight="bold" fill="#38bdf8">2. Clean / Hexagonal / Onion</text>
+    <text x="15" y="42" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="11" fill="#cbd5e1">Domain at core; Inward Dependency Rule; Ports &amp; Adapters.</text>
+    <text x="15" y="58" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="10" fill="#94a3b8">Best for: High business rule complexity, framework-agnostic systems.</text>
+  </g>
+
+  <!-- Pattern 3: Modular Monolith -->
+  <g transform="translate(55, 330)">
+    <rect width="390" height="68" rx="8" fill="#0f172a" stroke="#334155" stroke-width="1"/>
+    <text x="15" y="24" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="14" font-weight="bold" fill="#34d399">3. Modular Monolith Architecture</text>
+    <text x="15" y="42" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="11" fill="#cbd5e1">Strict module boundaries in 1 process; in-memory events; shared/split DB.</text>
+    <text x="15" y="58" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="10" fill="#94a3b8">Best for: Rapid product-market fit, medium-large teams without microservice tax.</text>
+  </g>
+
+  <!-- Pattern 4: Microkernel -->
+  <g transform="translate(55, 410)">
+    <rect width="390" height="68" rx="8" fill="#0f172a" stroke="#334155" stroke-width="1"/>
+    <text x="15" y="24" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="14" font-weight="bold" fill="#f472b6">4. Microkernel (Plugin) Architecture</text>
+    <text x="15" y="42" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="11" fill="#cbd5e1">Minimal core runtime + hot-pluggable domain extensions &amp; adapters.</text>
+    <text x="15" y="58" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="10" fill="#94a3b8">Best for: Workflow engines, IDEs, payment gateways, customizable SaaS.</text>
+  </g>
+
+  <!-- Right Column: Distributed Patterns -->
+  <rect x="500" y="95" width="420" height="415" rx="10" fill="url(#distGrad)" stroke="#818cf8" stroke-width="1.5" filter="url(#shadow)"/>
+  <rect x="515" y="110" width="180" height="26" rx="13" fill="#6366f1" />
+  <text x="605" y="127" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="12" font-weight="bold" fill="#ffffff" text-anchor="middle">DISTRIBUTED PATTERNS</text>
+  <text x="515" y="152" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="11" fill="#c7d2fe">Independent scaling • Fault isolation • Eventual Consistency &amp; Network fallacies</text>
+
+  <!-- Pattern 5: Microservices -->
+  <g transform="translate(515, 170)">
+    <rect width="390" height="68" rx="8" fill="#0f172a" stroke="#334155" stroke-width="1"/>
+    <text x="15" y="24" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="14" font-weight="bold" fill="#818cf8">5. Microservices Architecture</text>
+    <text x="15" y="42" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="11" fill="#cbd5e1">Autonomous services; Database-per-service; API Gateway; Polyglot.</text>
+    <text x="15" y="58" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="10" fill="#94a3b8">Best for: Large scale, multiple autonomous teams, distinct scaling requirements.</text>
+  </g>
+
+  <!-- Pattern 6: EDA -->
+  <g transform="translate(515, 250)">
+    <rect width="390" height="68" rx="8" fill="#0f172a" stroke="#334155" stroke-width="1"/>
+    <text x="15" y="24" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="14" font-weight="bold" fill="#a78bfa">6. Event-Driven Architecture (EDA)</text>
+    <text x="15" y="42" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="11" fill="#cbd5e1">Async decoupling via Events; Broker vs Mediator; Pub/Sub &amp; Streaming.</text>
+    <text x="15" y="58" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="10" fill="#94a3b8">Best for: High concurrency, reactive systems, temporal decoupling, IoT.</text>
+  </g>
+
+  <!-- Pattern 7: CQRS / ES -->
+  <g transform="translate(515, 330)">
+    <rect width="390" height="68" rx="8" fill="#0f172a" stroke="#334155" stroke-width="1"/>
+    <text x="15" y="24" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="14" font-weight="bold" fill="#fbbf24">7. CQRS &amp; Event Sourcing (ES)</text>
+    <text x="15" y="42" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="11" fill="#cbd5e1">Split Writes (Commands) &amp; Reads (Queries); Append-only Event Store.</text>
+    <text x="15" y="58" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="10" fill="#94a3b8">Best for: Audit-heavy compliance (fintech, healthcare), complex reads vs writes.</text>
+  </g>
+
+  <!-- Pattern 8: Space-Based -->
+  <g transform="translate(515, 410)">
+    <rect width="390" height="68" rx="8" fill="#0f172a" stroke="#334155" stroke-width="1"/>
+    <text x="15" y="24" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="14" font-weight="bold" fill="#f87171">8. Space-Based Architecture</text>
+    <text x="15" y="42" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="11" fill="#cbd5e1">Processing Units + In-Memory Data Grid; Async DB offloading; Virtual Actors.</text>
+    <text x="15" y="58" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="10" fill="#94a3b8">Best for: Ultra-low latency, extreme burst loads, gaming, high-frequency trading.</text>
+  </g>
+</svg>
+

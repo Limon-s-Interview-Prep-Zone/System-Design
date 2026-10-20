@@ -1,0 +1,128 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 540" width="100%" height="100%">
+  <defs>
+    <linearGradient id="bgLevels" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0f172a" />
+      <stop offset="100%" stop-color="#1e293b" />
+    </linearGradient>
+    <linearGradient id="lvl1Grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1e3a8a" stop-opacity="0.9"/>
+      <stop offset="100%" stop-color="#0f172a" stop-opacity="0.9"/>
+    </linearGradient>
+    <linearGradient id="lvl2Grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#065f46" stop-opacity="0.9"/>
+      <stop offset="100%" stop-color="#0f172a" stop-opacity="0.9"/>
+    </linearGradient>
+    <linearGradient id="lvl3Grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#78350f" stop-opacity="0.9"/>
+      <stop offset="100%" stop-color="#0f172a" stop-opacity="0.9"/>
+    </linearGradient>
+    <filter id="shadowLvl" x="-5%" y="-5%" width="110%" height="110%">
+      <feDropShadow dx="0" dy="4" stdDeviation="6" flood-color="#000" flood-opacity="0.35"/>
+    </filter>
+  </defs>
+
+  <!-- Background -->
+  <rect width="960" height="540" fill="url(#bgLevels)" rx="12"/>
+
+  <!-- Title -->
+  <text x="480" y="38" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="22" font-weight="bold" fill="#f8fafc" text-anchor="middle">The Architectural Hierarchy: System vs. Application vs. Patterns</text>
+  <text x="480" y="62" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="13" fill="#94a3b8" text-anchor="middle">From Distributed Macro-Topologies to In-Process Structures and Tactical Patterns</text>
+
+  <!-- Level 1: System Architecture (Macro) -->
+  <g transform="translate(40, 85)">
+    <rect width="880" height="125" rx="10" fill="url(#lvl1Grad)" stroke="#3b82f6" stroke-width="1.5" filter="url(#shadowLvl)"/>
+    <rect x="20" y="16" width="230" height="26" rx="13" fill="#2563eb" />
+    <text x="135" y="33" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="12" font-weight="bold" fill="#ffffff" text-anchor="middle">1. SYSTEM ARCHITECTURE (Macro)</text>
+    <text x="265" y="33" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="12" fill="#93c5fd">• Entire ecosystem, network boundaries, distributed infrastructure, deployability</text>
+    
+    <!-- Level 1 Items -->
+    <g transform="translate(20, 55)">
+      <!-- Box 1 -->
+      <rect width="200" height="55" rx="6" fill="#0f172a" stroke="#1d4ed8" stroke-width="1"/>
+      <text x="15" y="24" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="12" font-weight="bold" fill="#60a5fa">Monolith vs Distributed</text>
+      <text x="15" y="42" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="10" fill="#94a3b8">Single process vs multi-process network</text>
+
+      <!-- Box 2 -->
+      <rect x="215" width="200" height="55" rx="6" fill="#0f172a" stroke="#1d4ed8" stroke-width="1"/>
+      <text x="230" y="24" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="12" font-weight="bold" fill="#60a5fa">N-Tier (Physical Tiers)</text>
+      <text x="230" y="42" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="10" fill="#94a3b8">Client ➔ DMZ ➔ App ➔ DB Network Tiers</text>
+
+      <!-- Box 3 -->
+      <rect x="430" width="200" height="55" rx="6" fill="#0f172a" stroke="#1d4ed8" stroke-width="1"/>
+      <text x="445" y="24" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="12" font-weight="bold" fill="#60a5fa">Microservices</text>
+      <text x="445" y="42" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="10" fill="#94a3b8">Database-per-service &amp; autonomous teams</text>
+
+      <!-- Box 4 -->
+      <rect x="645" width="195" height="55" rx="6" fill="#0f172a" stroke="#1d4ed8" stroke-width="1"/>
+      <text x="660" y="24" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="12" font-weight="bold" fill="#60a5fa">Space-Based &amp; Serverless</text>
+      <text x="660" y="42" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="10" fill="#94a3b8">In-memory data grid &amp; ephemeral FaaS</text>
+    </g>
+  </g>
+
+  <!-- Level 2: Application Architecture (Meso) -->
+  <g transform="translate(40, 225)">
+    <rect width="880" height="125" rx="10" fill="url(#lvl2Grad)" stroke="#10b981" stroke-width="1.5" filter="url(#shadowLvl)"/>
+    <rect x="20" y="16" width="260" height="26" rx="13" fill="#059669" />
+    <text x="150" y="33" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="12" font-weight="bold" fill="#ffffff" text-anchor="middle">2. APPLICATION ARCHITECTURE (Meso)</text>
+    <text x="295" y="33" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="12" fill="#a7f3d0">• Inside a single service or process, layering, dependency flow, separation of concerns</text>
+
+    <!-- Level 2 Items -->
+    <g transform="translate(20, 55)">
+      <!-- Box 1 -->
+      <rect width="200" height="55" rx="6" fill="#0f172a" stroke="#047857" stroke-width="1"/>
+      <text x="15" y="24" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="12" font-weight="bold" fill="#34d399">Layered (Logical Layers)</text>
+      <text x="15" y="42" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="10" fill="#94a3b8">Presentation → BLL → DAL in 1 process</text>
+
+      <!-- Box 2 -->
+      <rect x="215" width="200" height="55" rx="6" fill="#0f172a" stroke="#047857" stroke-width="1"/>
+      <text x="230" y="24" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="12" font-weight="bold" fill="#34d399">Clean / Hexagonal</text>
+      <text x="230" y="42" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="10" fill="#94a3b8">Domain Core at center; Ports &amp; Adapters</text>
+
+      <!-- Box 3 -->
+      <rect x="430" width="200" height="55" rx="6" fill="#0f172a" stroke="#047857" stroke-width="1"/>
+      <text x="445" y="24" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="12" font-weight="bold" fill="#34d399">Modular Monolith</text>
+      <text x="445" y="42" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="10" fill="#94a3b8">In-process isolated modules &amp; contracts</text>
+
+      <!-- Box 4 -->
+      <rect x="645" width="195" height="55" rx="6" fill="#0f172a" stroke="#047857" stroke-width="1"/>
+      <text x="660" y="24" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="12" font-weight="bold" fill="#34d399">Microkernel (Plugin)</text>
+      <text x="660" y="42" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="10" fill="#94a3b8">Minimal core runtime + dynamic plugins</text>
+    </g>
+  </g>
+
+  <!-- Level 3: Architectural Patterns (Micro / Tactical) -->
+  <g transform="translate(40, 365)">
+    <rect width="880" height="150" rx="10" fill="url(#lvl3Grad)" stroke="#f59e0b" stroke-width="1.5" filter="url(#shadowLvl)"/>
+    <rect x="20" y="16" width="270" height="26" rx="13" fill="#d97706" />
+    <text x="155" y="33" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="12" font-weight="bold" fill="#ffffff" text-anchor="middle">3. ARCHITECTURAL PATTERNS (Micro/Tactical)</text>
+    <text x="305" y="33" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="12" fill="#fde68a">• Reusable structural solutions addressing cross-cutting challenges (consistency, scale, resilience)</text>
+
+    <!-- Level 3 Items -->
+    <g transform="translate(20, 55)">
+      <!-- Box 1 -->
+      <rect width="200" height="75" rx="6" fill="#0f172a" stroke="#b45309" stroke-width="1"/>
+      <text x="15" y="22" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="12" font-weight="bold" fill="#fbbf24">EDA Topologies</text>
+      <text x="15" y="40" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="10" fill="#cbd5e1">Broker (Choreography)</text>
+      <text x="15" y="56" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="10" fill="#94a3b8">Mediator (Orchestration)</text>
+
+      <!-- Box 2 -->
+      <rect x="215" width="200" height="75" rx="6" fill="#0f172a" stroke="#b45309" stroke-width="1"/>
+      <text x="230" y="22" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="12" font-weight="bold" fill="#fbbf24">CQRS &amp; Event Sourcing</text>
+      <text x="230" y="40" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="10" fill="#cbd5e1">Segregated Read/Write models</text>
+      <text x="230" y="56" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="10" fill="#94a3b8">Append-only event audit store</text>
+
+      <!-- Box 3 -->
+      <rect x="430" width="200" height="75" rx="6" fill="#0f172a" stroke="#b45309" stroke-width="1"/>
+      <text x="445" y="22" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="12" font-weight="bold" fill="#fbbf24">Repository &amp; Unit of Work</text>
+      <text x="445" y="40" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="10" fill="#cbd5e1">Collection abstraction over DB</text>
+      <text x="445" y="56" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="10" fill="#94a3b8">Change tracking &amp; atomic commit</text>
+
+      <!-- Box 4 -->
+      <rect x="645" width="195" height="75" rx="6" fill="#0f172a" stroke="#b45309" stroke-width="1"/>
+      <text x="660" y="22" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="12" font-weight="bold" fill="#fbbf24">Outbox, Saga &amp; Resilience</text>
+      <text x="660" y="40" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="10" fill="#cbd5e1">Transactional outbox &amp; dual-write</text>
+      <text x="660" y="56" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="10" fill="#94a3b8">Sagas &amp; Circuit Breaker</text>
+    </g>
+  </g>
+</svg>
+

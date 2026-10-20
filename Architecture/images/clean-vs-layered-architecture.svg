@@ -1,0 +1,84 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 520" width="100%" height="100%">
+  <defs>
+    <linearGradient id="bg2" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0f172a" />
+      <stop offset="100%" stop-color="#1e293b" />
+    </linearGradient>
+    <filter id="shadow2" x="-5%" y="-5%" width="110%" height="110%">
+      <feDropShadow dx="0" dy="4" stdDeviation="6" flood-color="#000" flood-opacity="0.3"/>
+    </filter>
+    <marker id="arrow" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 8 5 L 0 9 z" fill="#38bdf8" />
+    </marker>
+    <marker id="arrow-down" viewBox="0 0 10 10" refX="5" refY="6" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M 1 0 L 5 8 L 9 0 z" fill="#f87171" />
+    </marker>
+  </defs>
+
+  <rect width="960" height="520" fill="url(#bg2)" rx="12"/>
+
+  <text x="480" y="40" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="22" font-weight="bold" fill="#f8fafc" text-anchor="middle">Traditional Layered vs. Clean / Hexagonal Architecture</text>
+  <text x="480" y="65" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="13" fill="#94a3b8" text-anchor="middle">Top-Down Database Coupling vs. Domain-Centric Dependency Inversion</text>
+
+  <!-- Left: Traditional Layered -->
+  <g transform="translate(50, 95)">
+    <rect width="400" height="400" rx="10" fill="#1e293b" stroke="#f87171" stroke-width="1.5" filter="url(#shadow2)"/>
+    <text x="200" y="32" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="16" font-weight="bold" fill="#f87171" text-anchor="middle">Traditional Layered (Top-Down)</text>
+    <text x="200" y="52" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="11" fill="#cbd5e1" text-anchor="middle">Direct Coupling • Database Centric • Hard to Mock</text>
+
+    <!-- Presentation Layer -->
+    <rect x="50" y="75" width="300" height="50" rx="6" fill="#334155" stroke="#64748b" stroke-width="1"/>
+    <text x="200" y="105" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="13" font-weight="bold" fill="#f8fafc" text-anchor="middle">Presentation Layer (Controllers / UI)</text>
+
+    <line x1="200" y1="125" x2="200" y2="155" stroke="#f87171" stroke-width="2" marker-end="url(#arrow-down)"/>
+
+    <!-- Business Logic Layer -->
+    <rect x="50" y="155" width="300" height="50" rx="6" fill="#1e3a8a" stroke="#3b82f6" stroke-width="1"/>
+    <text x="200" y="185" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="13" font-weight="bold" fill="#93c5fd" text-anchor="middle">Business Logic Layer (Services)</text>
+
+    <line x1="200" y1="205" x2="200" y2="235" stroke="#f87171" stroke-width="2" marker-end="url(#arrow-down)"/>
+
+    <!-- Data Access Layer -->
+    <rect x="50" y="235" width="300" height="50" rx="6" fill="#431407" stroke="#ea580c" stroke-width="1"/>
+    <text x="200" y="265" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="13" font-weight="bold" fill="#fdba74" text-anchor="middle">Data Access Layer (DAL / Repositories)</text>
+
+    <line x1="200" y1="285" x2="200" y2="315" stroke="#f87171" stroke-width="2" marker-end="url(#arrow-down)"/>
+
+    <!-- Database -->
+    <rect x="50" y="315" width="300" height="50" rx="6" fill="#022c22" stroke="#10b981" stroke-width="1"/>
+    <text x="200" y="345" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="13" font-weight="bold" fill="#6ee7b7" text-anchor="middle">Database (SQL / Schema First)</text>
+
+    <text x="200" y="385" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="11" fill="#fca5a5" text-anchor="middle">⚠️ High Risk: Business logic depends directly on DAL &amp; DB schema</text>
+  </g>
+
+  <!-- Right: Clean / Hexagonal Architecture -->
+  <g transform="translate(510, 95)">
+    <rect width="400" height="400" rx="10" fill="#1e293b" stroke="#38bdf8" stroke-width="1.5" filter="url(#shadow2)"/>
+    <text x="200" y="32" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="16" font-weight="bold" fill="#38bdf8" text-anchor="middle">Clean / Hexagonal (Ports &amp; Adapters)</text>
+    <text x="200" y="52" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="11" fill="#cbd5e1" text-anchor="middle">Dependency Inversion • Domain Independent • 100% Testable</text>
+
+    <!-- Concentric Circles Representation -->
+    <!-- Outer Layer: Infrastructure & Presentation (Adapters) -->
+    <circle cx="200" cy="225" r="145" fill="#0f172a" stroke="#64748b" stroke-width="1.5" stroke-dasharray="4 2"/>
+    <text x="200" y="100" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="11" font-weight="bold" fill="#94a3b8" text-anchor="middle">Adapters: Controllers, EF Core, HTTP, Message Bus</text>
+
+    <!-- Middle Layer: Application (Use Cases & Ports) -->
+    <circle cx="200" cy="225" r="105" fill="#1e3a8a" fill-opacity="0.4" stroke="#3b82f6" stroke-width="1.5"/>
+    <text x="200" y="145" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="11" font-weight="bold" fill="#93c5fd" text-anchor="middle">Application Layer (Use Cases / Commands)</text>
+    <text x="200" y="160" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="9" fill="#bfdbfe" text-anchor="middle">Defines Ports: IOrderRepository, INotificationService</text>
+
+    <!-- Core: Domain Layer -->
+    <circle cx="200" cy="225" r="60" fill="#0284c7" fill-opacity="0.6" stroke="#38bdf8" stroke-width="2"/>
+    <text x="200" y="222" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="13" font-weight="bold" fill="#ffffff" text-anchor="middle">Domain Core</text>
+    <text x="200" y="238" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="10" fill="#e0f2fe" text-anchor="middle">Entities &amp; Value Objects</text>
+    <text x="200" y="250" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="9" fill="#bae6fd" text-anchor="middle">(Zero external dependencies)</text>
+
+    <!-- Inward Arrows -->
+    <line x1="75" y1="225" x2="135" y2="225" stroke="#38bdf8" stroke-width="2" marker-end="url(#arrow)"/>
+    <line x1="325" y1="225" x2="265" y2="225" stroke="#38bdf8" stroke-width="2" marker-end="url(#arrow)"/>
+    <line x1="200" y1="355" x2="200" y2="290" stroke="#38bdf8" stroke-width="2" marker-end="url(#arrow)"/>
+
+    <text x="200" y="385" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="11" fill="#34d399" text-anchor="middle">✅ Inward Rule: Dependencies point strictly INWARD toward Domain</text>
+  </g>
+</svg>
+

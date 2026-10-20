@@ -1,0 +1,167 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 520" width="100%" height="100%">
+  <defs>
+    <linearGradient id="uiBg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0f172a" />
+      <stop offset="100%" stop-color="#1e293b" />
+    </linearGradient>
+    <filter id="uiShadow" x="-5%" y="-5%" width="110%" height="110%">
+      <feDropShadow dx="0" dy="4" stdDeviation="5" flood-color="#000" flood-opacity="0.35"/>
+    </filter>
+    <marker id="uiArrow" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 8 5 L 0 9 z" fill="#38bdf8" />
+    </marker>
+    <marker id="uiArrowM" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 8 5 L 0 9 z" fill="#a78bfa" />
+    </marker>
+    <marker id="uiArrowG" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 8 5 L 0 9 z" fill="#34d399" />
+    </marker>
+    <marker id="uiArrowY" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 8 5 L 0 9 z" fill="#fbbf24" />
+    </marker>
+  </defs>
+
+  <rect width="960" height="520" fill="url(#uiBg)" rx="12"/>
+
+  <text x="480" y="38" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="22" font-weight="bold" fill="#f8fafc" text-anchor="middle">UI &amp; Presentation Architecture Patterns Evolution</text>
+  <text x="480" y="60" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="13" fill="#94a3b8" text-anchor="middle">Decoupling UI Rendering, State Synchronization, and User Interaction</text>
+
+  <!-- Panel 1: MVC -->
+  <g transform="translate(30, 85)">
+    <rect width="210" height="405" rx="8" fill="#1e293b" stroke="#38bdf8" stroke-width="1.5" filter="url(#uiShadow)"/>
+    <rect x="15" y="15" width="180" height="26" rx="13" fill="#0284c7"/>
+    <text x="105" y="32" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="12" font-weight="bold" fill="#ffffff" text-anchor="middle">1. MVC (Controller)</text>
+
+    <!-- User Input -->
+    <rect x="25" y="60" width="160" height="40" rx="6" fill="#0f172a" stroke="#64748b" stroke-width="1"/>
+    <text x="105" y="85" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="11" font-weight="bold" fill="#f8fafc" text-anchor="middle">User Action / HTTP</text>
+
+    <line x1="105" y1="100" x2="105" y2="125" stroke="#38bdf8" stroke-width="2" marker-end="url(#uiArrow)"/>
+
+    <!-- Controller -->
+    <rect x="25" y="130" width="160" height="45" rx="6" fill="#0c4a6e" stroke="#38bdf8" stroke-width="1"/>
+    <text x="105" y="150" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="12" font-weight="bold" fill="#38bdf8" text-anchor="middle">Controller</text>
+    <text x="105" y="165" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="9" fill="#94a3b8" text-anchor="middle">Mutates Model / Selects View</text>
+
+    <line x1="105" y1="175" x2="105" y2="200" stroke="#38bdf8" stroke-width="2" marker-end="url(#uiArrow)"/>
+
+    <!-- Model -->
+    <rect x="25" y="205" width="160" height="45" rx="6" fill="#0f172a" stroke="#475569" stroke-width="1"/>
+    <text x="105" y="225" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="12" font-weight="bold" fill="#f8fafc" text-anchor="middle">Model</text>
+    <text x="105" y="240" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="9" fill="#94a3b8" text-anchor="middle">Business Data &amp; Rules</text>
+
+    <line x1="105" y1="250" x2="105" y2="275" stroke="#38bdf8" stroke-width="2" marker-end="url(#uiArrow)"/>
+
+    <!-- View -->
+    <rect x="25" y="280" width="160" height="45" rx="6" fill="#0f172a" stroke="#475569" stroke-width="1"/>
+    <text x="105" y="300" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="12" font-weight="bold" fill="#f8fafc" text-anchor="middle">View</text>
+    <text x="105" y="315" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="9" fill="#94a3b8" text-anchor="middle">Renders Model to UI</text>
+
+    <rect x="15" y="345" width="180" height="45" rx="6" fill="#0f172a" stroke="#334155" stroke-width="1"/>
+    <text x="105" y="363" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="10" fill="#4ade80" text-anchor="middle">✔ Great for Server SSR</text>
+    <text x="105" y="378" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="9" fill="#94a3b8" text-anchor="middle">(ASP.NET Core MVC / Rails)</text>
+  </g>
+
+  <!-- Panel 2: MVP -->
+  <g transform="translate(260, 85)">
+    <rect width="210" height="405" rx="8" fill="#1e293b" stroke="#a78bfa" stroke-width="1.5" filter="url(#uiShadow)"/>
+    <rect x="15" y="15" width="180" height="26" rx="13" fill="#7c3aed"/>
+    <text x="105" y="32" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="12" font-weight="bold" fill="#ffffff" text-anchor="middle">2. MVP (Presenter)</text>
+
+    <!-- View (Passive) -->
+    <rect x="25" y="60" width="160" height="50" rx="6" fill="#0f172a" stroke="#475569" stroke-width="1"/>
+    <text x="105" y="80" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="12" font-weight="bold" fill="#f8fafc" text-anchor="middle">Passive View</text>
+    <text x="105" y="96" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="9" fill="#94a3b8" text-anchor="middle">Implements IOrderView</text>
+
+    <!-- Bi-directional arrows -->
+    <line x1="85" y1="110" x2="85" y2="155" stroke="#a78bfa" stroke-width="2" marker-end="url(#uiArrowM)"/>
+    <line x1="125" y1="155" x2="125" y2="110" stroke="#a78bfa" stroke-width="2" marker-end="url(#uiArrowM)"/>
+
+    <!-- Presenter -->
+    <rect x="25" y="160" width="160" height="55" rx="6" fill="#2e1065" stroke="#a78bfa" stroke-width="1"/>
+    <text x="105" y="182" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="12" font-weight="bold" fill="#a78bfa" text-anchor="middle">Presenter</text>
+    <text x="105" y="198" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="9" fill="#ddd6fe" text-anchor="middle">Drives View via Interface</text>
+
+    <!-- Bi-directional arrows to Model -->
+    <line x1="85" y1="215" x2="85" y2="255" stroke="#a78bfa" stroke-width="2" marker-end="url(#uiArrowM)"/>
+    <line x1="125" y1="255" x2="125" y2="215" stroke="#a78bfa" stroke-width="2" marker-end="url(#uiArrowM)"/>
+
+    <!-- Model -->
+    <rect x="25" y="260" width="160" height="45" rx="6" fill="#0f172a" stroke="#475569" stroke-width="1"/>
+    <text x="105" y="280" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="12" font-weight="bold" fill="#f8fafc" text-anchor="middle">Model</text>
+    <text x="105" y="295" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="9" fill="#94a3b8" text-anchor="middle">Domain &amp; Services</text>
+
+    <rect x="15" y="345" width="180" height="45" rx="6" fill="#0f172a" stroke="#334155" stroke-width="1"/>
+    <text x="105" y="363" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="10" fill="#4ade80" text-anchor="middle">✔ 100% Mockable View</text>
+    <text x="105" y="378" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="9" fill="#94a3b8" text-anchor="middle">(WinForms / Android MVP)</text>
+  </g>
+
+  <!-- Panel 3: MVVM -->
+  <g transform="translate(490, 85)">
+    <rect width="210" height="405" rx="8" fill="#1e293b" stroke="#34d399" stroke-width="1.5" filter="url(#uiShadow)"/>
+    <rect x="15" y="15" width="180" height="26" rx="13" fill="#059669"/>
+    <text x="105" y="32" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="12" font-weight="bold" fill="#ffffff" text-anchor="middle">3. MVVM (Data Binding)</text>
+
+    <!-- View -->
+    <rect x="25" y="60" width="160" height="50" rx="6" fill="#0f172a" stroke="#475569" stroke-width="1"/>
+    <text x="105" y="80" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="12" font-weight="bold" fill="#f8fafc" text-anchor="middle">Declarative View</text>
+    <text x="105" y="96" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="9" fill="#94a3b8" text-anchor="middle">XAML / Razor / Template</text>
+
+    <!-- Two-way Data Binding Link -->
+    <line x1="60" y1="110" x2="60" y2="155" stroke="#34d399" stroke-width="2" marker-end="url(#uiArrowG)"/>
+    <line x1="150" y1="155" x2="150" y2="110" stroke="#34d399" stroke-width="2" marker-end="url(#uiArrowG)"/>
+    <rect x="35" y="122" width="140" height="20" rx="4" fill="#064e3b" stroke="#10b981" stroke-width="1"/>
+    <text x="105" y="136" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="9" font-weight="bold" fill="#6ee7b7" text-anchor="middle">Two-Way Data Binding</text>
+
+    <!-- ViewModel -->
+    <rect x="25" y="160" width="160" height="55" rx="6" fill="#022c22" stroke="#34d399" stroke-width="1"/>
+    <text x="105" y="182" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="12" font-weight="bold" fill="#34d399" text-anchor="middle">ViewModel</text>
+    <text x="105" y="198" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="9" fill="#a7f3d0" text-anchor="middle">INotifyPropertyChanged</text>
+
+    <!-- Arrow to Model -->
+    <line x1="105" y1="215" x2="105" y2="255" stroke="#34d399" stroke-width="2" marker-end="url(#uiArrowG)"/>
+
+    <!-- Model -->
+    <rect x="25" y="260" width="160" height="45" rx="6" fill="#0f172a" stroke="#475569" stroke-width="1"/>
+    <text x="105" y="280" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="12" font-weight="bold" fill="#f8fafc" text-anchor="middle">Model</text>
+    <text x="105" y="295" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="9" fill="#94a3b8" text-anchor="middle">Entities &amp; API Clients</text>
+
+    <rect x="15" y="345" width="180" height="45" rx="6" fill="#0f172a" stroke="#334155" stroke-width="1"/>
+    <text x="105" y="363" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="10" fill="#4ade80" text-anchor="middle">✔ Zero UI Code-Behind</text>
+    <text x="105" y="378" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="9" fill="#94a3b8" text-anchor="middle">(WPF / MAUI / Blazor / Vue)</text>
+  </g>
+
+  <!-- Panel 4: MVI / UDF -->
+  <g transform="translate(720, 85)">
+    <rect width="210" height="405" rx="8" fill="#1e293b" stroke="#fbbf24" stroke-width="1.5" filter="url(#uiShadow)"/>
+    <rect x="15" y="15" width="180" height="26" rx="13" fill="#b45309"/>
+    <text x="105" y="32" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="12" font-weight="bold" fill="#ffffff" text-anchor="middle">4. MVI / Flux (UDF)</text>
+
+    <!-- Circular Unidirectional Flow -->
+    <rect x="25" y="60" width="160" height="40" rx="6" fill="#0f172a" stroke="#475569" stroke-width="1"/>
+    <text x="105" y="84" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="11" font-weight="bold" fill="#f8fafc" text-anchor="middle">View (Renders State)</text>
+
+    <line x1="165" y1="100" x2="165" y2="135" stroke="#fbbf24" stroke-width="2" marker-end="url(#uiArrowY)"/>
+
+    <rect x="25" y="135" width="160" height="40" rx="6" fill="#78350f" stroke="#fbbf24" stroke-width="1"/>
+    <text x="105" y="155" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="11" font-weight="bold" fill="#fef08a" text-anchor="middle">Intent / Action</text>
+    <text x="105" y="168" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="8" fill="#fde68a" text-anchor="middle">User dispatches intent</text>
+
+    <line x1="105" y1="175" x2="105" y2="200" stroke="#fbbf24" stroke-width="2" marker-end="url(#uiArrowY)"/>
+
+    <rect x="25" y="200" width="160" height="45" rx="6" fill="#0f172a" stroke="#b45309" stroke-width="1"/>
+    <text x="105" y="220" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="11" font-weight="bold" fill="#fde68a" text-anchor="middle">Reducer / Store</text>
+    <text x="105" y="235" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="8" fill="#94a3b8" text-anchor="middle">Pure function: (State, Action) =&gt; NewState</text>
+
+    <line x1="45" y1="200" x2="45" y2="105" stroke="#fbbf24" stroke-width="2" marker-end="url(#uiArrowY)"/>
+
+    <rect x="25" y="265" width="160" height="40" rx="6" fill="#0f172a" stroke="#475569" stroke-width="1"/>
+    <text x="105" y="285" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="11" font-weight="bold" fill="#f8fafc" text-anchor="middle">Immutable State</text>
+    <text x="105" y="298" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="8" fill="#94a3b8" text-anchor="middle">Single source of truth</text>
+
+    <rect x="15" y="345" width="180" height="45" rx="6" fill="#0f172a" stroke="#334155" stroke-width="1"/>
+    <text x="105" y="363" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="10" fill="#4ade80" text-anchor="middle">✔ Predictable State Machine</text>
+    <text x="105" y="378" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="9" fill="#94a3b8" text-anchor="middle">(Blazor Fluxor / React / Compose)</text>
+  </g>
+</svg>
+

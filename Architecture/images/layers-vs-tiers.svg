@@ -1,0 +1,103 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 520" width="100%" height="100%">
+  <defs>
+    <linearGradient id="lvBg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0f172a" />
+      <stop offset="100%" stop-color="#1e293b" />
+    </linearGradient>
+    <filter id="lvShadow" x="-5%" y="-5%" width="110%" height="110%">
+      <feDropShadow dx="0" dy="4" stdDeviation="5" flood-color="#000" flood-opacity="0.35"/>
+    </filter>
+    <marker id="netArrow" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 8 5 L 0 9 z" fill="#f87171" />
+    </marker>
+    <marker id="memArrow" viewBox="0 0 10 10" refX="5" refY="6" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M 1 0 L 5 8 L 9 0 z" fill="#38bdf8" />
+    </marker>
+  </defs>
+
+  <rect width="960" height="520" fill="url(#lvBg)" rx="12"/>
+
+  <text x="480" y="38" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="22" font-weight="bold" fill="#f8fafc" text-anchor="middle">Architectural Clarification: Logical Layers vs. Physical Tiers</text>
+  <text x="480" y="60" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="13" fill="#94a3b8" text-anchor="middle">Code Organization in Memory (Application Architecture) vs. Deployment across Network Boundaries (System Architecture)</text>
+
+  <!-- Left: Logical Layers (Single Process) -->
+  <g transform="translate(40, 85)">
+    <rect width="420" height="405" rx="10" fill="#1e293b" stroke="#38bdf8" stroke-width="1.5" filter="url(#lvShadow)"/>
+    <rect x="20" y="15" width="220" height="26" rx="13" fill="#0284c7"/>
+    <text x="130" y="32" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="12" font-weight="bold" fill="#ffffff" text-anchor="middle">LOGICAL LAYERS (Meso-Level)</text>
+    <text x="20" y="58" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="11" fill="#93c5fd">Inside ONE Operating System Process / Memory Space</text>
+
+    <!-- Host Process Box -->
+    <rect x="20" y="75" width="380" height="250" rx="8" fill="#0f172a" stroke="#334155" stroke-dasharray="4 2"/>
+    <text x="35" y="95" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="11" font-weight="bold" fill="#64748b">Single OS Process (.NET Application Host / App.dll)</text>
+
+    <!-- Layer 1 -->
+    <rect x="35" y="105" width="350" height="45" rx="6" fill="#1e3a8a" stroke="#3b82f6" stroke-width="1"/>
+    <text x="210" y="126" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="12" font-weight="bold" fill="#93c5fd" text-anchor="middle">Presentation Layer (Controllers / UI)</text>
+    <text x="210" y="141" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="9" fill="#bfdbfe" text-anchor="middle">Input Validation, Serialization, HTTP endpoints</text>
+
+    <line x1="210" y1="150" x2="210" y2="175" stroke="#38bdf8" stroke-width="2" marker-end="url(#memArrow)"/>
+
+    <!-- Layer 2 -->
+    <rect x="35" y="175" width="350" height="45" rx="6" fill="#065f46" stroke="#10b981" stroke-width="1"/>
+    <text x="210" y="196" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="12" font-weight="bold" fill="#a7f3d0" text-anchor="middle">Business Logic Layer (BLL / Services)</text>
+    <text x="210" y="211" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="9" fill="#d1fae5" text-anchor="middle">Business Rules, Calculations, Invariants</text>
+
+    <line x1="210" y1="220" x2="210" y2="245" stroke="#38bdf8" stroke-width="2" marker-end="url(#memArrow)"/>
+
+    <!-- Layer 3 -->
+    <rect x="35" y="245" width="350" height="45" rx="6" fill="#78350f" stroke="#f59e0b" stroke-width="1"/>
+    <text x="210" y="266" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="12" font-weight="bold" fill="#fde68a" text-anchor="middle">Data Access Layer (DAL / Repositories)</text>
+    <text x="210" y="281" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="9" fill="#fef3c7" text-anchor="middle">EF Core DbContext, SQL Commands, Queries</text>
+
+    <!-- Characteristics Box -->
+    <rect x="20" y="340" width="380" height="55" rx="6" fill="#0f172a" stroke="#334155" stroke-width="1"/>
+    <text x="30" y="360" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="11" fill="#38bdf8">⚡ Inter-layer Communication: In-memory method calls (&lt; 1 µs)</text>
+    <text x="30" y="380" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="11" fill="#4ade80">✔ Goal: Separation of concerns, modularity, and testability</text>
+  </g>
+
+  <!-- Right: Physical Tiers (Distributed Network) -->
+  <g transform="translate(500, 85)">
+    <rect width="420" height="405" rx="10" fill="#1e293b" stroke="#f87171" stroke-width="1.5" filter="url(#lvShadow)"/>
+    <rect x="20" y="15" width="220" height="26" rx="13" fill="#dc2626"/>
+    <text x="130" y="32" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="12" font-weight="bold" fill="#ffffff" text-anchor="middle">PHYSICAL TIERS (Macro-Level)</text>
+    <text x="20" y="58" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="11" fill="#fca5a5">Separated by HARDWARE, OS, and NETWORK Boundaries</text>
+
+    <!-- Tier 1: Client Tier -->
+    <rect x="20" y="75" width="380" height="48" rx="6" fill="#0f172a" stroke="#f87171" stroke-width="1"/>
+    <text x="210" y="96" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="12" font-weight="bold" fill="#fca5a5" text-anchor="middle">Tier 1: Client Tier (Browser / Mobile App)</text>
+    <text x="210" y="112" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="9" fill="#94a3b8" text-anchor="middle">Executes on End-User Device (React / Flutter / MAUI)</text>
+
+    <!-- Network Link 1 -->
+    <line x1="210" y1="123" x2="210" y2="150" stroke="#f87171" stroke-width="2" stroke-dasharray="3 3" marker-end="url(#netArrow)"/>
+    <text x="280" y="140" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="9" fill="#ef4444">Network (HTTPS / WAN)</text>
+
+    <!-- Tier 2: Web Server Tier -->
+    <rect x="20" y="150" width="380" height="48" rx="6" fill="#0f172a" stroke="#f87171" stroke-width="1"/>
+    <text x="210" y="171" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="12" font-weight="bold" fill="#fca5a5" text-anchor="middle">Tier 2: Web / API Gateway Tier (Reverse Proxy / DMZ)</text>
+    <text x="210" y="187" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="9" fill="#94a3b8" text-anchor="middle">YARP / NGINX, TLS termination, Rate Limiting</text>
+
+    <!-- Network Link 2 -->
+    <line x1="210" y1="198" x2="210" y2="225" stroke="#f87171" stroke-width="2" stroke-dasharray="3 3" marker-end="url(#netArrow)"/>
+    <text x="285" y="215" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="9" fill="#ef4444">Internal LAN (gRPC / HTTP)</text>
+
+    <!-- Tier 3: Application Server Tier -->
+    <rect x="20" y="225" width="380" height="48" rx="6" fill="#0f172a" stroke="#f87171" stroke-width="1"/>
+    <text x="210" y="246" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="12" font-weight="bold" fill="#fca5a5" text-anchor="middle">Tier 3: App Server Tier (Backend Compute)</text>
+    <text x="210" y="262" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="9" fill="#94a3b8" text-anchor="middle">ASP.NET Core Web API Nodes / Docker / Kubernetes Pods</text>
+
+    <!-- Network Link 3 -->
+    <line x1="210" y1="273" x2="210" y2="300" stroke="#f87171" stroke-width="2" stroke-dasharray="3 3" marker-end="url(#netArrow)"/>
+    <text x="280" y="290" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="9" fill="#ef4444">Database Socket (TCP / TLS)</text>
+
+    <!-- Tier 4: Database Tier -->
+    <rect x="20" y="300" width="380" height="42" rx="6" fill="#0f172a" stroke="#f87171" stroke-width="1"/>
+    <text x="210" y="322" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="12" font-weight="bold" fill="#fca5a5" text-anchor="middle">Tier 4: Data Tier (SQL Server / PostgreSQL Cluster)</text>
+
+    <!-- Characteristics Box -->
+    <rect x="20" y="355" width="380" height="40" rx="6" fill="#0f172a" stroke="#334155" stroke-width="1"/>
+    <text x="30" y="372" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="10" fill="#f87171">🌐 Inter-tier Communication: Network serialization (10 - 50 ms)</text>
+    <text x="30" y="387" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="10" fill="#fbbf24">✔ Goal: Physical security boundaries, independent hardware scaling</text>
+  </g>
+</svg>
+
