@@ -1,0 +1,252 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1100 700" width="100%" height="100%">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0f172a"/>
+      <stop offset="100%" stop-color="#1e293b"/>
+    </linearGradient>
+    <filter id="sh" x="-5%" y="-5%" width="110%" height="115%">
+      <feDropShadow dx="0" dy="3" stdDeviation="4" flood-color="#000" flood-opacity="0.4"/>
+    </filter>
+    <marker id="arr" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto">
+      <path d="M 0 1 L 9 5 L 0 9 z" fill="#94a3b8"/>
+    </marker>
+    <marker id="arrB" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto">
+      <path d="M 0 1 L 9 5 L 0 9 z" fill="#38bdf8"/>
+    </marker>
+    <marker id="arrG" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto">
+      <path d="M 0 1 L 9 5 L 0 9 z" fill="#34d399"/>
+    </marker>
+    <marker id="arrO" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto">
+      <path d="M 0 1 L 9 5 L 0 9 z" fill="#fb923c"/>
+    </marker>
+  </defs>
+  <style>
+    .t{font-family:system-ui,-apple-system,sans-serif;font-size:22px;font-weight:700;fill:#f8fafc}
+    .st{font-family:system-ui,-apple-system,sans-serif;font-size:12px;fill:#94a3b8}
+    .h{font-family:system-ui,-apple-system,sans-serif;font-size:13px;font-weight:700}
+    .n{font-family:system-ui,-apple-system,sans-serif;font-size:11px;font-weight:600;fill:#f8fafc}
+    .d{font-family:system-ui,-apple-system,sans-serif;font-size:9.5px;fill:#94a3b8}
+    .b{font-family:system-ui,-apple-system,sans-serif;font-size:10px;font-weight:700;fill:#fff}
+    .fl{stroke-width:1.6;fill:none}
+  </style>
+  <rect width="1100" height="700" fill="url(#bg)"/>
+
+  <!-- Title -->
+  <text x="40" y="40" class="t">Scalability Patterns: The Complete Mental Model</text>
+  <text x="40" y="60" class="st">Vertical vs Horizontal, Stateless Compute, Caching Tiers, DB Scaling Funnel, Async Decoupling</text>
+
+  <!-- ===== LEFT: Vertical vs Horizontal ===== -->
+  <g transform="translate(30,85)" filter="url(#sh)">
+    <rect width="240" height="270" rx="10" fill="#1e293b" stroke="#334155" stroke-width="1.2"/>
+    <rect x="12" y="12" width="155" height="22" rx="5" fill="#ef4444"/>
+    <text x="89" y="27" text-anchor="middle" class="b">VERTICAL vs HORIZONTAL</text>
+
+    <!-- Vertical -->
+    <rect x="15" y="50" width="95" height="200" rx="6" fill="#0f172a" stroke="#f87171" stroke-width="1" stroke-dasharray="3 3"/>
+    <text x="62" y="70" text-anchor="middle" class="n" fill="#f87171">Vertical</text>
+    <text x="62" y="85" text-anchor="middle" class="d">Scale Up</text>
+    <rect x="30" y="100" width="65" height="30" rx="4" fill="#1e293b" stroke="#475569"/>
+    <text x="62" y="119" text-anchor="middle" class="d">4 CPU / 16GB</text>
+    <path d="M 62 130 L 62 145" class="fl" stroke="#f87171" marker-end="url(#arr)"/>
+    <rect x="25" y="148" width="75" height="35" rx="4" fill="#1e293b" stroke="#f87171" stroke-width="1.2"/>
+    <text x="62" y="165" text-anchor="middle" class="n" fill="#f87171">64 CPU</text>
+    <text x="62" y="178" text-anchor="middle" class="d">512 GB RAM</text>
+    <text x="62" y="205" text-anchor="middle" class="d" fill="#f87171">Hardware Ceiling</text>
+    <text x="62" y="218" text-anchor="middle" class="d" fill="#f87171">Single Point of</text>
+    <text x="62" y="230" text-anchor="middle" class="d" fill="#f87171">Failure (SPOF)</text>
+
+    <!-- Horizontal -->
+    <rect x="125" y="50" width="100" height="200" rx="6" fill="#0f172a" stroke="#34d399" stroke-width="1"/>
+    <text x="175" y="70" text-anchor="middle" class="n" fill="#34d399">Horizontal</text>
+    <text x="175" y="85" text-anchor="middle" class="d">Scale Out</text>
+    <rect x="135" y="100" width="35" height="22" rx="3" fill="#1e293b" stroke="#475569"/>
+    <text x="152" y="115" text-anchor="middle" class="d">Node</text>
+    <rect x="175" y="100" width="35" height="22" rx="3" fill="#1e293b" stroke="#475569"/>
+    <text x="192" y="115" text-anchor="middle" class="d">Node</text>
+    <rect x="135" y="130" width="35" height="22" rx="3" fill="#1e293b" stroke="#475569"/>
+    <text x="152" y="145" text-anchor="middle" class="d">Node</text>
+    <rect x="175" y="130" width="35" height="22" rx="3" fill="#1e293b" stroke="#475569"/>
+    <text x="192" y="145" text-anchor="middle" class="d">Node</text>
+    <rect x="135" y="160" width="35" height="22" rx="3" fill="#1e293b" stroke="#34d399" stroke-width="1.2"/>
+    <text x="152" y="175" text-anchor="middle" class="d" fill="#34d399">+New</text>
+    <rect x="175" y="160" width="35" height="22" rx="3" fill="#1e293b" stroke="#34d399" stroke-width="1.2"/>
+    <text x="192" y="175" text-anchor="middle" class="d" fill="#34d399">+New</text>
+    <text x="175" y="205" text-anchor="middle" class="d" fill="#34d399">No Ceiling</text>
+    <text x="175" y="218" text-anchor="middle" class="d" fill="#34d399">Fault Tolerant</text>
+    <text x="175" y="231" text-anchor="middle" class="d" fill="#34d399">Cost Linear</text>
+  </g>
+
+  <!-- ===== CENTER-TOP: Stateless App Tier ===== -->
+  <g transform="translate(300,85)" filter="url(#sh)">
+    <rect width="230" height="270" rx="10" fill="#1e293b" stroke="#334155" stroke-width="1.2"/>
+    <rect x="12" y="12" width="165" height="22" rx="5" fill="#3b82f6"/>
+    <text x="94" y="27" text-anchor="middle" class="b">STATELESS COMPUTE TIER</text>
+
+    <text x="115" y="55" text-anchor="middle" class="n" fill="#38bdf8">Key Principle: Zero Server State</text>
+
+    <!-- LB -->
+    <rect x="70" y="68" width="90" height="30" rx="5" fill="#0f172a" stroke="#38bdf8" stroke-width="1.2"/>
+    <text x="115" y="87" text-anchor="middle" class="n">Load Balancer</text>
+
+    <!-- Arrows LB -> pods -->
+    <path d="M 95 98 L 55 118" class="fl" stroke="#38bdf8" marker-end="url(#arrB)"/>
+    <path d="M 115 98 L 115 118" class="fl" stroke="#38bdf8" marker-end="url(#arrB)"/>
+    <path d="M 135 98 L 175 118" class="fl" stroke="#38bdf8" marker-end="url(#arrB)"/>
+
+    <!-- 3 pods -->
+    <rect x="25" y="120" width="55" height="38" rx="4" fill="#0f172a" stroke="#475569"/>
+    <text x="52" y="138" text-anchor="middle" class="n">Pod 1</text>
+    <text x="52" y="150" text-anchor="middle" class="d">Stateless</text>
+    <rect x="87" y="120" width="55" height="38" rx="4" fill="#0f172a" stroke="#475569"/>
+    <text x="114" y="138" text-anchor="middle" class="n">Pod 2</text>
+    <text x="114" y="150" text-anchor="middle" class="d">Stateless</text>
+    <rect x="150" y="120" width="55" height="38" rx="4" fill="#0f172a" stroke="#475569"/>
+    <text x="177" y="138" text-anchor="middle" class="n">Pod 3</text>
+    <text x="177" y="150" text-anchor="middle" class="d">Stateless</text>
+
+    <!-- HPA -->
+    <rect x="40" y="172" width="150" height="25" rx="4" fill="#0f172a" stroke="#34d399" stroke-dasharray="3 3"/>
+    <text x="115" y="189" text-anchor="middle" class="d" fill="#34d399">HPA: Auto-Scale on CPU / QPS</text>
+
+    <!-- Session externalization -->
+    <rect x="20" y="210" width="190" height="45" rx="5" fill="#0f172a" stroke="#475569"/>
+    <text x="115" y="228" text-anchor="middle" class="n" fill="#fbbf24">Session Externalization</text>
+    <text x="115" y="243" text-anchor="middle" class="d">JWT Tokens or Redis Session Store</text>
+  </g>
+
+  <!-- ===== RIGHT-TOP: Caching Strategy ===== -->
+  <g transform="translate(560,85)" filter="url(#sh)">
+    <rect width="230" height="270" rx="10" fill="#1e293b" stroke="#334155" stroke-width="1.2"/>
+    <rect x="12" y="12" width="140" height="22" rx="5" fill="#f43f5e"/>
+    <text x="82" y="27" text-anchor="middle" class="b">MULTI-LEVEL CACHING</text>
+
+    <!-- CDN -->
+    <rect x="20" y="48" width="190" height="35" rx="5" fill="#0f172a" stroke="#c084fc" stroke-width="1.2"/>
+    <text x="115" y="65" text-anchor="middle" class="n" fill="#c084fc">L0: CDN (Edge PoPs)</text>
+    <text x="115" y="78" text-anchor="middle" class="d">Static assets, images, JS/CSS bundles</text>
+
+    <path d="M 115 83 L 115 95" class="fl" stroke="#94a3b8" marker-end="url(#arr)"/>
+
+    <!-- L1 In-Memory -->
+    <rect x="20" y="98" width="190" height="35" rx="5" fill="#0f172a" stroke="#fbbf24" stroke-width="1.2"/>
+    <text x="115" y="115" text-anchor="middle" class="n" fill="#fbbf24">L1: In-Memory (IMemoryCache)</text>
+    <text x="115" y="128" text-anchor="middle" class="d">Per-pod, 5s TTL, zero network hop</text>
+
+    <path d="M 115 133 L 115 145" class="fl" stroke="#94a3b8" marker-end="url(#arr)"/>
+
+    <!-- L2 Redis -->
+    <rect x="20" y="148" width="190" height="35" rx="5" fill="#0f172a" stroke="#f43f5e" stroke-width="1.2"/>
+    <text x="115" y="165" text-anchor="middle" class="n" fill="#f43f5e">L2: Redis Distributed Cache</text>
+    <text x="115" y="178" text-anchor="middle" class="d">Shared cluster, 80/20 Pareto hot data</text>
+
+    <path d="M 115 183 L 115 195" class="fl" stroke="#94a3b8" marker-end="url(#arr)"/>
+
+    <!-- DB -->
+    <rect x="20" y="198" width="190" height="35" rx="5" fill="#0f172a" stroke="#475569"/>
+    <text x="115" y="215" text-anchor="middle" class="n">Database (Cold Path)</text>
+    <text x="115" y="228" text-anchor="middle" class="d">Only cache misses reach here</text>
+
+    <!-- Hazards -->
+    <text x="15" y="255" class="d" fill="#f87171">⚠ Stampede | Penetration | Avalanche</text>
+    <text x="15" y="268" class="d" fill="#34d399">✔ TTL Jitter | Bloom Filter | XFetch</text>
+  </g>
+
+  <!-- ===== FAR-RIGHT: Async Decoupling ===== -->
+  <g transform="translate(820,85)" filter="url(#sh)">
+    <rect width="250" height="270" rx="10" fill="#1e293b" stroke="#334155" stroke-width="1.2"/>
+    <rect x="12" y="12" width="165" height="22" rx="5" fill="#f59e0b"/>
+    <text x="94" y="27" text-anchor="middle" class="b">ASYNC EVENT DECOUPLING</text>
+
+    <!-- Sync path -->
+    <text x="125" y="55" text-anchor="middle" class="n" fill="#f87171">Synchronous (Anti-Pattern)</text>
+    <rect x="15" y="63" width="220" height="30" rx="4" fill="#0f172a" stroke="#f87171" stroke-dasharray="3 3"/>
+    <text x="125" y="82" text-anchor="middle" class="d">Client waits → API → DB → Email → PDF → Response</text>
+
+    <!-- Async path -->
+    <text x="125" y="115" text-anchor="middle" class="n" fill="#34d399">Asynchronous (Production Pattern)</text>
+
+    <rect x="15" y="125" width="70" height="30" rx="4" fill="#0f172a" stroke="#38bdf8" stroke-width="1"/>
+    <text x="50" y="144" text-anchor="middle" class="n">API Pod</text>
+    <path d="M 85 140 L 105 140" class="fl" stroke="#fb923c" marker-end="url(#arrO)"/>
+
+    <rect x="108" y="125" width="70" height="30" rx="4" fill="#0f172a" stroke="#fb923c" stroke-width="1.2"/>
+    <text x="143" y="139" text-anchor="middle" class="n" fill="#fb923c">Kafka</text>
+    <text x="143" y="150" text-anchor="middle" class="d">Broker</text>
+    <path d="M 178 140 L 198 140" class="fl" stroke="#34d399" marker-end="url(#arrG)"/>
+
+    <rect x="200" y="125" width="38" height="30" rx="4" fill="#0f172a" stroke="#34d399" stroke-width="1"/>
+    <text x="219" y="144" text-anchor="middle" class="d" fill="#34d399">W1</text>
+    <rect x="200" y="160" width="38" height="30" rx="4" fill="#0f172a" stroke="#34d399" stroke-width="1"/>
+    <text x="219" y="179" text-anchor="middle" class="d" fill="#34d399">W2</text>
+
+    <!-- Outbox callout -->
+    <rect x="15" y="205" width="220" height="45" rx="5" fill="#0f172a" stroke="#f59e0b" stroke-width="1"/>
+    <text x="125" y="222" text-anchor="middle" class="n" fill="#f59e0b">Transactional Outbox Pattern</text>
+    <text x="125" y="236" text-anchor="middle" class="d">DB write + event in same ACID txn</text>
+    <text x="125" y="248" text-anchor="middle" class="d">Relay polls outbox → publishes to broker</text>
+  </g>
+
+  <!-- ===== BOTTOM: Database Scaling Funnel ===== -->
+  <g transform="translate(30,390)" filter="url(#sh)">
+    <rect width="1040" height="280" rx="10" fill="#1e293b" stroke="#334155" stroke-width="1.2"/>
+    <rect x="12" y="12" width="250" height="22" rx="5" fill="#8b5cf6"/>
+    <text x="137" y="27" text-anchor="middle" class="b">DATABASE SCALING FUNNEL (Sequential Steps)</text>
+
+    <!-- Step 1: Connection Pooling -->
+    <rect x="20" y="50" width="145" height="85" rx="6" fill="#0f172a" stroke="#c084fc" stroke-width="1.2"/>
+    <text x="92" y="70" text-anchor="middle" class="n" fill="#c084fc">Step 1</text>
+    <text x="92" y="86" text-anchor="middle" class="n">Connection Pooling</text>
+    <text x="92" y="100" text-anchor="middle" class="d">PgBouncer / ProxySQL</text>
+    <text x="92" y="113" text-anchor="middle" class="d">3000 clients → 100 DB conns</text>
+    <text x="92" y="126" text-anchor="middle" class="d" fill="#34d399">Eliminates conn overhead</text>
+
+    <path d="M 165 92 L 185 92" class="fl" stroke="#94a3b8" marker-end="url(#arr)"/>
+
+    <!-- Step 2: Read Replicas -->
+    <rect x="190" y="50" width="145" height="85" rx="6" fill="#0f172a" stroke="#38bdf8" stroke-width="1.2"/>
+    <text x="262" y="70" text-anchor="middle" class="n" fill="#38bdf8">Step 2</text>
+    <text x="262" y="86" text-anchor="middle" class="n">Read / Write Split</text>
+    <text x="262" y="100" text-anchor="middle" class="d">Primary (Writes Only)</text>
+    <text x="262" y="113" text-anchor="middle" class="d">N × Read Replicas</text>
+    <text x="262" y="126" text-anchor="middle" class="d" fill="#fbbf24">Trade-off: Replication lag</text>
+
+    <path d="M 335 92 L 355 92" class="fl" stroke="#94a3b8" marker-end="url(#arr)"/>
+
+    <!-- Step 3: Vertical Partitioning -->
+    <rect x="360" y="50" width="145" height="85" rx="6" fill="#0f172a" stroke="#34d399" stroke-width="1.2"/>
+    <text x="432" y="70" text-anchor="middle" class="n" fill="#34d399">Step 3</text>
+    <text x="432" y="86" text-anchor="middle" class="n">Vertical Partitioning</text>
+    <text x="432" y="100" text-anchor="middle" class="d">Split by Domain Boundary</text>
+    <text x="432" y="113" text-anchor="middle" class="d">UsersDB | OrdersDB | CatalogDB</text>
+    <text x="432" y="126" text-anchor="middle" class="d" fill="#fbbf24">Trade-off: No cross-DB joins</text>
+
+    <path d="M 505 92 L 525 92" class="fl" stroke="#94a3b8" marker-end="url(#arr)"/>
+
+    <!-- Step 4: Horizontal Sharding -->
+    <rect x="530" y="50" width="155" height="85" rx="6" fill="#0f172a" stroke="#fb923c" stroke-width="1.2"/>
+    <text x="607" y="70" text-anchor="middle" class="n" fill="#fb923c">Step 4</text>
+    <text x="607" y="86" text-anchor="middle" class="n">Horizontal Sharding</text>
+    <text x="607" y="100" text-anchor="middle" class="d">Consistent Hashing on UserId</text>
+    <text x="607" y="113" text-anchor="middle" class="d">256 virtual nodes / shard</text>
+    <text x="607" y="126" text-anchor="middle" class="d" fill="#fbbf24">Trade-off: Cross-shard queries</text>
+
+    <path d="M 685 92 L 705 92" class="fl" stroke="#94a3b8" marker-end="url(#arr)"/>
+
+    <!-- Step 5: CDC + Search -->
+    <rect x="710" y="50" width="155" height="85" rx="6" fill="#0f172a" stroke="#f43f5e" stroke-width="1.2"/>
+    <text x="787" y="70" text-anchor="middle" class="n" fill="#f43f5e">Step 5</text>
+    <text x="787" y="86" text-anchor="middle" class="n">CDC + Search Index</text>
+    <text x="787" y="100" text-anchor="middle" class="d">Debezium → Kafka → ES</text>
+    <text x="787" y="113" text-anchor="middle" class="d">Cross-shard search offloaded</text>
+    <text x="787" y="126" text-anchor="middle" class="d" fill="#34d399">Search latency &lt;50ms</text>
+
+    <!-- Bottom summary -->
+    <rect x="20" y="155" width="845" height="105" rx="6" fill="#0f172a" stroke="#475569"/>
+    <text x="442" y="178" text-anchor="middle" class="h" fill="#f8fafc">Senior Decision Framework: When to Move to the Next Step</text>
+    <text x="30" y="198" class="d" fill="#c084fc">→ Step 1 (Pooling): Always. Zero cost, massive impact. Deploy PgBouncer from day one.</text>
+    <text x="30" y="214" class="d" fill="#38bdf8">→ Step 2 (Replicas): When read QPS exceeds single-node capacity (typically &gt;2,000 read QPS).</text>
+    <text x="30" y="230" class="d" fill="#34d399">→ Step 3 (Vert. Partition): When monolithic schema exceeds 100+ tables or microservice boundaries emerge.</text>
+    <text x="30" y="246" class="d" fill="#fb923c">→ Step 4 (Sharding): When single-node disk &gt;2 TB or write IOPS hit hardware limits.</text>
+  </g>
+</svg>
+
