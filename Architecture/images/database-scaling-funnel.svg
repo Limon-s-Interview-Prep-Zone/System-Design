@@ -1,0 +1,91 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 980 560" width="100%" height="100%">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0f172a" />
+      <stop offset="100%" stop-color="#1e293b" />
+    </linearGradient>
+    <filter id="shadow" x="-5%" y="-5%" width="110%" height="110%">
+      <feDropShadow dx="0" dy="4" stdDeviation="5" flood-color="#000" flood-opacity="0.35"/>
+    </filter>
+    <marker id="ladderArrow" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#38bdf8" />
+    </marker>
+  </defs>
+
+  <!-- Background -->
+  <rect width="980" height="560" fill="url(#bgGrad)" rx="14"/>
+
+  <!-- Title & Subtitle -->
+  <text x="490" y="36" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="22" font-weight="bold" fill="#f8fafc" text-anchor="middle">The Database Scaling Ladder (Tier 3 Evolution)</text>
+  <text x="490" y="58" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="13" fill="#94a3b8" text-anchor="middle">Progressive Stages from a Single Bottlenecked Relational Database to a Hyperscale Persistence Mesh</text>
+
+  <!-- Ladder Stages (6 Stages) -->
+
+  <!-- Stage 1 -->
+  <g transform="translate(40, 90)">
+    <rect width="890" height="60" rx="8" fill="#1e293b" stroke="#38bdf8" stroke-width="1.5" filter="url(#shadow)"/>
+    <rect x="15" y="12" width="110" height="36" rx="6" fill="#0369a1"/>
+    <text x="70" y="34" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="11" font-weight="bold" fill="#ffffff" text-anchor="middle">Stage 1</text>
+    
+    <text x="145" y="27" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="13" font-weight="bold" fill="#38bdf8">Query &amp; Schema Optimization (Zero Infrastructure Change)</text>
+    <text x="145" y="45" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="11" fill="#cbd5e1">EXPLAIN ANALYZE, Covering B-Tree Indexes, Eliminating N+1 queries, Normalization vs. Denormalization</text>
+    <text x="860" y="35" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="11" font-weight="bold" fill="#34d399" text-anchor="end">10x Speedup</text>
+  </g>
+
+  <!-- Stage 2 -->
+  <g transform="translate(40, 165)">
+    <rect width="890" height="60" rx="8" fill="#1e293b" stroke="#3b82f6" stroke-width="1.5" filter="url(#shadow)"/>
+    <rect x="15" y="12" width="110" height="36" rx="6" fill="#1d4ed8"/>
+    <text x="70" y="34" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="11" font-weight="bold" fill="#ffffff" text-anchor="middle">Stage 2</text>
+    
+    <text x="145" y="27" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="13" font-weight="bold" fill="#60a5fa">Connection Pooling (Preventing Resource Starvation)</text>
+    <text x="145" y="45" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="11" fill="#cbd5e1">PgBouncer / AWS RDS Proxy / Azure SQL Proxy: Multiplexes 10,000 app threads into 100 pooled DB connections</text>
+    <text x="860" y="35" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="11" font-weight="bold" fill="#34d399" text-anchor="end">Zero Socket OOM</text>
+  </g>
+
+  <!-- Stage 3 -->
+  <g transform="translate(40, 240)">
+    <rect width="890" height="60" rx="8" fill="#1e293b" stroke="#6366f1" stroke-width="1.5" filter="url(#shadow)"/>
+    <rect x="15" y="12" width="110" height="36" rx="6" fill="#4338ca"/>
+    <text x="70" y="34" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="11" font-weight="bold" fill="#ffffff" text-anchor="middle">Stage 3</text>
+    
+    <text x="145" y="27" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="13" font-weight="bold" fill="#818cf8">In-Memory Distributed Caching (Offloading Reads)</text>
+    <text x="145" y="45" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="11" fill="#cbd5e1">Redis Cluster / Memcached (Cache-Aside Pattern, Probabilistic early expiration XFetch to stop Cache Stampedes)</text>
+    <text x="860" y="35" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="11" font-weight="bold" fill="#f43f5e" text-anchor="end">85-95% Read Offload</text>
+  </g>
+
+  <!-- Stage 4 -->
+  <g transform="translate(40, 315)">
+    <rect width="890" height="60" rx="8" fill="#1e293b" stroke="#10b981" stroke-width="1.5" filter="url(#shadow)"/>
+    <rect x="15" y="12" width="110" height="36" rx="6" fill="#047857"/>
+    <text x="70" y="34" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="11" font-weight="bold" fill="#ffffff" text-anchor="middle">Stage 4</text>
+    
+    <text x="145" y="27" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="13" font-weight="bold" fill="#34d399">Read Replicas &amp; Read/Write Splitting</text>
+    <text x="145" y="45" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="11" fill="#cbd5e1">1 Primary (Writes) + N Read Replicas (Asynchronous WAL Streaming Replication) + Session Sticky Reads</text>
+    <text x="860" y="35" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="11" font-weight="bold" fill="#34d399" text-anchor="end">100k+ Read QPS</text>
+  </g>
+
+  <!-- Stage 5 -->
+  <g transform="translate(40, 390)">
+    <rect width="890" height="60" rx="8" fill="#1e293b" stroke="#f59e0b" stroke-width="1.5" filter="url(#shadow)"/>
+    <rect x="15" y="12" width="110" height="36" rx="6" fill="#b45309"/>
+    <text x="70" y="34" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="11" font-weight="bold" fill="#ffffff" text-anchor="middle">Stage 5</text>
+    
+    <text x="145" y="27" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="13" font-weight="bold" fill="#fbbf24">Horizontal Partitioning &amp; Database Sharding</text>
+    <text x="145" y="45" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="11" fill="#cbd5e1">Hash-Based Shard Key &amp; Consistent Hashing; scaling write transactions across independent DB clusters</text>
+    <text x="860" y="35" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="11" font-weight="bold" fill="#fbbf24" text-anchor="end">Scale Out Writes</text>
+  </g>
+
+  <!-- Stage 6 -->
+  <g transform="translate(40, 465)">
+    <rect width="890" height="60" rx="8" fill="#1e293b" stroke="#ec4899" stroke-width="1.5" filter="url(#shadow)"/>
+    <rect x="15" y="12" width="110" height="36" rx="6" fill="#be185d"/>
+    <text x="70" y="34" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="11" font-weight="bold" fill="#ffffff" text-anchor="middle">Stage 6</text>
+    
+    <text x="145" y="27" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="13" font-weight="bold" fill="#f472b6">Polyglot Persistence &amp; Workload Specialization</text>
+    <text x="145" y="45" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="11" fill="#cbd5e1">Elasticsearch (Full-Text), S3 / Blobs (Media), MongoDB/Cosmos (Docs), ClickHouse (Real-time Analytics)</text>
+    <text x="860" y="35" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="11" font-weight="bold" fill="#a855f7" text-anchor="end">Hyperscale Mesh</text>
+  </g>
+
+</svg>
+

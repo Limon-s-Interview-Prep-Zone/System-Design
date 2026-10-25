@@ -1,0 +1,172 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1060 620" width="100%" height="100%">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0f172a" />
+      <stop offset="100%" stop-color="#1e293b" />
+    </linearGradient>
+    <linearGradient id="l4Header" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#0284c7" />
+      <stop offset="100%" stop-color="#38bdf8" />
+    </linearGradient>
+    <linearGradient id="l7Header" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#7c3aed" />
+      <stop offset="100%" stop-color="#a855f7" />
+    </linearGradient>
+    <linearGradient id="hybridHeader" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#059669" />
+      <stop offset="100%" stop-color="#10b981" />
+    </linearGradient>
+    <filter id="cardShadow" x="-5%" y="-5%" width="110%" height="110%">
+      <feDropShadow dx="0" dy="4" stdDeviation="5" flood-color="#000" flood-opacity="0.35"/>
+    </filter>
+    <marker id="arrowBlue" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#38bdf8" />
+    </marker>
+    <marker id="arrowPurple" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#c084fc" />
+    </marker>
+    <marker id="arrowGreen" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#34d399" />
+    </marker>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1060" height="620" fill="url(#bgGrad)" rx="14"/>
+
+  <!-- Title & Subtitle -->
+  <text x="530" y="34" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="22" font-weight="bold" fill="#f8fafc" text-anchor="middle">Layer 4 (Transport) vs. Layer 7 (Application) Load Balancing</text>
+  <text x="530" y="56" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="13" fill="#94a3b8" text-anchor="middle">Packet-Level Routing vs. Content-Aware Reverse Proxying</text>
+
+  <!-- ================= LEFT PANEL: LAYER 4 ================= -->
+  <g transform="translate(30, 80)">
+    <rect width="480" height="320" rx="10" fill="#1e293b" stroke="#0284c7" stroke-width="1.5" filter="url(#cardShadow)"/>
+    <rect x="15" y="12" width="450" height="26" rx="13" fill="url(#l4Header)"/>
+    <text x="240" y="29" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="12" font-weight="bold" fill="#ffffff" text-anchor="middle">LAYER 4: TRANSPORT LOAD BALANCING (TCP / UDP)</text>
+
+    <!-- Inspection Box -->
+    <rect x="25" y="50" width="430" height="75" rx="6" fill="#0f172a" stroke="#0369a1" stroke-width="1"/>
+    <text x="40" y="72" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="11" font-weight="bold" fill="#38bdf8">Inspection Level: Raw Packets (L3/L4 Headers Only)</text>
+    <text x="40" y="92" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="10" fill="#cbd5e1">• Evaluates: Source/Dest IP, Source/Dest TCP/UDP Port, TCP Flags</text>
+    <text x="40" y="110" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="10" fill="#f87171">• Blind to: HTTP URL, Headers, Cookies, JSON body, TLS content</text>
+
+    <!-- Flow Diagram Mini -->
+    <g transform="translate(25, 138)">
+      <rect width="100" height="42" rx="4" fill="#1e293b" stroke="#38bdf8" stroke-width="1"/>
+      <text x="50" y="26" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="10" font-weight="bold" fill="#f8fafc" text-anchor="middle">Client Packet</text>
+
+      <line x1="102" y1="21" x2="148" y2="21" stroke="#38bdf8" stroke-width="1.5" marker-end="url(#arrowBlue)"/>
+
+      <rect x="150" y="0" width="130" height="42" rx="4" fill="#0369a1" stroke="#38bdf8" stroke-width="1"/>
+      <text x="215" y="18" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="10" font-weight="bold" fill="#ffffff" text-anchor="middle">L4 Balancer (NLB)</text>
+      <text x="215" y="32" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="8" fill="#bae6fd" text-anchor="middle">NAT or DSR Forward</text>
+
+      <line x1="282" y1="21" x2="328" y2="21" stroke="#38bdf8" stroke-width="1.5" marker-end="url(#arrowBlue)"/>
+
+      <rect x="330" y="0" width="100" height="42" rx="4" fill="#1e293b" stroke="#38bdf8" stroke-width="1"/>
+      <text x="380" y="26" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="10" font-weight="bold" fill="#f8fafc" text-anchor="middle">Backend Node</text>
+    </g>
+
+    <!-- Key Attributes -->
+    <text x="25" y="208" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="10" font-weight="bold" fill="#38bdf8">Key Strengths &amp; Technologies:</text>
+    <text x="25" y="226" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="9.5" fill="#cbd5e1">✔ Millions of packets/sec with near-zero CPU/RAM overhead</text>
+    <text x="25" y="244" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="9.5" fill="#cbd5e1">✔ Direct Server Return (DSR) allows response packets to bypass LB</text>
+    <text x="25" y="262" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="9.5" fill="#cbd5e1">✔ Ideal for gaming (UDP), real-time DNS, VoIP, streaming, and DB ingress</text>
+    <text x="25" y="282" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="9.5" fill="#94a3b8">Tech: AWS NLB, IPVS (Linux Virtual Server), Maglev, Katran, HAProxy (TCP)</text>
+    <text x="25" y="300" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="9.5" fill="#f87171">✖ Cannot do path routing, cookie affinity, or gRPC stream multiplexing</text>
+  </g>
+
+  <!-- ================= RIGHT PANEL: LAYER 7 ================= -->
+  <g transform="translate(550, 80)">
+    <rect width="480" height="320" rx="10" fill="#1e293b" stroke="#7c3aed" stroke-width="1.5" filter="url(#cardShadow)"/>
+    <rect x="15" y="12" width="450" height="26" rx="13" fill="url(#l7Header)"/>
+    <text x="240" y="29" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="12" font-weight="bold" fill="#ffffff" text-anchor="middle">LAYER 7: APPLICATION LOAD BALANCING (HTTP / gRPC)</text>
+
+    <!-- Inspection Box -->
+    <rect x="25" y="50" width="430" height="75" rx="6" fill="#0f172a" stroke="#6d28d9" stroke-width="1"/>
+    <text x="40" y="72" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="11" font-weight="bold" fill="#c084fc">Inspection Level: Full Application Payload &amp; Protocols</text>
+    <text x="40" y="92" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="10" fill="#cbd5e1">• Terminates TCP &amp; TLS, decrypts payload, inspects HTTP/gRPC streams</text>
+    <text x="40" y="110" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="10" fill="#34d399">• Evaluates: URL path, query params, cookies, auth headers, HTTP method</text>
+
+    <!-- Flow Diagram Mini -->
+    <g transform="translate(25, 138)">
+      <rect width="90" height="42" rx="4" fill="#1e293b" stroke="#c084fc" stroke-width="1"/>
+      <text x="45" y="26" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="10" font-weight="bold" fill="#f8fafc" text-anchor="middle">HTTPS Client</text>
+
+      <line x1="92" y1="21" x2="138" y2="21" stroke="#c084fc" stroke-width="1.5" marker-end="url(#arrowPurple)"/>
+
+      <rect x="140" y="0" width="140" height="42" rx="4" fill="#5b21b6" stroke="#c084fc" stroke-width="1"/>
+      <text x="210" y="18" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="10" font-weight="bold" fill="#ffffff" text-anchor="middle">L7 Proxy (YARP/ALB)</text>
+      <text x="210" y="32" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="8" fill="#ddd6fe" text-anchor="middle">TLS Offload &amp; Path Match</text>
+
+      <!-- Splitting routes -->
+      <line x1="282" y1="12" x2="338" y2="8" stroke="#c084fc" stroke-width="1.5" marker-end="url(#arrowPurple)"/>
+      <line x1="282" y1="30" x2="338" y2="34" stroke="#c084fc" stroke-width="1.5" marker-end="url(#arrowPurple)"/>
+
+      <rect x="340" y="-4" width="90" height="22" rx="3" fill="#1e293b" stroke="#34d399" stroke-width="1"/>
+      <text x="385" y="11" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="8" fill="#a7f3d0" text-anchor="middle">/api/orders</text>
+
+      <rect x="340" y="24" width="90" height="22" rx="3" fill="#1e293b" stroke="#38bdf8" stroke-width="1"/>
+      <text x="385" y="39" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="8" fill="#93c5fd" text-anchor="middle">/api/users</text>
+    </g>
+
+    <!-- Key Attributes -->
+    <text x="25" y="208" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="10" font-weight="bold" fill="#c084fc">Key Strengths &amp; Technologies:</text>
+    <text x="25" y="226" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="9.5" fill="#cbd5e1">✔ Path-based routing (/checkout vs /catalog), Canary deployments, A/B tests</text>
+    <text x="25" y="244" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="9.5" fill="#cbd5e1">✔ TLS Termination, Brotli/Gzip compression, WAF security inspection</text>
+    <text x="25" y="262" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="9.5" fill="#cbd5e1">✔ Native gRPC stream balancing &amp; HTTP/2-to-HTTP/1 multiplexing</text>
+    <text x="25" y="282" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="9.5" fill="#94a3b8">Tech: YARP (.NET), NGINX, Envoy, Traefik, HAProxy (HTTP), AWS ALB</text>
+    <text x="25" y="300" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="9.5" fill="#f87171">✖ Higher latency (1-5ms) &amp; CPU/RAM footprint due to connection termination</text>
+  </g>
+
+  <!-- ================= BOTTOM PANEL: THE HYBRID PRODUCTION PATTERN ================= -->
+  <g transform="translate(30, 420)">
+    <rect width="1000" height="175" rx="10" fill="#064e3b" fill-opacity="0.25" stroke="#10b981" stroke-width="1.5" stroke-dasharray="6,4"/>
+    <rect x="15" y="12" width="410" height="24" rx="12" fill="url(#hybridHeader)"/>
+    <text x="220" y="28" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="11" font-weight="bold" fill="#ffffff" text-anchor="middle">HYPERSCALE PRODUCTION STANDARD: THE HYBRID L4 + L7 TANDEM</text>
+
+    <!-- Architecture flow -->
+    <g transform="translate(30, 50)">
+      <!-- Clients -->
+      <rect x="0" y="20" width="110" height="50" rx="6" fill="#1e293b" stroke="#38bdf8" stroke-width="1.5"/>
+      <text x="55" y="42" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="10" font-weight="bold" fill="#f8fafc" text-anchor="middle">Millions of</text>
+      <text x="55" y="56" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="9" fill="#94a3b8" text-anchor="middle">Client Devices</text>
+
+      <line x1="112" y1="45" x2="168" y2="45" stroke="#38bdf8" stroke-width="2" marker-end="url(#arrowBlue)"/>
+
+      <!-- Edge L4 -->
+      <rect x="170" y="10" width="190" height="70" rx="6" fill="#1e293b" stroke="#0284c7" stroke-width="1.5"/>
+      <text x="265" y="30" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="10" font-weight="bold" fill="#38bdf8" text-anchor="middle">Tier 1: Edge L4 Balancer</text>
+      <text x="265" y="46" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="8.5" fill="#cbd5e1">(AWS NLB / Maglev / IPVS)</text>
+      <text x="265" y="62" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="8" fill="#94a3b8" text-anchor="middle">DDoS absorption, Anycast IP,</text>
+      <text x="265" y="73" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="8" fill="#94a3b8" text-anchor="middle">High-throughput TCP distribution</text>
+
+      <line x1="362" y1="45" x2="418" y2="45" stroke="#38bdf8" stroke-width="2" marker-end="url(#arrowBlue)"/>
+
+      <!-- Ingress L7 -->
+      <rect x="420" y="10" width="220" height="70" rx="6" fill="#1e293b" stroke="#7c3aed" stroke-width="1.5"/>
+      <text x="530" y="30" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="10" font-weight="bold" fill="#c084fc" text-anchor="middle">Tier 2: Ingress L7 Proxies</text>
+      <text x="530" y="46" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="8.5" fill="#cbd5e1">(YARP / Envoy / ALB Cluster)</text>
+      <text x="530" y="62" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="8" fill="#94a3b8" text-anchor="middle">TLS Offload, Path &amp; Header Routing,</text>
+      <text x="530" y="73" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="8" fill="#94a3b8" text-anchor="middle">Auth Validation, WAF, Rate Limiting</text>
+
+      <line x1="642" y1="45" x2="698" y2="45" stroke="#c084fc" stroke-width="2" marker-end="url(#arrowPurple)"/>
+
+      <!-- App Clusters -->
+      <g transform="translate(700, 0)">
+        <rect x="0" y="0" width="230" height="26" rx="4" fill="#0f172a" stroke="#10b981" stroke-width="1"/>
+        <text x="115" y="17" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="9" font-weight="bold" fill="#6ee7b7" text-anchor="middle">Auth Service Cluster</text>
+
+        <rect x="0" y="32" width="230" height="26" rx="4" fill="#0f172a" stroke="#10b981" stroke-width="1"/>
+        <text x="115" y="49" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="9" font-weight="bold" fill="#6ee7b7" text-anchor="middle">Order Service Cluster (gRPC)</text>
+
+        <rect x="0" y="64" width="230" height="26" rx="4" fill="#0f172a" stroke="#10b981" stroke-width="1"/>
+        <text x="115" y="81" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="9" font-weight="bold" fill="#6ee7b7" text-anchor="middle">Payment Service Cluster</text>
+      </g>
+    </g>
+
+    <!-- Bottom summary line -->
+    <text x="500" y="152" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="10" font-weight="bold" fill="#34d399" text-anchor="middle">Result: L4 provides raw line-rate scalability and packet ingestion; L7 provides granular application routing and security.</text>
+  </g>
+
+</svg>
+

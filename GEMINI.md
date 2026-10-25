@@ -1,9 +1,10 @@
 # Workspace Rules
 
 ## Plan & Design Documents
-- Whenever creating plans, architecture specs, or design blueprints, always create them directly in the workspace directory under `plans/` (e.g., `plans/<feature-or-topic>-plan.md`).
+- Whenever creating system design plans, architecture specs, or feature blueprints, always create them directly in the workspace directory under `plans/` (e.g., `plans/<feature-or-topic>-plan.md`).
 - Ensure the `plans/` directory is created if it does not already exist.
-- Link all created plan files in responses using clickable markdown links (e.g., `file:///D:/Interview/System-Design/plans/<filename>.md`).
+- Link all created plan files using portable relative markdown links (e.g., `[Plan](plans/<filename>.md)`) so links work seamlessly across any OS (Windows, Linux, macOS) and on GitHub.
+- Agent, skill, and tool customizations should remain self-contained within `.agents/` and do not belong in `plans/`.
 
 ## Documentation & Notebook Standards (Strict Dual Language & SVG Diagrams)
 - **Strict Dual Language Requirement (English & Bangla)**:
