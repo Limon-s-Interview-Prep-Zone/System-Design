@@ -1,0 +1,217 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1100 700" width="100%" height="100%">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0f172a"/>
+      <stop offset="100%" stop-color="#1e293b"/>
+    </linearGradient>
+    <filter id="sh" x="-5%" y="-5%" width="110%" height="115%">
+      <feDropShadow dx="0" dy="3" stdDeviation="4" flood-color="#000" flood-opacity="0.4"/>
+    </filter>
+    <marker id="arr" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M 0 1 L 9 5 L 0 9 z" fill="#94a3b8"/>
+    </marker>
+    <marker id="arrCyan" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M 0 1 L 9 5 L 0 9 z" fill="#38bdf8"/>
+    </marker>
+    <marker id="arrGreen" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M 0 1 L 9 5 L 0 9 z" fill="#34d399"/>
+    </marker>
+    <marker id="arrOrange" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M 0 1 L 9 5 L 0 9 z" fill="#fb923c"/>
+    </marker>
+    <marker id="arrPurple" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M 0 1 L 9 5 L 0 9 z" fill="#c084fc"/>
+    </marker>
+  </defs>
+  <style>
+    .t{font-family:system-ui,-apple-system,sans-serif;font-size:22px;font-weight:700;fill:#f8fafc}
+    .st{font-family:system-ui,-apple-system,sans-serif;font-size:12px;fill:#94a3b8}
+    .h{font-family:system-ui,-apple-system,sans-serif;font-size:13px;font-weight:700}
+    .n{font-family:system-ui,-apple-system,sans-serif;font-size:11px;font-weight:600;fill:#f8fafc}
+    .d{font-family:system-ui,-apple-system,sans-serif;font-size:9.5px;fill:#94a3b8}
+    .b{font-family:system-ui,-apple-system,sans-serif;font-size:10px;font-weight:700;fill:#fff}
+    .code{font-family:ui-monospace,SFMono-Regular,Consolas,monospace;font-size:9px;fill:#cbd5e1}
+    .fl{stroke-width:1.6;fill:none}
+  </style>
+  <rect width="1100" height="700" fill="url(#bg)"/>
+
+  <!-- Title -->
+  <text x="40" y="40" class="t">Enterprise Observability Architecture: The 3 Pillars &amp; Beyond</text>
+  <text x="40" y="60" class="st">Telemetry Ingestion (M.E.L.T) • OpenTelemetry Collector • Storage Engines • Correlation &amp; Incident Response</text>
+
+  <!-- ===== COLUMN 1: CLIENTS & COMPUTE TIERS ===== -->
+  <g transform="translate(30,85)" filter="url(#sh)">
+    <rect width="210" height="570" rx="10" fill="#1e293b" stroke="#334155" stroke-width="1.2"/>
+    <rect x="12" y="12" width="135" height="22" rx="5" fill="#3b82f6"/>
+    <text x="79" y="27" text-anchor="middle" class="b">INSTRUMENTED SERVICES</text>
+
+    <!-- Edge / Gateway -->
+    <rect x="15" y="48" width="180" height="85" rx="6" fill="#0f172a" stroke="#60a5fa" stroke-width="1"/>
+    <text x="25" y="68" class="n" fill="#93c5fd">YARP / API Gateway</text>
+    <text x="25" y="85" class="d">• W3C traceparent injection</text>
+    <text x="25" y="100" class="d">• X-Correlation-ID header</text>
+    <text x="25" y="115" class="d">• Edge HTTP Duration Metrics</text>
+
+    <!-- Microservice Pods (ASP.NET Core) -->
+    <rect x="15" y="148" width="180" height="185" rx="6" fill="#0f172a" stroke="#38bdf8" stroke-width="1.2"/>
+    <text x="25" y="168" class="n" fill="#38bdf8">.NET Microservices (K8s Pods)</text>
+    
+    <rect x="25" y="180" width="160" height="40" rx="4" fill="#1e293b" stroke="#475569"/>
+    <text x="32" y="196" class="code" fill="#f87171">Logs: Serilog (JSON)</text>
+    <text x="32" y="210" class="d">TraceId, SpanId, UserId</text>
+
+    <rect x="25" y="228" width="160" height="40" rx="4" fill="#1e293b" stroke="#475569"/>
+    <text x="32" y="244" class="code" fill="#34d399">Metrics: System.Diagnostics</text>
+    <text x="32" y="258" class="d">P99 Latency, Errors, ThreadPool</text>
+
+    <rect x="25" y="276" width="160" height="45" rx="4" fill="#1e293b" stroke="#475569"/>
+    <text x="32" y="292" class="code" fill="#c084fc">Traces: OpenTelemetry SDK</text>
+    <text x="32" y="306" class="d">ActivitySource &amp; Propagator</text>
+
+    <!-- Background Workers -->
+    <rect x="15" y="348" width="180" height="95" rx="6" fill="#0f172a" stroke="#64748b" stroke-width="1"/>
+    <text x="25" y="368" class="n">Async Workers (MassTransit)</text>
+    <text x="25" y="388" class="d">• Message Consume Traces</text>
+    <text x="25" y="403" class="d">• Queue Lag &amp; Backpressure</text>
+    <text x="25" y="418" class="d">• Dead Letter Queue (DLQ) alerts</text>
+
+    <!-- Data Tier Telemetry -->
+    <rect x="15" y="458" width="180" height="95" rx="6" fill="#0f172a" stroke="#64748b" stroke-width="1"/>
+    <text x="25" y="478" class="n">Databases &amp; Caches</text>
+    <text x="25" y="498" class="d">• PgBouncer Pool Stats</text>
+    <text x="25" y="513" class="d">• Redis SlowLog &amp; Hit-Ratio</text>
+    <text x="25" y="528" class="d">• Slow Query Captures (&gt;200ms)</text>
+  </g>
+
+  <!-- Connectors from Services to OTel Agent -->
+  <path d="M 240 240 L 290 240" class="fl" stroke="#38bdf8" marker-end="url(#arrCyan)"/>
+  <text x="265" y="232" text-anchor="middle" class="d" fill="#38bdf8">OTLP (gRPC)</text>
+
+  <!-- ===== COLUMN 2: TELEMETRY PIPELINE (OPENTELEMETRY) ===== -->
+  <g transform="translate(290,85)" filter="url(#sh)">
+    <rect width="230" height="570" rx="10" fill="#1e293b" stroke="#334155" stroke-width="1.2"/>
+    <rect x="12" y="12" width="170" height="22" rx="5" fill="#6366f1"/>
+    <text x="97" y="27" text-anchor="middle" class="b">OPENTELEMETRY COLLECTOR</text>
+
+    <!-- OTel DaemonSet / Gateway -->
+    <rect x="15" y="48" width="200" height="150" rx="6" fill="#0f172a" stroke="#818cf8" stroke-width="1.2"/>
+    <text x="25" y="70" class="n" fill="#a5b4fc">OTel Agent (DaemonSet)</text>
+    <text x="25" y="88" class="d">• Local host/node scraper</text>
+    <text x="25" y="103" class="d">• Memory buffer &amp; batching</text>
+    <text x="25" y="118" class="d">• PII Masking &amp; Scrubbing</text>
+    <text x="25" y="133" class="d">• Tail-based Trace Sampling</text>
+    <text x="25" y="148" class="d">  (Keep 100% errors, 1% p50)</text>
+    <text x="25" y="163" class="d">• Drops high-cardinality tags</text>
+    <text x="25" y="178" class="d">• Low overhead on app node</text>
+
+    <!-- OTel Cluster Gateway -->
+    <rect x="15" y="220" width="200" height="155" rx="6" fill="#0f172a" stroke="#6366f1" stroke-width="1"/>
+    <text x="25" y="242" class="n" fill="#818cf8">OTel Central Gateway Cluster</text>
+    <text x="25" y="262" class="d">• Load balances telemetry streams</text>
+    <text x="25" y="277" class="d">• Metric Relabeling &amp; Dedup</text>
+    <text x="25" y="292" class="d">• Rate Limiting telemetry spikes</text>
+    <text x="25" y="307" class="d">• Multi-Tenant Routing</text>
+    <text x="25" y="322" class="d">• Compression &amp; TLS Egress</text>
+    <text x="25" y="352" class="code" fill="#a5b4fc">Outputs: Prom, Loki, Tempo</text>
+
+    <!-- Pipeline Processors Box -->
+    <rect x="15" y="395" width="200" height="158" rx="6" fill="#0f172a" stroke="#475569" stroke-width="1"/>
+    <text x="25" y="418" class="n" fill="#cbd5e1">Core Pipeline Processors</text>
+    <rect x="25" y="430" width="180" height="24" rx="3" fill="#1e293b"/>
+    <text x="35" y="446" class="code">1. memory_limiter (anti-OOM)</text>
+    <rect x="25" y="460" width="180" height="24" rx="3" fill="#1e293b"/>
+    <text x="35" y="476" class="code">2. batch (flush 1000 items / 5s)</text>
+    <rect x="25" y="490" width="180" height="24" rx="3" fill="#1e293b"/>
+    <text x="35" y="506" class="code">3. transform (redact Passwords)</text>
+    <rect x="25" y="520" width="180" height="24" rx="3" fill="#1e293b"/>
+    <text x="35" y="536" class="code">4. filter (drop spam 404s)</text>
+  </g>
+
+  <!-- Connectors to Engines -->
+  <path d="M 520 180 L 580 180" class="fl" stroke="#34d399" marker-end="url(#arrGreen)"/>
+  <path d="M 520 280 L 580 280" class="fl" stroke="#f87171" marker-end="url(#arrOrange)"/>
+  <path d="M 520 380 L 580 380" class="fl" stroke="#c084fc" marker-end="url(#arrPurple)"/>
+
+  <!-- ===== COLUMN 3: DEDICATED STORAGE ENGINES ===== -->
+  <g transform="translate(580,85)" filter="url(#sh)">
+    <rect width="230" height="570" rx="10" fill="#1e293b" stroke="#334155" stroke-width="1.2"/>
+    <rect x="12" y="12" width="145" height="22" rx="5" fill="#059669"/>
+    <text x="84" y="27" text-anchor="middle" class="b">STORAGE BACKENDS</text>
+
+    <!-- Metrics Engine -->
+    <rect x="15" y="48" width="200" height="150" rx="6" fill="#0f172a" stroke="#34d399" stroke-width="1.2"/>
+    <text x="25" y="70" class="n" fill="#34d399">Metrics (Prometheus / Mimir)</text>
+    <text x="25" y="90" class="d">• Time-Series DB (TSDB)</text>
+    <text x="25" y="105" class="d">• Fast downsampling (5m, 1h)</text>
+    <text x="25" y="120" class="d">• High-frequency scraping (15s)</text>
+    <text x="25" y="135" class="d">• Retention: 30-90 Days</text>
+    <text x="25" y="150" class="d">• Alert evaluation rules</text>
+    <text x="25" y="175" class="code" fill="#34d399">Rate, Histogram, Counter</text>
+
+    <!-- Logs Engine -->
+    <rect x="15" y="215" width="200" height="155" rx="6" fill="#0f172a" stroke="#f87171" stroke-width="1.2"/>
+    <text x="25" y="237" class="n" fill="#f87171">Logs (Loki / Elasticsearch)</text>
+    <text x="25" y="257" class="d">• Hot Tier: Elastic/SSD (7 Days)</text>
+    <text x="25" y="272" class="d">• Cold Tier: Object Store S3 (90d)</text>
+    <text x="25" y="287" class="d">• Indexed on Labels &amp; TraceId</text>
+    <text x="25" y="302" class="d">• Full-Text regex search</text>
+    <text x="25" y="317" class="d">• Log volume alerts on spike</text>
+    <text x="25" y="347" class="code" fill="#f87171">Structured JSON with Metadata</text>
+
+    <!-- Traces Engine -->
+    <rect x="15" y="388" width="200" height="165" rx="6" fill="#0f172a" stroke="#c084fc" stroke-width="1.2"/>
+    <text x="25" y="410" class="n" fill="#c084fc">Traces (Tempo / Jaeger)</text>
+    <text x="25" y="430" class="d">• DAG of spans &amp; parent-child</text>
+    <text x="25" y="445" class="d">• Low-cost Object Storage backend</text>
+    <text x="25" y="460" class="d">• Retention: 7-14 Days</text>
+    <text x="25" y="475" class="d">• Trace-to-Metrics exemplar links</text>
+    <text x="25" y="490" class="d">• Critical Path waterfall breakdown</text>
+    <text x="25" y="525" class="code" fill="#c084fc">W3C Distributed Spans</text>
+  </g>
+
+  <!-- Connectors to Visualization -->
+  <path d="M 810 240 L 860 240" class="fl" stroke="#fb923c" marker-end="url(#arrOrange)"/>
+
+  <!-- ===== COLUMN 4: ACTIONABILITY & OBSERVABILITY CONSUMERS ===== -->
+  <g transform="translate(860,85)" filter="url(#sh)">
+    <rect width="210" height="570" rx="10" fill="#1e293b" stroke="#334155" stroke-width="1.2"/>
+    <rect x="12" y="12" width="165" height="22" rx="5" fill="#f97316"/>
+    <text x="94" y="27" text-anchor="middle" class="b">ANALYSIS &amp; RESPONSE</text>
+
+    <!-- Unified Visualization -->
+    <rect x="15" y="48" width="180" height="150" rx="6" fill="#0f172a" stroke="#fb923c" stroke-width="1.2"/>
+    <text x="25" y="70" class="n" fill="#fb923c">Unified Grafana UI</text>
+    <text x="25" y="90" class="d">• 360° Correlated View:</text>
+    <text x="35" y="105" class="d">1. Metric Spike in Graph</text>
+    <text x="35" y="120" class="d">2. Click Trace Exemplar</text>
+    <text x="35" y="135" class="d">3. Jump to Correlated Logs</text>
+    <text x="25" y="155" class="d">• Latency Heatmaps &amp; SLOs</text>
+    <text x="25" y="175" class="code" fill="#fed7aa">Single-pane-of-glass</text>
+
+    <!-- Alertmanager & Paging -->
+    <rect x="15" y="215" width="180" height="165" rx="6" fill="#0f172a" stroke="#ef4444" stroke-width="1.2"/>
+    <text x="25" y="237" class="n" fill="#f87171">Alertmanager &amp; On-Call</text>
+    <text x="25" y="257" class="d">• Multi-window Burn Rate Alerts</text>
+    <text x="25" y="272" class="d">• Route by Team &amp; Severity</text>
+    <text x="25" y="287" class="d">• PagerDuty / OpsGenie</text>
+    <text x="25" y="302" class="d">• Slack / Teams Bot Alerts</text>
+    <text x="25" y="317" class="d">• Runbook Markdown Links</text>
+    <text x="25" y="345" class="code" fill="#fca5a5">Inhibition &amp; Grouping</text>
+
+    <!-- Automated Remediation -->
+    <rect x="15" y="398" width="180" height="155" rx="6" fill="#0f172a" stroke="#10b981" stroke-width="1"/>
+    <text x="25" y="420" class="n" fill="#34d399">Auto-Remediation</text>
+    <text x="25" y="440" class="d">• HPA pod scaling on metrics</text>
+    <text x="25" y="455" class="d">• Polly circuit breaker trigger</text>
+    <text x="25" y="470" class="d">• Automated Pod restart</text>
+    <text x="25" y="485" class="d">• Canary rollback on error %</text>
+    <text x="25" y="525" class="code" fill="#6ee7b7">Self-Healing Loops</text>
+  </g>
+
+  <!-- Cross-Cutting Correlation Banner at Bottom -->
+  <g transform="translate(30,620)">
+    <rect width="1040" height="35" rx="6" fill="#0f172a" stroke="#475569" stroke-width="1"/>
+    <text x="20" y="22" class="n" fill="#38bdf8">Correlation Backbone:</text>
+    <text x="170" y="22" class="code" fill="#f8fafc">TraceId (32-hex) + SpanId (16-hex) + CorrelationId (GUID) embedded seamlessly across all Logs, Metrics &amp; Traces</text>
+  </g>
+</svg>

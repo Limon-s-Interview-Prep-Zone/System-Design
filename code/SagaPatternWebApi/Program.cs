@@ -53,7 +53,11 @@ builder.Services.AddOpenTelemetry()
 
         if (builder.Configuration.GetValue<bool>("OpenTelemetry:EnableOtlp", true))
         {
-            metrics.AddOtlpExporter(o => o.Endpoint = new Uri(otlpEndpoint));
+            metrics.AddOtlpExporter((o, readerOptions) =>
+            {
+                o.Endpoint = new Uri(otlpEndpoint);
+                readerOptions.PeriodicExportingMetricReaderOptions.ExportIntervalMilliseconds = 2000;
+            });
         }
     });
 
@@ -71,7 +75,11 @@ builder.Logging.AddOpenTelemetry(logging =>
 
     if (builder.Configuration.GetValue<bool>("OpenTelemetry:EnableOtlp", true))
     {
-        logging.AddOtlpExporter(o => o.Endpoint = new Uri(otlpEndpoint));
+        logging.AddOtlpExporter((o, processorOptions) =>
+        {
+            o.Endpoint = new Uri(otlpEndpoint);
+            processorOptions.BatchExportProcessorOptions.ScheduledDelayMilliseconds = 2000;
+        });
     }
 });
 

@@ -1,1 +1,213 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="800" height="400"><rect width="800" height="400" fill="#f0f0f0"/><text x="400" y="200" font-size="24" text-anchor="middle" fill="#333">Microservice Scaling Architecture (placeholder)</text></svg>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1100 700" width="100%" height="100%">
+  <defs>
+    <linearGradient id="msBg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0f172a"/>
+      <stop offset="100%" stop-color="#1e293b"/>
+    </linearGradient>
+    <filter id="msSh" x="-5%" y="-5%" width="110%" height="115%">
+      <feDropShadow dx="0" dy="3" stdDeviation="4" flood-color="#000" flood-opacity="0.4"/>
+    </filter>
+    <marker id="msArr" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M 0 1 L 9 5 L 0 9 z" fill="#94a3b8"/>
+    </marker>
+    <marker id="msArrBlue" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M 0 1 L 9 5 L 0 9 z" fill="#38bdf8"/>
+    </marker>
+    <marker id="msArrGreen" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M 0 1 L 9 5 L 0 9 z" fill="#34d399"/>
+    </marker>
+    <marker id="msArrOrange" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M 0 1 L 9 5 L 0 9 z" fill="#fb923c"/>
+    </marker>
+  </defs>
+  <style>
+    .t{font-family:system-ui,-apple-system,sans-serif;font-size:22px;font-weight:700;fill:#f8fafc}
+    .st{font-family:system-ui,-apple-system,sans-serif;font-size:12px;fill:#94a3b8}
+    .h{font-family:system-ui,-apple-system,sans-serif;font-size:13px;font-weight:700}
+    .n{font-family:system-ui,-apple-system,sans-serif;font-size:11px;font-weight:600;fill:#f8fafc}
+    .d{font-family:system-ui,-apple-system,sans-serif;font-size:9.5px;fill:#94a3b8}
+    .b{font-family:system-ui,-apple-system,sans-serif;font-size:10px;font-weight:700;fill:#fff}
+    .code{font-family:ui-monospace,SFMono-Regular,Consolas,monospace;font-size:9px;fill:#cbd5e1}
+    .fl{stroke-width:1.6;fill:none}
+  </style>
+  <rect width="1100" height="700" fill="url(#msBg)"/>
+
+  <!-- Title -->
+  <text x="40" y="40" class="t">End-to-End Microservice Scaling Architecture</text>
+  <text x="40" y="60" class="st">Edge Caching • Stateless Kubernetes Pods &amp; HPA • L1/L2 Caches • Async Outbox &amp; DB Sharding</text>
+
+  <!-- Flow 1: Clients & Edge Routing -->
+  <g transform="translate(30,85)" filter="url(#msSh)">
+    <rect width="210" height="570" rx="10" fill="#1e293b" stroke="#334155" stroke-width="1.2"/>
+    <rect x="12" y="12" width="135" height="22" rx="5" fill="#3b82f6"/>
+    <text x="79" y="27" text-anchor="middle" class="b">EDGE &amp; GATEWAY</text>
+
+    <!-- Global Clients -->
+    <rect x="15" y="48" width="180" height="85" rx="6" fill="#0f172a" stroke="#60a5fa" stroke-width="1"/>
+    <text x="25" y="68" class="n" fill="#93c5fd">Global Traffic</text>
+    <text x="25" y="85" class="d">• 50,000 Concurrent Users</text>
+    <text x="25" y="100" class="d">• 42,000 Peak QPS</text>
+    <text x="25" y="115" class="d">• Anycast GeoDNS Routing</text>
+
+    <!-- CDN Edge -->
+    <rect x="15" y="148" width="180" height="120" rx="6" fill="#0f172a" stroke="#38bdf8" stroke-width="1.2"/>
+    <text x="25" y="168" class="n" fill="#38bdf8">L0: CDN (Cloudflare / FrontDoor)</text>
+    <text x="25" y="188" class="d">• Edge TLS Termination</text>
+    <text x="25" y="203" class="d">• Caches Static Assets &amp; HTML</text>
+    <text x="25" y="218" class="d">• DDoS Protection (WAF)</text>
+    <text x="25" y="233" class="d">• Absorbs 70% of static traffic</text>
+    <text x="25" y="253" class="code" fill="#7dd3fc">Offloads Origin Compute</text>
+
+    <!-- API Gateway -->
+    <rect x="15" y="285" width="180" height="150" rx="6" fill="#0f172a" stroke="#6366f1" stroke-width="1"/>
+    <text x="25" y="307" class="n" fill="#818cf8">YARP / Envoy Gateway</text>
+    <text x="25" y="327" class="d">• JWT Validation &amp; Auth</text>
+    <text x="25" y="342" class="d">• Token Bucket Rate Limiting</text>
+    <text x="25" y="357" class="d">• Path-based Routing</text>
+    <text x="25" y="372" class="d">• HTTP/3 to HTTP/2 proxying</text>
+    <text x="25" y="387" class="d">• W3C traceparent injection</text>
+    <text x="25" y="415" class="code" fill="#a5b4fc">Yarp.ReverseProxy</text>
+
+    <!-- Resilience Note -->
+    <rect x="15" y="450" width="180" height="100" rx="6" fill="#0f172a" stroke="#475569" stroke-width="1"/>
+    <text x="25" y="472" class="n">Circuit Breaker &amp; Bulkhead</text>
+    <text x="25" y="492" class="d">• Polly fail-fast policies</text>
+    <text x="25" y="507" class="d">• Thread pool isolation</text>
+    <text x="25" y="522" class="d">• Prevents cascading outage</text>
+  </g>
+
+  <!-- Path from Gateway to K8s Pods -->
+  <path d="M 240 360 L 290 360" class="fl" stroke="#38bdf8" marker-end="url(#msArrBlue)"/>
+
+  <!-- Flow 2: Compute Tier (Stateless Pods & HPA) -->
+  <g transform="translate(290,85)" filter="url(#msSh)">
+    <rect width="230" height="570" rx="10" fill="#1e293b" stroke="#334155" stroke-width="1.2"/>
+    <rect x="12" y="12" width="150" height="22" rx="5" fill="#6366f1"/>
+    <text x="87" y="27" text-anchor="middle" class="b">STATELESS COMPUTE</text>
+
+    <!-- K8s Autoscaling Box -->
+    <rect x="15" y="48" width="200" height="110" rx="6" fill="#0f172a" stroke="#818cf8" stroke-width="1.2"/>
+    <text x="25" y="70" class="n" fill="#a5b4fc">Kubernetes HPA</text>
+    <text x="25" y="90" class="d">• Scales from 3 to 30 Pods</text>
+    <text x="25" y="105" class="d">• CPU &gt; 70% threshold</text>
+    <text x="25" y="120" class="d">• Custom QPS metric (&gt;1k RPS/pod)</text>
+    <text x="25" y="140" class="code" fill="#a5b4fc">HorizontalPodAutoscaler v2</text>
+
+    <!-- Pod 1 -->
+    <rect x="15" y="170" width="200" height="115" rx="6" fill="#0f172a" stroke="#34d399" stroke-width="1.2"/>
+    <text x="25" y="190" class="n" fill="#34d399">ASP.NET Core Pod 1</text>
+    <text x="25" y="208" class="d">• L1 In-Memory Cache (IMemoryCache)</text>
+    <text x="25" y="223" class="d">• Zero local disk state</text>
+    <text x="25" y="238" class="d">• Kestrel Async non-blocking I/O</text>
+    <text x="25" y="263" class="code" fill="#34d399">MemoryCache (TTL 5s)</text>
+
+    <!-- Pod 2 -->
+    <rect x="15" y="295" width="200" height="115" rx="6" fill="#0f172a" stroke="#34d399" stroke-width="1.2"/>
+    <text x="25" y="315" class="n" fill="#34d399">ASP.NET Core Pod 2</text>
+    <text x="25" y="333" class="d">• Identical Stateless Replica</text>
+    <text x="25" y="348" class="d">• Connection Pool to DB</text>
+    <text x="25" y="363" class="d">• MassTransit Outbox Publisher</text>
+    <text x="25" y="388" class="code" fill="#34d399">MemoryCache (TTL 5s)</text>
+
+    <!-- Pod N -->
+    <rect x="15" y="420" width="200" height="85" rx="6" fill="#0f172a" stroke="#64748b" stroke-width="1"/>
+    <text x="25" y="440" class="n">ASP.NET Core Pod N (Auto-scaled)</text>
+    <text x="25" y="460" class="d">• Scales up in seconds under surge</text>
+    <text x="25" y="475" class="d">• Rolling updates with 0 downtime</text>
+
+    <!-- Stateless Contract Note -->
+    <rect x="15" y="515" width="200" height="35" rx="4" fill="#0f172a" stroke="#475569"/>
+    <text x="25" y="535" class="d" fill="#cbd5e1">Rule: No Session In-Proc state</text>
+  </g>
+
+  <!-- Connectors to Cache & Broker -->
+  <path d="M 520 220 L 580 220" class="fl" stroke="#38bdf8" marker-end="url(#msArrBlue)"/>
+  <path d="M 520 370 L 580 370" class="fl" stroke="#fb923c" marker-end="url(#msArrOrange)"/>
+
+  <!-- Flow 3: Caching & Asynchronous Queue Tier -->
+  <g transform="translate(580,85)" filter="url(#msSh)">
+    <rect width="230" height="570" rx="10" fill="#1e293b" stroke="#334155" stroke-width="1.2"/>
+    <rect x="12" y="12" width="165" height="22" rx="5" fill="#059669"/>
+    <text x="94" y="27" text-anchor="middle" class="b">CACHE &amp; ASYNC QUEUES</text>
+
+    <!-- Redis Distributed Cache -->
+    <rect x="15" y="48" width="200" height="175" rx="6" fill="#0f172a" stroke="#38bdf8" stroke-width="1.2"/>
+    <text x="25" y="70" class="n" fill="#38bdf8">L2: Redis Distributed Cache</text>
+    <text x="25" y="90" class="d">• Multi-node Redis Cluster</text>
+    <text x="25" y="105" class="d">• 123 GB Cache RAM (80/20 rule)</text>
+    <text x="25" y="120" class="d">• Shared Session &amp; Hot Entities</text>
+    <text x="25" y="135" class="d">• Cache-Aside with TTL Jitter</text>
+    <text x="25" y="150" class="d">• Atomic Lua Decrement (Flash sales)</text>
+    <text x="25" y="165" class="d">• Absorbs 85% of read queries</text>
+    <text x="25" y="195" class="code" fill="#7dd3fc">StackExchange.Redis</text>
+
+    <!-- Message Broker (Kafka / RabbitMQ) -->
+    <rect x="15" y="240" width="200" height="175" rx="6" fill="#0f172a" stroke="#fb923c" stroke-width="1.2"/>
+    <text x="25" y="262" class="n" fill="#fb923c">Async Broker (Kafka / RabbitMQ)</text>
+    <text x="25" y="282" class="d">• Decouples Long-running Tasks</text>
+    <text x="25" y="297" class="d">• Transactional Outbox Relay</text>
+    <text x="25" y="312" class="d">• Guarantees At-Least-Once delivery</text>
+    <text x="25" y="327" class="d">• Order Fulfillment, Email, Push</text>
+    <text x="25" y="342" class="d">• Backpressure buffer under spikes</text>
+    <text x="25" y="357" class="d">• Dead Letter Queues (DLQ)</text>
+    <text x="25" y="388" class="code" fill="#fed7aa">MassTransit + Outbox</text>
+
+    <!-- Async Worker Consumers -->
+    <rect x="15" y="430" width="200" height="120" rx="6" fill="#0f172a" stroke="#64748b" stroke-width="1"/>
+    <text x="25" y="452" class="n">Background Workers (Consumers)</text>
+    <text x="25" y="472" class="d">• Scaled independently on Queue Lag</text>
+    <text x="25" y="487" class="d">• Idempotent Message Handlers</text>
+    <text x="25" y="502" class="d">• Processes analytics &amp; heavy PDF</text>
+    <text x="25" y="525" class="code" fill="#cbd5e1">KEDA Queue Autoscaling</text>
+  </g>
+
+  <!-- Connectors to Database Tier -->
+  <path d="M 810 330 L 860 330" class="fl" stroke="#34d399" marker-end="url(#msArrGreen)"/>
+
+  <!-- Flow 4: Scaled Data Tier (Funnel) -->
+  <g transform="translate(860,85)" filter="url(#msSh)">
+    <rect width="210" height="570" rx="10" fill="#1e293b" stroke="#334155" stroke-width="1.2"/>
+    <rect x="12" y="12" width="150" height="22" rx="5" fill="#10b981"/>
+    <text x="87" y="27" text-anchor="middle" class="b">DATABASE SCALING</text>
+
+    <!-- Connection Pooler -->
+    <rect x="15" y="48" width="180" height="95" rx="6" fill="#0f172a" stroke="#34d399" stroke-width="1"/>
+    <text x="25" y="70" class="n" fill="#34d399">PgBouncer Pooler</text>
+    <text x="25" y="90" class="d">• Prevents connection starvation</text>
+    <text x="25" y="105" class="d">• Multiplexes 1000 app conns</text>
+    <text x="25" y="120" class="d">• Down to 50 server DB conns</text>
+
+    <!-- Primary Write DB -->
+    <rect x="15" y="155" width="180" height="125" rx="6" fill="#0f172a" stroke="#ef4444" stroke-width="1.2"/>
+    <text x="25" y="177" class="n" fill="#f87171">Primary DB (Writes: 6.3k QPS)</text>
+    <text x="25" y="197" class="d">• ACID Transactions</text>
+    <text x="25" y="212" class="d">• OutboxMessages Table</text>
+    <text x="25" y="227" class="d">• Fast SSD / NVMe Storage</text>
+    <text x="25" y="242" class="d">• Multi-AZ Synchronous Standby</text>
+    <text x="25" y="260" class="code" fill="#fca5a5">PostgreSQL / SQL Server</text>
+
+    <!-- Read Replicas -->
+    <rect x="15" y="295" width="180" height="125" rx="6" fill="#0f172a" stroke="#38bdf8" stroke-width="1.2"/>
+    <text x="25" y="317" class="n" fill="#38bdf8">Read Replicas (Reads: 35k QPS)</text>
+    <text x="25" y="337" class="d">• Asynchronous Replication</text>
+    <text x="25" y="352" class="d">• Read-only query offload</text>
+    <text x="25" y="367" class="d">• Scales horizontally (3+ nodes)</text>
+    <text x="25" y="382" class="d">• Read-your-own-writes bypass</text>
+    <text x="25" y="400" class="code" fill="#7dd3fc">Read-Write Splitting</text>
+
+    <!-- Sharding Stage -->
+    <rect x="15" y="435" width="180" height="115" rx="6" fill="#0f172a" stroke="#c084fc" stroke-width="1"/>
+    <text x="25" y="457" class="n" fill="#c084fc">Horizontal Sharding (Scale Out)</text>
+    <text x="25" y="477" class="d">• Sharded on UserId / TenantId</text>
+    <text x="25" y="492" class="d">• Consistent Hashing ring</text>
+    <text x="25" y="507" class="d">• Cross-shard via CDC to Search</text>
+    <text x="25" y="530" class="code" fill="#e9d5ff">Elasticsearch / Debezium</text>
+  </g>
+
+  <!-- Bottom Architecture Summary Banner -->
+  <g transform="translate(30,620)">
+    <rect width="1040" height="35" rx="6" fill="#0f172a" stroke="#475569" stroke-width="1"/>
+    <text x="20" y="22" class="n" fill="#38bdf8">Microservice Scaling Levers:</text>
+    <text x="200" y="22" class="code" fill="#f8fafc">Stateless Pods + HPA (K8s) &gt;&gt; L1/L2 Caches (Redis) &gt;&gt; Async Outbox (MassTransit) &gt;&gt; DB Funnel (Pool + Replicas + Shards)</text>
+  </g>
+</svg>

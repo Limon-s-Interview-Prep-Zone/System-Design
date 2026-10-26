@@ -1,0 +1,106 @@
+version: '3.8'
+
+services:
+  # ---------------------------------------------------------------------------
+  # OpenTelemetry Collector (Contrib)
+  # Central pipeline ingesting OTLP gRPC/HTTP from SagaPatternWebApi, then
+  # fanning out traces to Jaeger, metrics to Prometheus, and logs to Loki.
+  # ---------------------------------------------------------------------------
+  otel-collector:
+    image: otel/opentelemetry-collector-contrib:0.98.0
+    container_name: saga-otel-collector
+    restart: unless-stopped
+    command: ["--config=/etc/otelcol-contrib/config.yaml"]
+    volumes:
+      - ./otel-collector-config.yaml:/etc/otelcol-contrib/config.yaml:ro
+    ports:
+      - "4317:4317"   # OTLP gRPC receiver
+      - "4318:4318"   # OTLP HTTP receiver
+      - "8889:8889"   # Prometheus metrics exporter
+    depends_on:
+      - jaeger
+      - loki
+    networks:
+      - observability-net
+
+  # ---------------------------------------------------------------------------
+  # Jaeger All-in-One: Distributed Tracing
+  # Renders end-to-end trace waterfalls (HTTP -> MassTransit -> RabbitMQ -> Saga)
+  # ---------------------------------------------------------------------------
+  jaeger:
+    image: jaegertracing/all-in-one:1.57.0
+    container_name: saga-jaeger
+    restart: unless-stopped
+    environment:
+      - COLLECTOR_OTLP_ENABLED=true
+    ports:
+      - "16686:16686" # Jaeger Web UI
+    networks:
+      - observability-net
+
+  # ---------------------------------------------------------------------------
+  # Prometheus: Time-Series Metrics
+  # Scrapes OTel Collector metrics for ASP.NET runtime & MassTransit message stats
+  # ---------------------------------------------------------------------------
+  prometheus:
+    image: prom/prometheus:v2.52.0
+    container_name: saga-prometheus
+    restart: unless-stopped
+    command:
+      - --config.file=/etc/prometheus/prometheus.yml
+      - --storage.tsdb.path=/prometheus
+      - --web.console.libraries=/usr/share/prometheus/console_libraries
+      - --web.console.templates=/usr/share/prometheus/consoles
+    ports:
+      - "9090:9090"   # Prometheus Web UI
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml:ro
+    networks:
+      - observability-net
+
+  # ---------------------------------------------------------------------------
+  # Grafana Loki: High-Efficiency Structured Log Aggregation
+  # Ingests structured logs with TraceId/SpanId metadata via OTLP HTTP
+  # ---------------------------------------------------------------------------
+  loki:
+    image: grafana/loki:3.0.0
+    container_name: saga-loki
+    restart: unless-stopped
+    command: -config.file=/etc/loki/local-config.yaml
+    volumes:
+      - ./loki-config.yaml:/etc/loki/local-config.yaml:ro
+    ports:
+      - "3100:3100"   # Loki API & OTLP ingestion endpoint
+    networks:
+      - observability-net
+
+  # ---------------------------------------------------------------------------
+  # Grafana: Unified Visualization Dashboard
+  # Pre-provisioned with Jaeger, Prometheus, and Loki datasources with seamless
+  # Trace-to-Logs correlation.
+  # ---------------------------------------------------------------------------
+  grafana:
+    image: grafana/grafana:11.0.0
+    container_name: saga-grafana
+    restart: unless-stopped
+    ports:
+      - "3000:3000"   # Grafana Web UI
+    environment:
+      - GF_SECURITY_ADMIN_USER=admin
+      - GF_SECURITY_ADMIN_PASSWORD=admin
+      - GF_USERS_ALLOW_SIGN_UP=false
+    volumes:
+      - ./grafana-datasources.yaml:/etc/grafana/provisioning/datasources/datasources.yaml:ro
+      - ./grafana-dashboards.yaml:/etc/grafana/provisioning/dashboards/dashboards.yaml:ro
+      - ./dashboards:/etc/grafana/dashboards:ro
+    depends_on:
+      - prometheus
+      - jaeger
+      - loki
+    networks:
+      - observability-net
+
+networks:
+  observability-net:
+    driver: bridge
+
